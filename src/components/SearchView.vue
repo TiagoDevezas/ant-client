@@ -13,7 +13,11 @@
   <div class="content-wrap-results">
     <div class="cw">
       <div class="results-wrapper">
-        <result-counter :count="data.metadata.count" :curr-page="data.metadata.page"></result-counter>  
+        <result-counter
+          v-if="data.entities.length"
+          :count="data.metadata.count"
+          :curr-page="data.metadata.page">
+        </result-counter>  
         <div class="results">
           <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity">
           </result-item>
