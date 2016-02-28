@@ -6,18 +6,26 @@
         <a v-link="'/'" id="header-logo-wrap">
           <span class="header-logo">ANT Pesquisa Orientada a Entidades</span>
         </a>
-        <search-form :query-params="queryParams" class="search-top"></search-form>
+        <search-form :query-params="queryParams.q" class="search-top"></search-form>
       </div>
     </div>
   </div>
   <div class="content-wrap-results">
     <div class="cw">
       <div class="results-wrapper">
+        <result-counter :count="data.metadata.count" :curr-page="data.metadata.page"></result-counter>  
         <div class="results">
           <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity">
           </result-item>
         </div>
       </div>
+      <result-paginator
+        v-if="data.entities.length"
+        :num-pages="data.metadata.pages"
+        :curr-page="data.metadata.page"
+        :start-page="data.metadata.start"
+        :total-results="data.metadata.count">
+      </result-paginator>
     </div>
   </div>
   </div>
@@ -27,26 +35,35 @@
 import store from '../store'
 import SearchForm from './SearchForm'
 import ResultItem from './ResultItem'
+import ResultCounter from './ResultCounter'
+import ResultPaginator from './ResultPaginator'
 
 export default {
   components: {
     SearchForm,
-    ResultItem
+    ResultItem,
+    ResultCounter,
+    ResultPaginator
   },
 
   data () {
     return {
       data: {
-        entities: []
+        entities: [],
+        metadata: []
       },
-      queryParams: ''
+      queryParams: {
+        q: '',
+        start: ''
+      }
     }
   },
   route: {
     data () {
       this.data.entities = []
+      this.data.metadata = []
       store.getEntitiesWithMetadata(this)
-      this.$set('queryParams', this.$route.query.q)
+      this.$set('queryParams.q', this.$route.query.q)
     }
   }
 }
@@ -122,6 +139,6 @@ export default {
     padding-left: 94px;
   }
   .results {
-    margin: 0.5em 0 2em;
+    margin: 0.5em 0 0;
   }
 </style>

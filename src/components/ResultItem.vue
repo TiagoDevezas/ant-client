@@ -67,7 +67,6 @@ export default {
   },
   ready () {
     this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes.slice(0, 3))
-    console.log(this.defaultAttributes)
     this.$set('extraAttributes', this.metadata.metadata.decorations.attributes.slice(4))
     this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
     // this.metadata.metadata.decorations.attributes.forEach(obj => {

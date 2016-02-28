@@ -9,9 +9,10 @@ const store = Object.create(null)
 
 export default store
 
-store.getEntities = context => {
-  let queryParams = context.$route.query.q
-  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {q: queryParams}})
+store.getEntities = (context, startPage) => {
+  const query = context.$route.query.q
+  const start = context.$route.query.start
+  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {q: query, start: start}})
 }
 store.getEntityMetada = (context, item) => {
   let entity = item.uri.split('#')[1]
@@ -19,10 +20,11 @@ store.getEntityMetada = (context, item) => {
   return context.$http({url: METADATA_SEARCH_URL, method: 'GET', params: {entity: entity, type: type}})
 }
 
-store.getEntitiesWithMetadata = context => {
-  return store.getEntities(context)
+store.getEntitiesWithMetadata = (context, startPage) => {
+  return store.getEntities(context, startPage)
     .then(response => {
       let data = response.data.data
+      context.$set('data.metadata', response.data.metadata)
       data.forEach(d => {
         store.getEntityMetada(context, d)
           .then(response => {
