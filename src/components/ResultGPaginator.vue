@@ -55,7 +55,9 @@
     },
     methods: {
       isStartPage (page) {
-        if (+this.$route.query.start === page * 10 - 10) {
+        if (+page === 1 && !this.$route.query.start) {
+          return true
+        } else if (+this.$route.query.start === page * 10 - 10) {
           return true
         }
       }
