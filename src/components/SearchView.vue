@@ -40,7 +40,7 @@ import store from '../store'
 import SearchForm from './SearchForm'
 import ResultItem from './ResultItem'
 import ResultCounter from './ResultCounter'
-import ResultPaginator from './ResultPaginator'
+import ResultPaginator from './ResultGPaginator'
 
 export default {
   components: {
