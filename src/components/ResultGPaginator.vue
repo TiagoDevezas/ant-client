@@ -88,25 +88,23 @@
   .page-navigation {
     padding: 0;
     margin: 0;
-    display: table;
   }
   
   .page-navigation li {
-    display: table-cell;
-  }
-
-  .page-navigation li a {
-    display: table-cell;
-    text-decoration: none;
-    padding: 0.5em;
-    color: #d9230f;
-    text-align: center;
+    display: inline-flex;
     vertical-align: middle;
   }
 
-  .page-navigation li a i {
-    display: table-cell;
-    padding: 0;
+  .page-navigation li a {
+    text-decoration: none;
+    color: #d9230f;
+    font-size: 1em;
+    padding: .5em;
+  }
+
+  .page-navigation i.material-icons {
+    display: inline-flex;
+    vertical-align: middle;
   }
 
   .page-navigation li a.active {

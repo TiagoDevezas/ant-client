@@ -16,7 +16,8 @@
         <result-counter
           v-if="data.entities.length"
           :count="data.metadata.count"
-          :curr-page="data.metadata.page">
+          :curr-page="data.metadata.page"
+          :time-to-search="timeToSearch">
         </result-counter>  
         <div class="results">
           <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity">
@@ -59,7 +60,8 @@ export default {
       queryParams: {
         q: '',
         start: ''
-      }
+      },
+      timeToSearch: 0
     }
   },
   route: {

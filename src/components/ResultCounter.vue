@@ -1,12 +1,12 @@
 <template>
   <div id="results-counter" v-if="count">
-    Página {{ currPage }} de {{ count }} resultados
+    {{ count }} resultados ({{ timeToSearch }} segundos)
   </div>
 </template>
 
 <script>
   export default {
-    props: ['count', 'currPage']
+    props: ['count', 'currPage', 'timeToSearch']
   }
 </script>
 

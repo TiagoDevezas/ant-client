@@ -9,6 +9,8 @@ const store = Object.create(null)
 
 export default store
 
+var t0
+
 store.getEntities = (context, startPage) => {
   const query = context.$route.query.q
   const start = context.$route.query.start
@@ -21,8 +23,12 @@ store.getEntityMetada = (context, item) => {
 }
 
 store.getEntitiesWithMetadata = (context, startPage) => {
+  t0 = performance.now()
   return store.getEntities(context, startPage)
     .then(response => {
+      let t1 = performance.now()
+      let timeToSearch = ((t1 - t0) * 0.001).toFixed(2)
+      context.$set('timeToSearch', timeToSearch)
       let data = response.data.data
       context.$set('data.metadata', response.data.metadata)
       data.forEach(d => {
