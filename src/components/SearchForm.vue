@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  props: ['queryParams'],
+  props: ['queryParams', 'isFocused'],
 
   data () {
     return {
@@ -28,6 +28,12 @@ export default {
     },
     unhighlightForm () {
       this.formFocused = false
+    }
+  },
+
+  ready () {
+    if (this.isFocused) {
+      this.$el.childNodes[1][0].focus()
     }
   }
 }

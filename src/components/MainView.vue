@@ -8,7 +8,7 @@
           </a>
         </div>
         <div class="search-wrap">
-          <search-form></search-form>
+          <search-form is-focused="true"></search-form>
         </div>
       </div>
     </div>
