@@ -49,7 +49,7 @@
             :class="{ 'active': selectedEntityType === entityTypes.departamento }"
             class="{{ entityTypes.departamento.split(':')[1] }}"
             >
-            Departamento
+            Departamentos
           </a>
         </li>
       </ul> 
