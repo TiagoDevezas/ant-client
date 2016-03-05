@@ -9,10 +9,12 @@
         <search-form :query-params="queryParams.q" class="search-top"></search-form>
       </div>
     </div>
+    <result-filter :query-params="queryParams.q"></result-filter>
   </div>
   <div class="content-wrap-results">
     <div class="cw">
-      <div class="results-wrapper">
+      <result-empty v-if="data.metadata.count === 0"></result-empty>
+      <div class="results-wrapper" v-if="data.metadata.count > 0">
         <result-counter
           v-if="data.entities.length"
           :count="data.metadata.count"
@@ -25,7 +27,7 @@
         </div>
       </div>
       <result-paginator
-        v-if="data.entities.length"
+        v-if="data.metadata.pages > 1"
         :num-pages="data.metadata.pages"
         :curr-page="data.metadata.page"
         :start-page="data.metadata.start"
@@ -42,13 +44,17 @@ import SearchForm from './SearchForm'
 import ResultItem from './ResultItem'
 import ResultCounter from './ResultCounter'
 import ResultPaginator from './ResultGPaginator'
+import ResultFilter from './ResultFilter'
+import ResultEmpty from './ResultEmpty'
 
 export default {
   components: {
     SearchForm,
     ResultItem,
     ResultCounter,
-    ResultPaginator
+    ResultPaginator,
+    ResultFilter,
+    ResultEmpty
   },
 
   data () {
@@ -83,7 +89,7 @@ export default {
   #header-wrapper {
     box-shadow: 0 1px 0 rgba(0,0,0,0.15);
     background-color: #fff;
-    padding: 16px 0;
+    padding: 16px 0 0;
     position: relative;
     z-index: 15;
   }
