@@ -21,7 +21,7 @@
   </div>
   <div class="result-more-data" :class="{ 'toggle': toggled }">
     <p v-for="attr in extraAttributes">
-      <strong>{{ attr.label }}:</strong> {{ attr.value }}
+      <strong>{{ attr.label }}:</strong> {{{ attr.value }}}
     </p>
     <div class="result-l2-attributes">
       <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
