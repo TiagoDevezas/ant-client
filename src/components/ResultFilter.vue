@@ -42,6 +42,16 @@
             Salas
           </a>
         </li>
+        <li>
+          <a 
+            v-link="{ name: 'search', query: { q: cleanQuery + entityTypes.departamento }}"
+            @click="setEntityType(entityTypes.departamento)"
+            :class="{ 'active': selectedEntityType === entityTypes.departamento }"
+            class="{{ entityTypes.departamento.split(':')[1] }}"
+            >
+            Departamento
+          </a>
+        </li>
       </ul> 
   </div>
 </div>
@@ -56,7 +66,8 @@
           all: '',
           funcionario: ' tipoentidade:funcionário',
           estudante: ' tipoentidade:estudante',
-          sala: ' tipoentidade:sala'
+          sala: ' tipoentidade:sala',
+          departamento: ' tipoentidade:departamento'
         },
         selectedEntityType: ''
       }
@@ -146,5 +157,9 @@
   .result-filter a.active.sala {
     color: #222324 !important;
     border-bottom: solid 3px #222324;
+  }
+  .result-filter a.active.departamento {
+    color: #69707a !important;
+    border-bottom: solid 3px #69707a;
   }
 </style>

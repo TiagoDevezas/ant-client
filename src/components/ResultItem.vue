@@ -198,10 +198,10 @@ export default {
   white-space: nowrap;
 }
 .tag {
-  background: #f5f7fa;
+  background: #69707a;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  color: #69707a;
+  color: #f5f7fa;
   display: inline-block;
   font-size: .7em;
   line-height: 1.2em;
