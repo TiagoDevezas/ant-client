@@ -22,7 +22,7 @@
           :time-to-search="timeToSearch">
         </result-counter>  
         <div class="results">
-          <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity">
+          <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity" :category="data.metadata.category">
           </result-item>
         </div>
       </div>

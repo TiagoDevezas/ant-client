@@ -3,7 +3,7 @@
   <div class="result-body">
     <div class="result-title">
       <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
-      <h2><a href="{{ metadata.link }}">{{ metadata.description }}</a></h2>
+      <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)" target="_blank">{{ metadata.description }}</a></h2>
     </div>
     <div class="result-link">
 <!--       <span class="result-icon">
@@ -42,19 +42,44 @@
 
 <script>
 export default {
-  props: ['metadata'],
+  props: ['metadata', 'category'],
   data () {
     return {
       defaultAttributes: [],
       extraAttributes: [],
       levelTwoAttributes: [],
-      toggled: false
+      toggled: false,
+      clicked: false
     }
   },
   methods: {
     toggleAccordion () {
       this.toggled = !this.toggled
-      console.log(this.toggled)
+      this.sendClickData()
+    },
+    sendClickData () {
+      const values = {
+        active_query: this.$route.query.q.toString(),
+        active_query_category: this.category.toString(),
+        active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
+        clicked_result_rank: this.metadata.rank.toString(),
+        clicked_result_score: this.metadata.score.toString(),
+        clicked_result_uri: this.metadata.uri.toString(),
+        client_user_agent: window.navigator.userAgent.toString(),
+        client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
+        is_test: 'true'
+      }
+      if (!this.clicked && arguments.length === 0) {
+        // console.log(values)
+        this.$http.post('http://ant.fe.up.pt/log/event/click', values, {emulateJSON: true})
+        this.clicked = true
+      }
+      if (arguments.length > 0 && arguments[0]) {
+        values['target_url'] = arguments[0]
+        this.$http.post('http://ant.fe.up.pt/log/event/click', values, {emulateJSON: true})
+        // console.log(values)
+      }
+
     }
   },
   computed: {
