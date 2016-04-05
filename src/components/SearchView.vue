@@ -76,6 +76,7 @@ export default {
       this.data.metadata = []
       store.getEntitiesWithMetadata(this)
       this.$set('queryParams.q', this.$route.query.q)
+      document.title = this.$route.query.q + ' - ANT'
     }
   }
 }
@@ -141,7 +142,7 @@ export default {
   .cw {
     position: relative;
     padding: 0 7px;
-    max-width: 1008px;
+    max-width: 960px;
     margin-left: 0;
     margin-right: auto;
   }

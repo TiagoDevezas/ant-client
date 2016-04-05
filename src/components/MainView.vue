@@ -7,8 +7,14 @@
             ANT Pesquisa Orientada a Entidades
           </a>
         </div>
+        <div class="text-wrap">
+          <p class="app-name">ANT</p>
+        </div>
         <div class="search-wrap">
           <search-form is-focused="true"></search-form>
+        </div>
+        <div class="text-wrap">
+          <p class="app-description">Pesquisa orientada a entidades.</p>
         </div>
       </div>
     </div>
@@ -23,6 +29,9 @@ export default {
 
   components: {
     SearchForm
+  },
+  ready () {
+    document.title = 'ANT - Pesquisa orientada a entidades'
   }
 }
 </script>
@@ -49,13 +58,30 @@ export default {
     max-width: 1008px;
     padding: 0 7px;
   }
-  .logo-wrap {
+  .logo-wrap, .text-wrap {
     position: relative;
     display: block;
     max-width: 300px;
     margin: auto;
     margin-bottom: 0.8em;
   }
+
+  .text-wrap {
+    margin-bottom: 0;
+    text-align: center;
+  }
+  .app-name {
+    margin: 0;
+    font-size: 35px;
+    line-height: 1;
+    color: #4C4C4C;
+  }
+  .app-description {
+    font-size: 1em;
+    line-height: 1;
+    color: #A3A3A3;
+  }
+
   #logo-link {
     background-image: url("../assets/ant-logo.svg");
     background-position: 50% 50%;

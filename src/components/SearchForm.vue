@@ -1,7 +1,8 @@
 <template>
 <div id="search-form">  
   <form id="search-form-home" @submit="showResults" :class="{ 'focused': formFocused, 'unfocused': !formFocused }">
-    <input id="search-input-home" type="text" v-model="queryParams" @focus="highlightForm" @blur="unhighlightForm">
+    <input id="search-input-home" type="text" v-model="queryParams" @focus="highlightForm" @blur="unhighlightForm" placeholder="Introduza a sua pesquisa">
+    <input id="search-button-home" :class="['material-icons', {'btn-highlight': buttonFocused}]" tabindex="2" value="search" type="submit">
   </form>
 </div>
 </template>
@@ -12,12 +13,16 @@ export default {
 
   data () {
     return {
-      formFocused: false
+      formFocused: false,
+      buttonFocused: false
     }
   },
 
   methods: {
     showResults () {
+      this.$el.childNodes[1][0].blur()
+      this.formFocused = false
+      this.buttonFocused = false
       this.$route.router.go({
         name: 'search',
         query: {q: this.queryParams}
@@ -28,6 +33,16 @@ export default {
     },
     unhighlightForm () {
       this.formFocused = false
+    }
+  },
+
+  watch: {
+    'queryParams': function (val, oldVal) {
+      if (val !== oldVal && val.length > 0 && this.formFocused) {
+        this.buttonFocused = true
+      } else {
+        this.buttonFocused = false
+      }
     }
   },
 
@@ -42,7 +57,7 @@ export default {
 <style>
   #search-form-home, .unfocused {
     font-size: 1.14em;
-    padding-right: 3.5em;
+    padding: 0.5em 3.5em 0.5em 0.75em;
     box-sizing: border-box;
     border-radius: 2px;
     display: block;
@@ -50,7 +65,6 @@ export default {
     height: 2.8em;
     background-color: #ffffff;
     border: 1px solid #d0d0d0;
-    padding-left: 0.75em;
   }
   #search-form-home.focused {
     border: 1px solid #d9230f;
@@ -70,6 +84,57 @@ export default {
     z-index: 1;
     top: -1px;
   }
+
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    #ddd;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    #ddd;
+     opacity:  1;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color:    #ddd;
+     opacity:  1;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+     color:    #ddd;
+  }
+
+  #search-button-home {
+    border-radius: 2px;
+    min-width: 26px;
+    color: #aaa;
+    font-size: 1.25em;
+    padding: 0 0.64em 0 0.54em;
+    height: auto;
+    min-height: 1.4em;
+    margin: 2px 0;
+    /*line-height: 1.5;*/
+    background-color: transparent;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 2px;
+    left: auto;
+    z-index: 2;
+    outline: none;
+    width: 2em;
+    display: block;
+    cursor: pointer;
+    background: transparent;
+    text-align: center;
+    border: none;
+    color: #111111;
+    font-size: 1.3em;
+  }
+
+  #search-button-home:hover, .btn-highlight {
+    background: #d9230f !important;
+    color: #ffffff !important;
+  }
+
   .search-top #search-form-home {
     background-color: #f7f7f7;
     height: 38px;

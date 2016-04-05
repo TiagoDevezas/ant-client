@@ -3,15 +3,15 @@
   <div class="result-body">
     <div class="result-title">
       <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
-      <h2>{{ metadata.description }}</h2>
+      <h2><a href="{{ metadata.link }}">{{ metadata.description }}</a></h2>
     </div>
     <div class="result-link">
-      <span class="result-icon">
+<!--       <span class="result-icon">
         <a href="{{ metadata.link }}">
           <img src="../assets/up.png" alt="UP Logo" width="16" height="16" class="result-icon-img">
         </a>
-      </span>
-      <a href="{{ metadata.link }}" class="result-url">{{ metadata.link }}</a>
+      </span> -->
+      <span class="result-url">{{ metadata.link }}</span>
     </div>
     <div class="result-snippet">
       <p v-for="attr in defaultAttributes">
@@ -83,9 +83,9 @@ export default {
   -webkit-tap-highlight-color: transparent;
   padding-left: 10px;
   padding-right: 10px;
-  padding-top: 0.5em;
+  padding-top: 0.3em;
   padding-bottom: 0.5em;
-  margin-bottom: 0.8em;
+  margin-bottom: 0.5em;
   position: relative;
   word-wrap: break-word;
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
@@ -100,18 +100,29 @@ export default {
   overflow: hidden;
   padding: 0;
   margin: 0;
-  margin-bottom: 0.2em;
+  /*margin-bottom: 0.2em;*/
   max-width: 100%;
 }
 .result-title h2 {
   display: inline-block;
   font-size: 1.38em;
+  font-weight: normal;
   vertical-align: middle;
   color: #333;
   line-height: 1.3em;
   margin: 0;
-  padding-left: 10px;
+  /*padding-left: 10px;*/
 }
+
+.result-title h2 a {
+  text-decoration: none;
+  color: #333;
+}
+
+.result-title h2 a:hover {
+  text-decoration: underline;
+}
+
 .result-snippet, .result-more-data {
   font-size: 0.85em;
   color: #666;
@@ -132,15 +143,8 @@ export default {
   margin-top: 0;
 }
 .result-url {
-  text-decoration: none;
-  color: #d9230f;
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.85em;
-}
-.result-url:hover, .result-url:active, .result-url:focus {
-  text-decoration: underline;
-  color: #a91b0c;
+  color: #555;
+  font-size: 0.8em;
 }
 .result-more-data {
   max-height: 0;
@@ -159,7 +163,7 @@ export default {
   height: 0px;
   margin-bottom: -0.5em;
   overflow: hidden;
-  padding: 20px 0;
+  padding: 15px 0;
   text-align: center;
   position: relative;
   clear: both;
@@ -181,16 +185,16 @@ export default {
   width: 24px;
   margin-right: auto;
   position: relative;
-  top: -10px;
+  top: -12px;
   color: #777;
 }
 .more-text {
-  top: 9px;
+  top: 4.5px;
   left: 20px;
   right: 0;
   text-align: left;
   color: #777;
-  font-size: 0.9em;
+  font-size: 0.8em;
   margin: 0 15px;
   position: absolute;
   overflow: hidden;
@@ -209,6 +213,7 @@ export default {
   white-space: nowrap;
   top: 0;
   font-weight: bold;
+  float: right;
 }
 .tag-sala {
   background: #222324;
