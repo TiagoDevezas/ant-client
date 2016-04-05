@@ -14,7 +14,7 @@
           <search-form is-focused="true"></search-form>
         </div>
         <div class="text-wrap">
-          <p class="app-description">Pesquisa orientada a entidades.</p>
+          <p class="app-description">Pesquisa Orientada a Entidades.</p>
         </div>
       </div>
     </div>
