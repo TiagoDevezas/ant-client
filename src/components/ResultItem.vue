@@ -15,18 +15,18 @@
     </div>
     <div class="result-snippet">
       <p v-for="attr in defaultAttributes">
-        <strong>{{ attr.label }}:</strong> {{ attr.value }}
+        <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{ attr.value }}</span>
       </p>
     </div>
   </div>
   <div class="result-more-data" :class="{ 'toggle': toggled }">
     <p v-for="attr in extraAttributes">
-      <strong>{{ attr.label }}:</strong> {{{ attr.value }}}
+      <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</span>
     </p>
     <div class="result-l2-attributes">
       <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
         <p v-for="attr in attrs">
-          <strong>{{ attr.label }}:</strong> {{ attr.value }}
+          <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{ attr.value }}</span>
         </p>
       </div>
     </div>
