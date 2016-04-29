@@ -3,53 +3,13 @@
   <div class="filter-wrapper">
       {{ setFilterFromUrl }}
       <ul class="result-filter">
-        <li>
+        <li v-for="eType in entityTypes">
           <a
-            v-link="{ name: 'search', query: { q: cleanQuery + entityTypes.all }}"
-            @click="setEntityType(entityTypes.all)"
-            :class="{ 'active': selectedEntityType === '' }"
-            >
-            Todos
-          </a>
-        </li>
-        <li>
-          <a 
-            v-link="{ name: 'search', query: { q: cleanQuery + entityTypes.funcionario }}"
-            @click="setEntityType(entityTypes.funcionario)"
-            :class="{ 'active': selectedEntityType === entityTypes.funcionario }"
-            class="{{ entityTypes.funcionario.split(':')[1] }}"
-            >
-            Funcionários
-          </a>
-        </li>
-        <li>
-          <a 
-            v-link="{ name: 'search', query: { q: cleanQuery + entityTypes.estudante }}"
-            @click="setEntityType(entityTypes.estudante)"
-            :class="{ 'active': selectedEntityType === entityTypes.estudante }"
-            class="{{ entityTypes.estudante.split(':')[1] }}"
-            >
-            Estudantes
-          </a>
-        </li>
-        <li>
-          <a 
-            v-link="{ name: 'search', query: { q: cleanQuery + entityTypes.sala }}"
-            @click="setEntityType(entityTypes.sala)"
-            :class="{ 'active': selectedEntityType === entityTypes.sala }"
-            class="{{ entityTypes.sala.split(':')[1] }}"
-            >
-            Salas
-          </a>
-        </li>
-        <li>
-          <a 
-            v-link="{ name: 'search', query: { q: cleanQuery + entityTypes.departamento }}"
-            @click="setEntityType(entityTypes.departamento)"
-            :class="{ 'active': selectedEntityType === entityTypes.departamento }"
-            class="{{ entityTypes.departamento.split(':')[1] }}"
-            >
-            Departamentos
+            v-link="{ name: 'search', query: { q: cleanQuery + eType.value }}"
+            @click="setEntityType(eType.value)"
+            :class="[eType.value.split(':')[1], { 'active': selectedEntityType === eType.value }]"
+          >
+          {{ eType.label }}
           </a>
         </li>
       </ul> 
@@ -63,17 +23,18 @@
     data () {
       return {
         entityTypes: {
-          all: '',
-          funcionario: ' tipoentidade:funcionário',
-          estudante: ' tipoentidade:estudante',
-          sala: ' tipoentidade:sala',
-          departamento: ' tipoentidade:departamento'
+          all: {value: '', label: 'Todos'},
+          funcionario: {value: ' tipoentidade:funcionário', label: 'Funcionário'},
+          estudante: {value: ' tipoentidade:estudante', label: 'Estudantes'},
+          sala: {value: ' tipoentidade:sala', label: 'Salas'},
+          departamento: {value: ' tipoentidade:departamento', label: 'Departamentos'}
         },
         selectedEntityType: ''
       }
     },
     methods: {
       setEntityType (type) {
+        this.queryParams = this.queryParams.replace(this.selectedEntityType, '')
         this.$set('selectedEntityType', type)
       }
     },
@@ -85,8 +46,8 @@
         let obj = this.entityTypes
         let objKey
         Object.keys(obj).forEach(key => {
-          if (this.queryParams.indexOf(obj[key]) > 0) {
-            objKey = obj[key]
+          if (this.queryParams.indexOf(obj[key].value) > 0) {
+            objKey = obj[key].value
           }
         })
         if (objKey) {
