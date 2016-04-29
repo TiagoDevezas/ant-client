@@ -18,6 +18,11 @@ Object.keys(config.entry).forEach(function (name, i) {
 config.output.publicPath = '/'
 
 config.plugins = (config.plugins || []).concat([
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: '"development"'
+    }
+  }),
   // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),

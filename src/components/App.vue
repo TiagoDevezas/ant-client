@@ -4,6 +4,16 @@
 	</div>
 </template>
 
+<script>
+export default {
+  data () {
+    return {
+      environment: process.env.NODE_ENV
+    }
+  }
+}
+</script>
+
 <style>
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 

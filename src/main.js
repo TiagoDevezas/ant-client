@@ -22,4 +22,8 @@ router.map({
   }
 })
 
+router.afterEach(function (transition) {
+  console.log('Successfully navigated to: ' + transition.to.path)
+})
+
 router.start(App, '#app')
