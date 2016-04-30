@@ -24,10 +24,13 @@
       return {
         entityTypes: {
           all: {value: '', label: 'Todos'},
-          funcionario: {value: ' tipoentidade:funcionário', label: 'Funcionário'},
-          estudante: {value: ' tipoentidade:estudante', label: 'Estudantes'},
-          sala: {value: ' tipoentidade:sala', label: 'Salas'},
-          departamento: {value: ' tipoentidade:departamento', label: 'Departamentos'}
+          funcionario: {value: this.setEntityValue('funcionário'), label: 'Funcionário'},
+          estudante: {value: this.setEntityValue('estudante'), label: 'Estudantes'},
+          sala: {value: this.setEntityValue('sala'), label: 'Salas'},
+          departamento: {value: this.setEntityValue('departamento'), label: 'Departamentos'},
+          noticia: {value: this.setEntityValue('noticia'), label: 'Notícias'},
+          curso: {value: this.setEntityValue('curso'), label: 'Cursos'},
+          cadeira: {value: this.setEntityValue('cadeira'), label: 'Cadeiras'}
         },
         selectedEntityType: ''
       }
@@ -36,6 +39,9 @@
       setEntityType (type) {
         this.queryParams = this.queryParams.replace(this.selectedEntityType, '')
         this.$set('selectedEntityType', type)
+      },
+      setEntityValue (entityType) {
+        return ' tipoentidade:' + entityType
       }
     },
     computed: {

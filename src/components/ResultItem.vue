@@ -1,6 +1,9 @@
 <template>
 <div class="result">
   <div class="result-body">
+    <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'" style="float: left;">
+      <img src="https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod={{ metadata.link.split('=')[1] }}" alt="" width="70%">  
+    </div>
     <div class="result-title">
       <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
       <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)" target="_blank">{{ metadata.description }}</a></h2>
@@ -15,7 +18,7 @@
     </div>
     <div class="result-snippet">
       <p v-for="attr in defaultAttributes">
-        <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{ attr.value }}</span>
+        <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</span>
       </p>
     </div>
   </div>
@@ -26,12 +29,12 @@
     <div class="result-l2-attributes">
       <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
         <p v-for="attr in attrs">
-          <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{ attr.value }}</span>
+          <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</span>
         </p>
       </div>
     </div>
   </div>
-  <div class="result-more" @click="toggleAccordion" v-if="extraAttributes.length">
+  <div class="result-more" @click="toggleAccordion" v-if="extraAttributes.length || levelTwoAttributes.length">
     <div class="more-icon">
       <i class="material-icons">{{ toggleIcon }}</i>
     </div>
