@@ -5,7 +5,7 @@
 // const JSON_SEARCH_URL = SEARCH_URL + '.json'
 // const METADATA_SEARCH_URL = SEARCH_URL + '/decorator/metadata.json'
 
-const API_URL = 'http://maltese.fe.up.pt/api/'
+const API_URL = 'http://ant.fe.up.pt/api/'
 const SEARCH_URL = API_URL + 'search'
 const JSON_SEARCH_URL = SEARCH_URL
 const METADATA_SEARCH_URL = SEARCH_URL + '/decorator/metadata'

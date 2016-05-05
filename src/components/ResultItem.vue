@@ -2,35 +2,30 @@
 <div class="result">
   <div class="result-body">
     <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'" style="float: left;">
-      <img src="https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod={{ metadata.link.split('=')[1] }}" alt="" width="70%">  
+      <img src="{{ metadata.metadata.decorations.photo }}" alt="" width="70%">  
     </div>
     <div class="result-title">
       <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
       <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)" target="_blank">{{ metadata.description }}</a></h2>
     </div>
     <div class="result-link">
-<!--       <span class="result-icon">
-        <a href="{{ metadata.link }}">
-          <img src="../assets/up.png" alt="UP Logo" width="16" height="16" class="result-icon-img">
-        </a>
-      </span> -->
       <span class="result-url">{{ metadata.link }}</span>
     </div>
     <div class="result-snippet">
-      <p v-for="attr in defaultAttributes">
-        <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</span>
-      </p>
+      <span v-for="attr in defaultAttributes">
+        <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+      </span>
     </div>
   </div>
   <div class="result-more-data" :class="{ 'toggle': toggled }">
-    <p v-for="attr in extraAttributes">
-      <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</span>
-    </p>
+    <span v-for="attr in extraAttributes">
+      <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+    </span>
     <div class="result-l2-attributes">
       <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
-        <p v-for="attr in attrs">
-          <span v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</span>
-        </p>
+        <span v-for="attr in attrs">
+          <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+        </span>
       </div>
     </div>
   </div>
@@ -82,7 +77,60 @@ export default {
         this.$http.post('http://ant.fe.up.pt/log/event/click', values, {emulateJSON: true})
         // console.log(values)
       }
-
+    },
+    filterByLabels (attrsArray, labelsToFilter) {
+      let filtered = []
+      let unfiltered = []
+      for (let j in attrsArray) {
+        for (let i in labelsToFilter) {
+          if (attrsArray[j].label === labelsToFilter[i]) {
+            attrsArray[j].order = i
+            filtered.push(attrsArray[j])
+          }
+        }
+      }
+      unfiltered = attrsArray.filter(function (obj) {
+        return filtered.indexOf(obj) === -1
+      })
+      filtered.sort(function (a, b) {
+        return a.order - b.order
+      })
+      this.$set('defaultAttributes', filtered)
+      this.$set('extraAttributes', unfiltered)
+    },
+    setVisibleAttrs (entityType) {
+      let attrsArray = this.metadata.metadata.decorations.attributes
+      let labelsToFilter = []
+      switch (entityType) {
+        case 'Funcionário':
+          labelsToFilter = ['Faculdade', 'Estado', 'Sala']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+        case 'Estudante':
+          labelsToFilter = ['Faculdade']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+        case 'Sala':
+          labelsToFilter = ['Faculdade', 'Edifício', 'Piso', 'Descrição']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+        case 'Departamento':
+          labelsToFilter = ['Faculdade', 'Responsável']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+        case 'Notícia':
+          labelsToFilter = ['Faculdade', 'Data de Publicação', 'Conteúdo']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+        case 'Curso':
+          labelsToFilter = ['Faculdade', 'Área Científica', 'Duração']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+        case 'Cadeira':
+          labelsToFilter = ['Faculdade', 'Ativo', 'Área Científica', 'Professor']
+          this.filterByLabels(attrsArray, labelsToFilter)
+          break
+      }
     }
   },
   computed: {
@@ -91,15 +139,17 @@ export default {
     },
     toggleIcon () {
       return !this.toggled ? 'keyboard_arrow_down' : 'keyboard_arrow_up'
+    },
+    getPicture () {
+      return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
     }
   },
   ready () {
-    this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes.slice(0, 3))
-    this.$set('extraAttributes', this.metadata.metadata.decorations.attributes.slice(4))
+    this.setVisibleAttrs(this.metadata.type.label)
+    // console.log(this.filterByLabels(this.metadata.metadata.decorations.attributes, ['Faculdade']))
+    // this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes)
+    // this.$set('extraAttributes', this.metadata.metadata.decorations.attributes)
     this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
-    // this.metadata.metadata.decorations.attributes.forEach(obj => {
-    //   // console.log(obj.label)
-    // })
   }
 }
 </script>

@@ -24,7 +24,7 @@
       return {
         entityTypes: {
           all: {value: '', label: 'Todos'},
-          funcionario: {value: this.setEntityValue('funcionário'), label: 'Funcionário'},
+          funcionario: {value: this.setEntityValue('funcionário'), label: 'Funcionários'},
           estudante: {value: this.setEntityValue('estudante'), label: 'Estudantes'},
           sala: {value: this.setEntityValue('sala'), label: 'Salas'},
           departamento: {value: this.setEntityValue('departamento'), label: 'Departamentos'},
