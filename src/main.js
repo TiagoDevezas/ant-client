@@ -5,6 +5,7 @@ import VueResource from 'vue-resource'
 import App from './components/App'
 import MainView from './components/MainView'
 import SearchView from './components/SearchView'
+import AboutView from './components/AboutView'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -19,11 +20,16 @@ router.map({
   '/search': {
     name: 'search',
     component: SearchView
+  },
+  '/about': {
+    name: 'about',
+    component: AboutView
   }
 })
 
 router.afterEach(function (transition) {
-  console.log('Successfully navigated to: ' + transition.to.path)
+  window.ga('send', 'pageview', { page: transition.to.path })
+  // console.log('Successfully navigated to: ' + transition.to.path)
 })
 
 router.start(App, '#app')

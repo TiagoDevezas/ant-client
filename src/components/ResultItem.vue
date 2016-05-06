@@ -65,7 +65,7 @@ export default {
         clicked_result_uri: this.metadata.uri.toString(),
         client_user_agent: window.navigator.userAgent.toString(),
         client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
-        is_test: 'true'
+        Referer: document.referrer
       }
       if (!this.clicked && arguments.length === 0) {
         // console.log(values)

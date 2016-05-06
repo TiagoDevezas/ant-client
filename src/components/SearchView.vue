@@ -1,4 +1,5 @@
 <template>
+  <about-link link-text="Sobre" link-path="/about"></about-link>
   <div id="search">
   <div id="header-wrapper">
     <div id="header">
@@ -46,6 +47,7 @@ import ResultCounter from './ResultCounter'
 import ResultPaginator from './ResultGPaginator'
 import ResultFilter from './ResultFilter'
 import ResultEmpty from './ResultEmpty'
+import AboutLink from './AboutLink'
 
 export default {
   components: {
@@ -54,7 +56,8 @@ export default {
     ResultCounter,
     ResultPaginator,
     ResultFilter,
-    ResultEmpty
+    ResultEmpty,
+    AboutLink
   },
 
   data () {

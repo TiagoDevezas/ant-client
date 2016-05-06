@@ -1,4 +1,5 @@
 <template>
+  <about-link link-text="Sobre" link-path="/about"></about-link>
   <div class="wrapper">
     <div class="content-wrap">
       <div class="content-container">
@@ -14,7 +15,7 @@
           <search-form is-focused="true"></search-form>
         </div>
         <div class="text-wrap">
-          <p class="app-description">Pesquisa Orientada a Entidades.</p>
+          <p class="app-description">Pesquisa Orientada a Entidades da Universidade do Porto.</p>
         </div>
       </div>
     </div>
@@ -23,12 +24,14 @@
 
 <script>
 import SearchForm from './SearchForm'
+import AboutLink from './AboutLink'
 
 export default {
   name: 'MainView',
 
   components: {
-    SearchForm
+    SearchForm,
+    AboutLink
   },
   ready () {
     document.title = 'ANT - Pesquisa orientada a entidades'
@@ -61,7 +64,7 @@ export default {
   .logo-wrap, .text-wrap {
     position: relative;
     display: block;
-    max-width: 300px;
+    max-width: 500px;
     margin: auto;
     margin-bottom: 0.8em;
   }
