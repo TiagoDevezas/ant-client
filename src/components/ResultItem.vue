@@ -69,12 +69,12 @@ export default {
       }
       if (!this.clicked && arguments.length === 0) {
         // console.log(values)
-        this.$http.post('http://ant.fe.up.pt/log/event/click', values, {emulateJSON: true})
+        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
         this.clicked = true
       }
       if (arguments.length > 0 && arguments[0]) {
         values['target_url'] = arguments[0]
-        this.$http.post('http://ant.fe.up.pt/log/event/click', values, {emulateJSON: true})
+        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
         // console.log(values)
       }
     },
@@ -107,7 +107,7 @@ export default {
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Estudante':
-          labelsToFilter = ['Faculdade']
+          labelsToFilter = ['Faculdade', 'Código']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Sala':
@@ -303,6 +303,18 @@ export default {
 }
 .tag-funcionário {
   background: #97cd76;
+  color: white;
+}
+.tag-notícia {
+  background: #3288bd;
+  color: white;
+}
+.tag-curso {
+  background: #66c2a5;
+  color: white;
+}
+.tag-cadeira {
+  background: #f46d43;
   color: white;
 }
 </style>

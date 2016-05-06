@@ -129,4 +129,16 @@
     color: #69707a !important;
     border-bottom: solid 3px #69707a;
   }
+  .result-filter a.active.noticia {
+    color: #3288bd !important;
+    border-bottom: solid 3px #3288bd;
+  }
+  .result-filter a.active.curso {
+    color: #66c2a5 !important;
+    border-bottom: solid 3px #66c2a5;
+  }
+  .result-filter a.active.cadeira {
+    color: #f46d43 !important;
+    border-bottom: solid 3px #f46d43;
+  }
 </style>
