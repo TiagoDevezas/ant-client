@@ -28,7 +28,9 @@ router.map({
 })
 
 router.afterEach(function (transition) {
-  window.ga('send', 'pageview', { page: transition.to.path })
+  if (window.ga) {
+    window.ga('send', 'pageview', { page: transition.to.path })
+  }
   // console.log('Successfully navigated to: ' + transition.to.path)
 })
 
