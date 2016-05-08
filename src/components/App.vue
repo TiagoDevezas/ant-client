@@ -22,6 +22,14 @@ export default {
                     'ga("send", "pageview");'
       document.querySelector('body').appendChild(script)
     }
+    var openSearchXML = require('file?name=[name].[ext]!../assets/opensearch.xml')
+
+    const openSearchLink = document.createElement('link')
+    openSearchLink.href = openSearchXML
+    openSearchLink.rel = 'search'
+    openSearchLink.title = 'ANT'
+    openSearchLink.type = 'application/opensearchdescription+xml'
+    document.head.appendChild(openSearchLink)
   }
 }
 </script>
