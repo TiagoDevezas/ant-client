@@ -3,12 +3,12 @@
   <div class="result-body">
     <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'" style="float: left;">
       <div class="image-wrapper" v-if="metadata.metadata.decorations.photo">
-        <img src="{{ metadata.metadata.decorations.photo }}" alt="" width="70%">  
+        <img :src="metadata.metadata.decorations.photo" alt="" width="70%">  
       </div>
     </div>
     <div class="result-title">
       <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
-      <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)" target="_blank">{{ metadata.description }}</a></h2>
+      <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
     </div>
     <div class="result-link">
       <span class="result-url">{{ metadata.link }}</span>

@@ -1,6 +1,6 @@
 <template>
 <div id="search-form">  
-  <form id="search-form-home" @submit="showResults" :class="{ 'focused': formFocused, 'unfocused': !formFocused }">
+  <form id="search-form-home" @submit="showResults" :class="['animated', { 'focused': formFocused, 'unfocused': !formFocused, 'shake': shakeForm }]">
     <input id="search-input-home" type="text" v-model="queryParams" @focus="highlightForm" @blur="unhighlightForm" placeholder="Introduza a sua pesquisa">
     <input id="search-button-home" :class="['material-icons', {'btn-highlight': buttonFocused}]" tabindex="2" value="search" type="submit">
   </form>
@@ -14,28 +14,40 @@ export default {
   data () {
     return {
       formFocused: false,
-      buttonFocused: false
+      buttonFocused: false,
+      shakeForm: false
     }
   },
-
   methods: {
     showResults () {
       this.$el.childNodes[1][0].blur()
       this.formFocused = false
       this.buttonFocused = false
-      this.$route.router.go({
-        name: 'search',
-        query: {q: this.queryParams}
-      })
+      this.shakeForm = false
+      if (this.queryParams.length) {
+        this.$route.router.go({
+          name: 'search',
+          query: {q: this.queryParams}
+        })
+      } else {
+        this.$el.childNodes[1][0].focus()
+        this.$set('shakeForm', true)
+        this.removeShakeClass()
+      }
     },
     highlightForm () {
       this.formFocused = true
     },
     unhighlightForm () {
       this.formFocused = false
+    },
+    removeShakeClass () {
+      const that = this
+      setTimeout(function () {
+        that.shakeForm = false
+      }, 2000)
     }
   },
-
   watch: {
     'queryParams': function (val, oldVal) {
       if (val !== oldVal && val.length > 0 && this.formFocused) {
@@ -43,9 +55,11 @@ export default {
       } else {
         this.buttonFocused = false
       }
+    },
+    'shakeForm': function (val) {
+      console.log(val)
     }
   },
-
   ready () {
     if (this.isFocused) {
       this.$el.childNodes[1][0].focus()
@@ -55,6 +69,21 @@ export default {
 </script>
 
 <style>
+  .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+
+  @keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+    20%, 40%, 60%, 80% {transform: translateX(10px);}
+  }
+
+  .shake {
+    animation-name: shake;
+  }
+
   #search-form-home, .unfocused {
     font-size: 1.14em;
     padding: 0.5em 3.5em 0.5em 0.75em;
