@@ -19,7 +19,8 @@ let t0
 store.getEntities = (context, startPage) => {
   const query = context.$route.query.q
   const start = context.$route.query.start
-  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {q: query, start: start}})
+  const entityType = context.$route.query.tipoentidade
+  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {q: query, tipoentidade: entityType, start: start}})
 }
 store.getEntityMetada = (context, item) => {
   const entity = item.uri.split('#')[1]

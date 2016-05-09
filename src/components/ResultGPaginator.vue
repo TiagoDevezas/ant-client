@@ -3,17 +3,17 @@
   <div class="pagination-wrapper">  
     <ul class="page-navigation">
       <li v-if="currPage > 1">
-        <a v-link="{ name: 'search', query: { q: this.$route.query.q, start: this.startPage - 10 }}">
+        <a v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: this.startPage - 10 }}">
           <i class="material-icons">chevron_left</i>
         </a>
       </li>
       <li v-for="page in getPages">
-        <a :class="{'active': isStartPage(this.page)}" v-link="{ name: 'search', query: { q: this.$route.query.q, start: this.page * 10 - 10 }}">
+        <a :class="{'active': isStartPage(this.page)}" v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: this.page * 10 - 10 }}">
           {{ page }}
         </a>
       </li>
       <li v-if="currPage < numPages">
-        <a v-link="{ name: 'search', query: { q: this.$route.query.q, start: (this.startPage + 10) }}">
+        <a v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: (this.startPage + 10) }}">
           <i class="material-icons">chevron_right</i>
         </a>
       </li>

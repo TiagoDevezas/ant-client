@@ -2,7 +2,9 @@
 <div class="result">
   <div class="result-body">
     <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'" style="float: left;">
-      <img src="{{ metadata.metadata.decorations.photo }}" alt="" width="70%">  
+      <div class="image-wrapper" v-if="metadata.metadata.decorations.photo">
+        <img src="{{ metadata.metadata.decorations.photo }}" alt="" width="70%">  
+      </div>
     </div>
     <div class="result-title">
       <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>

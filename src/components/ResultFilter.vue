@@ -1,13 +1,12 @@
 <template>
+{{ setFilterFromUrl }}
 <div id="filter-nav">
   <div class="filter-wrapper">
-      {{ setFilterFromUrl }}
       <ul class="result-filter">
         <li v-for="eType in entityTypes">
           <a
-            v-link="{ name: 'search', query: { q: cleanQuery + eType.value }}"
-            @click="setEntityType(eType.value)"
-            :class="[eType.value.split(':')[1], { 'active': selectedEntityType === eType.value }]"
+            v-link="{ name: 'search', query: { q: queryParams, tipoentidade: eType.value !== 'todos' ? eType.value : null }}"
+            :class="[eType.value, { 'active': selectedEntityType === eType.value }]"
           >
           {{ eType.label }}
           </a>
@@ -23,43 +22,25 @@
     data () {
       return {
         entityTypes: {
-          all: {value: '', label: 'Todos'},
-          funcionario: {value: this.setEntityValue('funcionário'), label: 'Funcionários'},
-          estudante: {value: this.setEntityValue('estudante'), label: 'Estudantes'},
-          sala: {value: this.setEntityValue('sala'), label: 'Salas'},
-          departamento: {value: this.setEntityValue('departamento'), label: 'Departamentos'},
-          noticia: {value: this.setEntityValue('noticia'), label: 'Notícias'},
-          curso: {value: this.setEntityValue('curso'), label: 'Cursos'},
-          cadeira: {value: this.setEntityValue('cadeira'), label: 'Cadeiras'}
+          all: {value: 'todos', label: 'Todos'},
+          funcionario: {value: 'funcionário', label: 'Funcionários'},
+          estudante: {value: 'estudante', label: 'Estudantes'},
+          sala: {value: 'sala', label: 'Salas'},
+          departamento: {value: 'departamento', label: 'Departamentos'},
+          noticia: {value: 'noticia', label: 'Notícias'},
+          curso: {value: 'curso', label: 'Cursos'},
+          cadeira: {value: 'cadeira', label: 'Cadeiras'}
         },
         selectedEntityType: ''
       }
     },
-    methods: {
-      setEntityType (type) {
-        this.queryParams = this.queryParams.replace(this.selectedEntityType, '')
-        this.$set('selectedEntityType', type)
-      },
-      setEntityValue (entityType) {
-        return ' tipoentidade:' + entityType
-      }
-    },
     computed: {
-      cleanQuery () {
-        return this.queryParams.replace(this.selectedEntityType, '')
-      },
       setFilterFromUrl () {
-        let obj = this.entityTypes
-        let objKey
-        Object.keys(obj).forEach(key => {
-          if (this.queryParams.indexOf(obj[key].value) > 0) {
-            objKey = obj[key].value
-          }
-        })
-        if (objKey) {
-          this.setEntityType(objKey)
+        if (this.$route.query.tipoentidade) {
+          const type = this.$route.query.tipoentidade
+          this.$set('selectedEntityType', type)
         } else {
-          this.setEntityType('')
+          this.$set('selectedEntityType', 'todos')
         }
       }
     }
@@ -109,7 +90,7 @@
     outline: none;
   }
 
-  .result-filter a.active {
+  .result-filter a.active.todos {
     color: #de5833 !important;
     border-bottom: solid 3px #de5833;
   }
