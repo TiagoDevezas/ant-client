@@ -27,7 +27,7 @@
           estudante: {value: 'estudante', label: 'Estudantes'},
           sala: {value: 'sala', label: 'Salas'},
           departamento: {value: 'departamento', label: 'Departamentos'},
-          noticia: {value: 'noticia', label: 'Notícias'},
+          noticia: {value: 'notícia', label: 'Notícias'},
           curso: {value: 'curso', label: 'Cursos'},
           cadeira: {value: 'cadeira', label: 'Cadeiras'}
         },
@@ -110,7 +110,7 @@
     color: #69707a !important;
     border-bottom: solid 3px #69707a;
   }
-  .result-filter a.active.noticia {
+  .result-filter a.active.notícia {
     color: #3288bd !important;
     border-bottom: solid 3px #3288bd;
   }

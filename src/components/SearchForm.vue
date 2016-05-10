@@ -1,6 +1,6 @@
 <template>
 <div id="search-form">  
-  <form id="search-form-home" @submit="showResults" :class="['animated', { 'focused': formFocused, 'unfocused': !formFocused, 'shake': shakeForm }]">
+  <form id="search-form-home" @submit.prevent="showResults" :class="['animated', { 'focused': formFocused, 'unfocused': !formFocused, 'shake': shakeForm }]">
     <input id="search-input-home" type="text" v-model="queryParams" @focus="highlightForm" @blur="unhighlightForm" placeholder="Introduza a sua pesquisa">
     <input id="search-button-home" :class="['material-icons', {'btn-highlight': buttonFocused}]" tabindex="2" value="search" type="submit">
   </form>
@@ -55,9 +55,6 @@ export default {
       } else {
         this.buttonFocused = false
       }
-    },
-    'shakeForm': function (val) {
-      console.log(val)
     }
   },
   ready () {

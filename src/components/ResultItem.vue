@@ -3,7 +3,7 @@
   <div class="result-body">
     <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'" style="float: left;">
       <div class="image-wrapper" v-if="metadata.metadata.decorations.photo">
-        <img :src="metadata.metadata.decorations.photo" alt="" width="70%">  
+        <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="70%">  
       </div>
     </div>
     <div class="result-title">
@@ -144,6 +144,9 @@ export default {
     },
     getPicture () {
       return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
+    },
+    setAltText () {
+      return 'Foto de ' + this.metadata.description
     }
   },
   ready () {
@@ -235,7 +238,7 @@ export default {
   margin-top: 0;
 }
 .result-more-data.toggle {
-  max-height: 9999px;
+  max-height: 1000px;
 }
 .result-more {
   border-top: 1px solid #ebebeb;

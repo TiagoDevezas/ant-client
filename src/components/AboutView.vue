@@ -8,7 +8,7 @@
     <h1>Colaboração</h1>
     <p>Se pertences à Universidade do Porto e pretendes colaborar no projeto ANT para desenvolver competências na área da recuperação de informação, em particular da pesquisa orientada a entidades, entra em contacto connosco.</p>
 
-    <p>Podes fazê-lo via <a href="/contact">e-mail</a>, ou pessoalmente no Laboratório de Sistemas de Informação, que fica na sala <a href="#!/search?q=i123">i123</a> do <a href="#!/search?q=departamento+de+engenharia+inform%C3%A1tica">Departamento de Engenharia Informática</a> — pergunta pelo <a href="#!/search?q=jos%C3%A9+devezas+funcion%C3%A1rio">José Devezas</a> ou pelo <a href="#!/search?q=s%C3%A9rgio+nunes+funcion%C3%A1rio">Sérgio Nunes</a>.</p>
+    <p>Podes fazê-lo via e-mail, ou pessoalmente no Laboratório de Sistemas de Informação, que fica na sala <a v-link="{name: 'search', query: {q: 'i123'}}">i123</a> do <a v-link="{name: 'search', query: {q: 'departamento de engenharia informática'}}">Departamento de Engenharia Informática</a> — pergunta pelo <a v-link="{name: 'search', query: {q: 'josé devezas funcionário'}}">José Devezas</a> ou pelo <a v-link="{name: 'search', query: {q: 'sérgio nunes funcionário'}}">Sérgio Nunes</a>.</p>
 
     <h1>Contactos</h1>
     <address>
@@ -29,15 +29,15 @@
 
     <h1>Agradecimentos</h1>
     <dl>
-      <dt><a href="#!/search?q=tiago+devezas">Tiago Devezas</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'tiago devezas'}}">Tiago Devezas</a></dt>
       <dd>Front-End Development</dd>
-      <dt><a href="#!/search?q=no%C3%A9mia+moreira">Noémia Moreira</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'noémia moreira'}}">Noémia Moreira</a></dt>
       <dd>UX Analyst</dd>
     </dl>
     <dl>
-      <dt><a href="#!/search?q=ricardo+carvalho+amorim">Ricardo Amorim</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'ricardo carvalho amorim'}}">Ricardo Amorim</a></dt>
       <dd>Android Development</dd>
-      <dt><a href="#!/search?q=ana+de+lurdes+rocha+reis">Ana Rocha Reis</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'ana de lurdes rocha reis'}}">Ana Rocha Reis</a></dt>
       <dd>Android Design</dd>
     </dl>
 
