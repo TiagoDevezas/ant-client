@@ -238,7 +238,7 @@ export default {
   margin-top: 0;
 }
 .result-more-data.toggle {
-  max-height: 1000px;
+  max-height: 3000px;
 }
 .result-more {
   border-top: 1px solid #ebebeb;

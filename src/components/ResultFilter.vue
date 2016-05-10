@@ -3,7 +3,7 @@
 <div id="filter-nav">
   <div class="filter-wrapper">
       <ul class="result-filter">
-        <li v-for="eType in entityTypes">
+        <li v-for="eType in entityTypes" track-by="$index">
           <a
             v-link="{ name: 'search', query: { q: queryParams, tipoentidade: eType.value !== 'todos' ? eType.value : null }}"
             :class="[eType.value, { 'active': selectedEntityType === eType.value }]"
@@ -18,19 +18,19 @@
 
 <script>
   export default {
-    props: ['queryParams'],
+    props: ['queryParams', 'entityTypes'],
     data () {
       return {
-        entityTypes: {
-          all: {value: 'todos', label: 'Todos'},
-          funcionario: {value: 'funcionário', label: 'Funcionários'},
-          estudante: {value: 'estudante', label: 'Estudantes'},
-          sala: {value: 'sala', label: 'Salas'},
-          departamento: {value: 'departamento', label: 'Departamentos'},
-          noticia: {value: 'notícia', label: 'Notícias'},
-          curso: {value: 'curso', label: 'Cursos'},
-          cadeira: {value: 'cadeira', label: 'Cadeiras'}
-        },
+        // entityTypes: {
+        //   all: {value: 'todos', label: 'Todos'},
+        //   funcionário: {value: 'funcionário', label: 'Funcionários'},
+        //   estudante: {value: 'estudante', label: 'Estudantes'},
+        //   sala: {value: 'sala', label: 'Salas'},
+        //   departamento: {value: 'departamento', label: 'Departamentos'},
+        //   notícia: {value: 'notícia', label: 'Notícias'},
+        //   curso: {value: 'curso', label: 'Cursos'},
+        //   cadeira: {value: 'cadeira', label: 'Cadeiras'}
+        // },
         selectedEntityType: ''
       }
     },

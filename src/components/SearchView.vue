@@ -10,7 +10,7 @@
         <search-form :query-params="queryParams.q" class="search-top"></search-form>
       </div>
     </div>
-    <result-filter :query-params="queryParams.q"></result-filter>
+    <result-filter :query-params="queryParams.q" :entity-types="getEntityTypes"></result-filter>
   </div>
   <div class="content-wrap-results">
     <div class="cw">
@@ -71,6 +71,22 @@ export default {
         start: ''
       },
       timeToSearch: 0
+    }
+  },
+  computed: {
+    getEntityTypes () {
+      let entityTypes = []
+      entityTypes.push({value: 'todos', label: 'Todos'})
+      const facetsCount = this.data.metadata.facetsCount
+      for (let key in facetsCount) {
+        if (facetsCount[key] > 0) {
+          entityTypes.push({value: key, count: facetsCount[key], label: key.charAt(0).toUpperCase() + key.slice(1) + 's'})
+        }
+      }
+      entityTypes.sort(function (a, b) {
+        return b.count - a.count
+      })
+      return entityTypes
     }
   },
   route: {
