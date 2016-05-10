@@ -45,7 +45,7 @@ export default {
       const that = this
       setTimeout(function () {
         that.shakeForm = false
-      }, 2000)
+      }, 1500)
     }
   },
   watch: {

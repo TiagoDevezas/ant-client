@@ -5,7 +5,7 @@
     <div id="header">
       <div class="header-search-wrap">
         <a v-link="'/'" id="header-logo-wrap">
-          <span class="header-logo">ANT Pesquisa Orientada a Entidades</span>
+          <span class="header-logo">ANT Pesquisa de Informação na Universidade do Porto</span>
         </a>
         <search-form :query-params="queryParams.q" class="search-top"></search-form>
       </div>
@@ -138,7 +138,7 @@ export default {
     display: block;
   }
   .content-wrap-results {
-    margin: 0 auto;
+    margin: 0 auto 40px auto;
     position: relative;
     /*background-color: #fefefe;*/
   }

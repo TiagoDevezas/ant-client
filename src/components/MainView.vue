@@ -5,7 +5,7 @@
       <div class="content-container">
         <div class="logo-wrap">
           <a v-link="'/'" id="logo-link">
-            ANT Pesquisa Orientada a Entidades
+            ANT Pesquisa de Informação na Universidade do Porto
           </a>
         </div>
         <div class="text-wrap">
@@ -15,7 +15,7 @@
           <search-form is-focused="true"></search-form>
         </div>
         <div class="text-wrap">
-          <p class="app-description">Pesquisa Orientada a Entidades da Universidade do Porto.</p>
+          <p class="app-description">Pesquisa de Informação na Universidade do Porto.</p>
         </div>
       </div>
     </div>
@@ -28,13 +28,12 @@ import AboutLink from './AboutLink'
 
 export default {
   name: 'MainView',
-
   components: {
     SearchForm,
     AboutLink
   },
   ready () {
-    document.title = 'ANT - Pesquisa orientada a entidades'
+    document.title = 'ANT - Pesquisa de Informação na Universidade do Porto'
   }
 }
 </script>

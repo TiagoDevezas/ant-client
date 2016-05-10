@@ -41,7 +41,7 @@
       <dd>Android Design</dd>
     </dl>
 
-    <p><em><a href="http://ant.fe.up.pt/dev">Versão de desenvolvimento</a></em></p>
+    <p class="dev-link"><em><a href="http://ant.fe.up.pt/dev">Versão de desenvolvimento</a></em></p>
   </div>
 </template>
 
@@ -95,6 +95,10 @@
   #about-wrapper a {
     text-decoration: none;
     color: #de5833;
+  }
+
+  .dev-link {
+    margin: 40px 0;
   }
   
 </style>
