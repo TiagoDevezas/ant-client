@@ -25,7 +25,7 @@ export default {
       this.buttonFocused = false
       this.shakeForm = false
       if (this.queryParams.length) {
-        this.$route.router.go({
+        this.$router.go({
           name: 'search',
           query: {q: this.queryParams}
         })

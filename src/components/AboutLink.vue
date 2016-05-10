@@ -1,6 +1,6 @@
 <template>
   <div id="floating-link">
-    <a href="#!{{ linkPath }}">{{ linkText }}</a>
+    <a v-link="{name: linkPath}">{{ linkText }}</a>
   </div>
 </template>
 

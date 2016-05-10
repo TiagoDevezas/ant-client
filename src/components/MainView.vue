@@ -1,10 +1,10 @@
 <template>
-  <about-link link-text="Sobre" link-path="/about"></about-link>
+  <about-link link-text="Sobre" link-path="about"></about-link>
   <div class="wrapper">
     <div class="content-wrap">
       <div class="content-container">
         <div class="logo-wrap">
-          <a v-link="'/'" id="logo-link">
+          <a v-link="{name: 'home'}" id="logo-link">
             ANT Pesquisa de Informação na Universidade do Porto
           </a>
         </div>

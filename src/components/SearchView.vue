@@ -1,5 +1,5 @@
 <template>
-  <about-link link-text="Sobre" link-path="/about"></about-link>
+  <about-link link-text="Sobre" link-path="about"></about-link>
   <div id="search">
   <div id="header-wrapper">
     <div id="header">

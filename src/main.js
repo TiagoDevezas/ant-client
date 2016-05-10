@@ -10,7 +10,7 @@ import AboutView from './components/AboutView'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-export var router = new VueRouter()
+export var router = new VueRouter({history: true})
 
 router.map({
   '/': {
