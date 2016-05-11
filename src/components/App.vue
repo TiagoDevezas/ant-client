@@ -43,7 +43,7 @@ html {
 body {
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 100%;
-  background-color: #f7f7f7;
+  background-color: #fff;
   padding: 0;
   border: 0;
   margin: 0;

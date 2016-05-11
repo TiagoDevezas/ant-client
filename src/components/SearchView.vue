@@ -108,7 +108,7 @@ export default {
   }
   #header-wrapper {
     box-shadow: 0 1px 0 rgba(0,0,0,0.15);
-    background-color: #fff;
+    background-color: #f7f7f7;
     padding: 16px 0 0;
     position: relative;
     z-index: 15;
@@ -161,7 +161,7 @@ export default {
   .cw {
     position: relative;
     padding: 0 7px;
-    max-width: 960px;
+    max-width: 800px;
     margin-left: 0;
     margin-right: auto;
   }

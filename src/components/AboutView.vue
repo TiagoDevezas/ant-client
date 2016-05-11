@@ -94,7 +94,7 @@
 
   #about-wrapper a {
     text-decoration: none;
-    color: #de5833;
+    color: #1a0dab;
   }
 
   .dev-link {

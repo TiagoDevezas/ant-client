@@ -93,7 +93,7 @@ export default {
     border: 1px solid #d0d0d0;
   }
   #search-form-home.focused {
-    border: 1px solid #d9230f;
+    border: 1px solid #4285f4;
   }
   #search-input-home {
     font-size: 1.1em;
@@ -157,12 +157,12 @@ export default {
   }
 
   #search-button-home:hover, .btn-highlight {
-    background: #d9230f !important;
+    background: #4285f4 !important;
     color: #ffffff !important;
   }
 
   .search-top #search-form-home {
-    background-color: #f7f7f7;
+    background-color: #fff;
     height: 38px;
     padding-left: 9px;
     font-size: 1em;

@@ -1,9 +1,9 @@
 <template>
 <div class="result">
   <div class="result-body">
-    <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'" style="float: left;">
-      <div class="image-wrapper" v-if="metadata.metadata.decorations.photo">
-        <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="70%">  
+    <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
+      <div class="image-wrapper" v-if="metadata.metadata.decorations.photo" style="float: left; width: 100px;">
+        <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="90%">  
       </div>
     </div>
     <div class="result-title">
@@ -171,7 +171,7 @@ export default {
   margin-bottom: 0.5em;
   position: relative;
   word-wrap: break-word;
-  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+  /*box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);*/
   background-color: #fff;
   /*cursor: pointer;*/
 }
@@ -199,11 +199,15 @@ export default {
 
 .result-title h2 a {
   text-decoration: none;
-  color: #333;
+  color: #1a0dab;
 }
 
 .result-title h2 a:hover {
   text-decoration: underline;
+}
+
+.result-title h2 a:visited {
+  color: #609;
 }
 
 .result-snippet, .result-more-data {
@@ -212,6 +216,11 @@ export default {
   line-height: 1.38;
   margin: 0 0 0.1em;
 }
+
+.result-snippet p {
+  margin: 5px 0;
+}
+
 .result-icon {
   overflow: hidden;
   display: inline-block;
@@ -241,7 +250,7 @@ export default {
   max-height: 3000px;
 }
 .result-more {
-  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
   cursor: pointer;
   height: 0px;
   margin-bottom: -0.5em;
@@ -272,7 +281,7 @@ export default {
   color: #777;
 }
 .more-text {
-  top: 4.5px;
+  top: 7px;
   left: 20px;
   right: 0;
   text-align: left;

@@ -80,9 +80,9 @@
     margin: 0;
     position: relative;
     word-wrap: break-word;
-    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    /*box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);*/
     background-color: #fff;
-    border: 1px solid #dbdbdb;
+    /*border: 1px solid #dbdbdb;*/
   }
 
   .page-navigation {
@@ -97,7 +97,7 @@
 
   .page-navigation li a {
     text-decoration: none;
-    color: #d9230f;
+    color: #1a0dab;
     font-size: 1em;
     padding: .5em;
   }
