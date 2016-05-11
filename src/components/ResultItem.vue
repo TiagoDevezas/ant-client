@@ -1,24 +1,28 @@
 <template>
 <div class="result">
   <div class="result-body">
-    <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
-      <div class="image-wrapper" v-if="metadata.metadata.decorations.photo" style="float: left; width: 100px;">
-        <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="90%">  
+    <div class="result-right">
+      <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
+        <div class="image-wrapper" v-if="metadata.metadata.decorations.photo" style="float: left; width: 75px;">
+          <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="90%">  
+        </div>
       </div>
     </div>
-    <div class="result-title">
-      <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
-      <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
+    <div class="result-left">
+      <div class="result-title">
+         <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
+         <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
+       </div>
+       <div class="result-link">
+         <span class="result-url">{{ metadata.link }}</span>
+       </div>
+       <div class="result-snippet">
+         <span v-for="attr in defaultAttributes">
+           <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+         </span>
+       </div>
+     </div>     
     </div>
-    <div class="result-link">
-      <span class="result-url">{{ metadata.link }}</span>
-    </div>
-    <div class="result-snippet">
-      <span v-for="attr in defaultAttributes">
-        <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
-      </span>
-    </div>
-  </div>
   <div class="result-more-data" :class="{ 'toggle': toggled }">
     <span v-for="attr in extraAttributes">
       <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
@@ -175,9 +179,18 @@ export default {
   background-color: #fff;
   /*cursor: pointer;*/
 }
+
+.result-left: {
+  width: 100%;
+}
 /*.result:hover {
   background-color: #f7f7f7;
 }*/
+.result-body {
+  display: flex;
+  flex-direction: row;
+}
+
 .result-title {
   position: relative;
   overflow: hidden;
