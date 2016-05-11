@@ -97,7 +97,7 @@
 
   .page-navigation li a {
     text-decoration: none;
-    color: #1a0dab;
+    color: #699EF6;
     font-size: 1em;
     padding: .5em;
   }

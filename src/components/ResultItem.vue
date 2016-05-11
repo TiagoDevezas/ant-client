@@ -1,14 +1,14 @@
 <template>
 <div class="result">
   <div class="result-body">
-    <div class="result-right">
+    <div class="result-left">
       <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
         <div class="image-wrapper" v-if="metadata.metadata.decorations.photo" style="float: left; width: 75px;">
           <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="90%">  
         </div>
       </div>
     </div>
-    <div class="result-left">
+    <div class="result-right" :class="{'pad-left': metadata.metadata.decorations.photo}">
       <div class="result-title">
          <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
          <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
@@ -17,24 +17,25 @@
          <span class="result-url">{{ metadata.link }}</span>
        </div>
        <div class="result-snippet">
+         <p>{{ metadata.sources.join(', ') }}</p>
          <span v-for="attr in defaultAttributes">
            <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
          </span>
        </div>
+        <div class="result-more-data" :class="{ 'toggle': toggled }">
+          <span v-for="attr in extraAttributes">
+            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+          </span>
+          <div class="result-l2-attributes">
+            <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
+              <span v-for="attr in attrs">
+                <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+              </span>
+            </div>
+          </div>
+        </div>
      </div>     
     </div>
-  <div class="result-more-data" :class="{ 'toggle': toggled }">
-    <span v-for="attr in extraAttributes">
-      <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
-    </span>
-    <div class="result-l2-attributes">
-      <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
-        <span v-for="attr in attrs">
-          <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
-        </span>
-      </div>
-    </div>
-  </div>
   <div class="result-more" @click="toggleAccordion" v-if="extraAttributes.length || levelTwoAttributes.length">
     <div class="more-icon">
       <i class="material-icons">{{ toggleIcon }}</i>
@@ -88,6 +89,7 @@ export default {
       let filtered = []
       let unfiltered = []
       for (let j in attrsArray) {
+        if (attrsArray[j].value.constructor === Array) attrsArray[j].value = attrsArray[j].value.join(', ')
         for (let i in labelsToFilter) {
           if (attrsArray[j].label === labelsToFilter[i]) {
             attrsArray[j].order = i
@@ -109,31 +111,31 @@ export default {
       let labelsToFilter = []
       switch (entityType) {
         case 'Funcionário':
-          labelsToFilter = ['Faculdade', 'Estado', 'Sala']
+          labelsToFilter = ['Estado', 'Sala']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Estudante':
-          labelsToFilter = ['Faculdade', 'Código']
+          labelsToFilter = ['Código']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Sala':
-          labelsToFilter = ['Faculdade', 'Edifício', 'Piso', 'Descrição']
+          labelsToFilter = ['Edifício', 'Piso']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Departamento':
-          labelsToFilter = ['Faculdade', 'Responsável']
+          labelsToFilter = ['Responsável']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Notícia':
-          labelsToFilter = ['Faculdade', 'Data de Publicação', 'Conteúdo']
+          labelsToFilter = ['Data de Publicação', 'Conteúdo']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Curso':
-          labelsToFilter = ['Faculdade', 'Área Científica', 'Duração']
+          labelsToFilter = ['Área Científica', 'Duração']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Cadeira':
-          labelsToFilter = ['Faculdade', 'Ativo', 'Área Científica', 'Professor']
+          labelsToFilter = ['Ativo', 'Professor']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
       }
@@ -180,15 +182,13 @@ export default {
   /*cursor: pointer;*/
 }
 
-.result-left: {
-  width: 100%;
-}
-/*.result:hover {
-  background-color: #f7f7f7;
-}*/
 .result-body {
   display: flex;
   flex-direction: row;
+}
+
+.result-right {
+  flex-grow: 1;
 }
 
 .result-title {
@@ -200,12 +200,10 @@ export default {
   max-width: 100%;
 }
 .result-title h2 {
-  display: inline-block;
-  font-size: 1.38em;
+  font-size: 18px;
   font-weight: normal;
-  vertical-align: middle;
   color: #333;
-  line-height: 1.3em;
+  line-height: 1;
   margin: 0;
   /*padding-left: 10px;*/
 }
@@ -223,6 +221,19 @@ export default {
   color: #609;
 }
 
+.result-link {
+  font-size: 1.1em;
+  line-height: 1.3;
+  max-width: 650px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+span.result-url {
+  color: #0C1F3A;
+}
+
 .result-snippet, .result-more-data {
   font-size: 0.85em;
   color: #666;
@@ -230,8 +241,9 @@ export default {
   margin: 0 0 0.1em;
 }
 
-.result-snippet p {
-  margin: 5px 0;
+.result p {
+  margin: 0 0 5px;
+  line-height: 1.3;
 }
 
 .result-icon {
@@ -260,7 +272,7 @@ export default {
   margin-top: 0;
 }
 .result-more-data.toggle {
-  max-height: 3000px;
+  max-height: 9000px;
 }
 .result-more {
   border-bottom: 1px solid #ebebeb;
@@ -306,6 +318,11 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.pad-left {
+  padding-left: 10px;
+}
+
 .tag {
   background: #69707a;
   border-radius: 3px;
@@ -321,27 +338,27 @@ export default {
   float: right;
 }
 .tag-sala {
-  background: #222324;
+  background: #9B59B6;
   color: white;
 }
 .tag-estudante {
-  background: #1fc8db;
+  background: #2ECC71;
   color: white;
 }
 .tag-funcionário {
-  background: #97cd76;
+  background: #1ABC9C;
   color: white;
 }
 .tag-notícia {
-  background: #3288bd;
+  background: #F39C12;
   color: white;
 }
 .tag-curso {
-  background: #66c2a5;
+  background: #E67E22;
   color: white;
 }
 .tag-cadeira {
-  background: #f46d43;
+  background: #C0392B;
   color: white;
 }
 </style>

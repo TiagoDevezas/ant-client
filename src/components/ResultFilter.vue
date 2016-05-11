@@ -91,35 +91,35 @@
   }
 
   .result-filter a.active.todos {
-    color: #de5833 !important;
-    border-bottom: solid 3px #de5833;
+    color: #4285f4 !important;
+    border-bottom: solid 3px #4285f4;
   }
   .result-filter a.active.funcionário {
-    color: #97cd76 !important;
-    border-bottom: solid 3px #97cd76;
+    color: #1ABC9C !important;
+    border-bottom: solid 3px #1ABC9C;
   }
   .result-filter a.active.estudante {
-    color: #1fc8db !important;
-    border-bottom: solid 3px #1fc8db;
+    color: #2ECC71 !important;
+    border-bottom: solid 3px #2ECC71;
   }
   .result-filter a.active.sala {
-    color: #222324 !important;
-    border-bottom: solid 3px #222324;
+    color: #9B59B6 !important;
+    border-bottom: solid 3px #9B59B6;
   }
   .result-filter a.active.departamento {
-    color: #69707a !important;
-    border-bottom: solid 3px #69707a;
+    color: #34495E !important;
+    border-bottom: solid 3px #34495E;
   }
   .result-filter a.active.notícia {
-    color: #3288bd !important;
-    border-bottom: solid 3px #3288bd;
+    color: #F39C12 !important;
+    border-bottom: solid 3px #F39C12;
   }
   .result-filter a.active.curso {
-    color: #66c2a5 !important;
-    border-bottom: solid 3px #66c2a5;
+    color: #E67E22 !important;
+    border-bottom: solid 3px #E67E22;
   }
   .result-filter a.active.cadeira {
-    color: #f46d43 !important;
-    border-bottom: solid 3px #f46d43;
+    color: #C0392B !important;
+    border-bottom: solid 3px #C0392B;
   }
 </style>
