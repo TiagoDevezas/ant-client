@@ -4,7 +4,7 @@
   <ShortName>ANT</ShortName> 
   <Description>ANT Pesquisa de Informação na Universidade do Porto</Description> 
   <Image width="16" height="16">http:/ant.fe.up.pt/dev/assets/favicon-f3ed423703de4bee14631f77282552ca.ico</Image> 
-  <Url rel="results" type="text/html" template="http:/ant.fe.up.pt/#!/search?q={searchTerms}&amp;utm_source=opensearch"/>
+  <Url rel="results" type="text/html" template="http:/ant.fe.up.pt/search?q={searchTerms}&amp;utm_source=opensearch"/>
   <Url rel="suggestions" type="application/json" template="http:/ant.fe.up.pt/dev/search/autocomplete/basic?q={searchTerms}&amp;utm_source=opensearch"/>
   <Tags>sigarra, feup, up, pesquisa, entidades, estudantes, funcionários, departamentos, salas</Tags> 
   <InputEncoding>UTF-8</InputEncoding> 
