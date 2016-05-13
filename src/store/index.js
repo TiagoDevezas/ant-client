@@ -37,6 +37,9 @@ store.getEntitiesWithMetadata = (context, startPage) => {
       context.$set('timeToSearch', timeToSearch)
       const data = response.data.data
       context.$set('data.metadata', response.data.metadata)
+      if (response.data.metadata.facetsCount !== context.entities) {
+        context.$set('entities', response.data.metadata.facetsCount)
+      }
       data.forEach(d => {
         store.getEntityMetada(context, d)
           .then(response => {

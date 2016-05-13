@@ -70,14 +70,15 @@ export default {
         q: '',
         start: ''
       },
-      timeToSearch: 0
+      timeToSearch: 0,
+      entities: []
     }
   },
   computed: {
     getEntityTypes () {
       let entityTypes = []
       entityTypes.push({value: 'todos', label: 'Todos'})
-      const facetsCount = this.data.metadata.facetsCount
+      const facetsCount = this.entities
       for (let key in facetsCount) {
         if (facetsCount[key] > 0) {
           entityTypes.push({value: key, count: facetsCount[key], label: key.charAt(0).toUpperCase() + key.slice(1) + 's'})
