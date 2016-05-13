@@ -11,7 +11,7 @@
     <div class="result-right" :class="{'pad-left': metadata.metadata.decorations.photo}">
       <div class="result-title">
          <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
-         <h2><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
+         <h2><a href="{{ metadata.link }}" @click="sendClickData">{{ metadata.description }}</a></h2>
        </div>
        <div class="result-link">
          <span class="result-url">{{ metadata.link }}</span>
@@ -62,27 +62,27 @@ export default {
       this.toggled = !this.toggled
       this.sendClickData()
     },
-    sendClickData () {
-      const values = {
-        active_query: this.$route.query.q.toString(),
-        active_query_category: this.category.toString(),
-        active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
-        clicked_result_rank: this.metadata.rank.toString(),
-        clicked_result_score: this.metadata.score.toString(),
-        clicked_result_uri: this.metadata.uri.toString(),
-        client_user_agent: window.navigator.userAgent.toString(),
-        client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
-        Referer: document.referrer
-      }
-      if (!this.clicked && arguments.length === 0) {
-        // console.log(values)
-        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
-        this.clicked = true
-      }
-      if (arguments.length > 0 && arguments[0]) {
-        values['target_url'] = arguments[0]
-        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
-        // console.log(values)
+    sendClickData (event) {
+      if (event.button === 0 || event.button === 1) {
+        const values = {
+          active_query: this.$route.query.q.toString(),
+          active_query_category: this.category.toString(),
+          active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
+          clicked_result_rank: this.metadata.rank.toString(),
+          clicked_result_score: this.metadata.score.toString(),
+          clicked_result_uri: this.metadata.uri.toString(),
+          client_user_agent: window.navigator.userAgent.toString(),
+          client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
+          Referer: document.referrer
+        }
+        if (!this.clicked && arguments.length === 0) {
+          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+          this.clicked = true
+        }
+        if (arguments.length > 0 && arguments[0]) {
+          values['target_url'] = arguments[0]
+          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+        }
       }
     },
     filterByLabels (attrsArray, labelsToFilter) {
