@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     showResults () {
+      console.log(this.$route.query)
       this.$el.childNodes[1][0].blur()
       this.formFocused = false
       this.buttonFocused = false
@@ -27,7 +28,7 @@ export default {
       if (this.queryParams.length) {
         this.$router.go({
           name: 'search',
-          query: {q: this.queryParams}
+          query: {q: this.queryParams, tipoentidade: this.$route.query.tipoentidade}
         })
       } else {
         this.$el.childNodes[1][0].focus()
