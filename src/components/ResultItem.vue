@@ -63,26 +63,29 @@ export default {
       this.sendClickData()
     },
     sendClickData (event) {
-      if (event.button === 0 || event.button === 1) {
-        const values = {
-          active_query: this.$route.query.q.toString(),
-          active_query_category: this.category.toString(),
-          active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
-          clicked_result_rank: this.metadata.rank.toString(),
-          clicked_result_score: this.metadata.score.toString(),
-          clicked_result_uri: this.metadata.uri.toString(),
-          client_user_agent: window.navigator.userAgent.toString(),
-          client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
-          Referer: document.referrer
-        }
-        if (!this.clicked && arguments.length === 0) {
-          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
-          this.clicked = true
-        }
-        if (arguments.length > 0 && arguments[0]) {
-          values['target_url'] = arguments[0]
-          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
-        }
+      let values = {
+        active_query: this.$route.query.q.toString(),
+        active_query_category: this.category.toString(),
+        active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
+        clicked_result_rank: this.metadata.rank.toString(),
+        clicked_result_score: this.metadata.score.toString(),
+        clicked_result_uri: this.metadata.uri.toString(),
+        client_user_agent: window.navigator.userAgent.toString(),
+        client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
+        Referer: document.referrer
+      }
+
+      if (process.env.NODE_ENV === 'development') {
+        values.test = true
+      }
+
+      if (!this.clicked && arguments.length === 0) {
+        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+        this.clicked = true
+      }
+      if (arguments.length > 0 && arguments[0]) {
+        values['target_url'] = arguments[0]
+        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
       }
     },
     filterByLabels (attrsArray, labelsToFilter) {

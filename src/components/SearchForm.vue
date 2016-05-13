@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     showResults () {
-      console.log(this.$route.query)
       this.$el.childNodes[1][0].blur()
       this.formFocused = false
       this.buttonFocused = false
