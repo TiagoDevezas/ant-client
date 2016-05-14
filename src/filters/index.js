@@ -2,8 +2,8 @@ export function cleanMarkup (value) {
   if (value) {
     let val = value.toString()
     let clean = val.toString().replace(/(?:<br>\s*){2,}/g, '<p></p>')
-                      .replace(/<[\/]?strong>/g, '')
-                      .replace(/<[\/]?b>/g, '')
+                              .replace(/<[\/]?strong>/g, '')
+                              .replace(/<[\/]?b>/g, '')
     return clean
   }
 }
