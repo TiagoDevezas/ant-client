@@ -46,7 +46,10 @@
 </template>
 
 <script>
+import { cleanMarkup, highlightQuery } from '../filters'
+
 export default {
+  filters: { cleanMarkup, highlightQuery },
   props: ['metadata', 'category'],
   data () {
     return {
