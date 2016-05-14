@@ -19,17 +19,17 @@
        <div class="result-snippet">
          <p>{{ metadata.sources.join(', ') }}</p>
          <span v-for="attr in defaultAttributes">
-           <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+           <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q}}}</p>
          </span>
        </div>
         <div class="result-more-data" :class="{ 'toggle': toggled }">
           <span v-for="attr in extraAttributes">
-            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
           </span>
           <div class="result-l2-attributes">
             <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
               <span v-for="attr in attrs">
-                <p v-if="attr.value !== metadata.description"><strong>{{ attr.label }}:</strong> {{{ attr.value }}}</p>
+                <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
               </span>
             </div>
           </div>
@@ -299,6 +299,17 @@ span.result-url {
 .l2-attribute p:last-of-type {
   margin-bottom: 0;
 }
+
+.attr-label {
+  color: #222;
+  font-size: 14px;
+}
+
+.highlight {
+  color: #000;
+  font-weight: bolder;
+}
+
 .more-icon {
   margin-left: 0;
   height: 6px;

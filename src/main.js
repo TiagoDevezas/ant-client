@@ -7,8 +7,13 @@ import MainView from './components/MainView'
 import SearchView from './components/SearchView'
 import AboutView from './components/AboutView'
 
+import { cleanMarkup, highlightQuery } from './filters'
+
 Vue.use(VueRouter)
 Vue.use(VueResource)
+
+Vue.filter('cleanMarkup', cleanMarkup)
+Vue.filter('highlightQuery', highlightQuery)
 
 export var router = new VueRouter({history: true})
 
