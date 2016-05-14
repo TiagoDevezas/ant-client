@@ -8,16 +8,11 @@ export function cleanMarkup (value) {
   }
 }
 
-export function highlightQuery (value, query, eType) {
+export function highlightQuery (value, query) {
   if (value && query) {
     let val = value.toString()
     let q = query.toString()
-    let regex
-    if (eType === 'notícia') {
-      regex = new RegExp('(\\s?' + q + '\\s?)', 'gim')
-    } else {
-      regex = new RegExp('(\\s?' + q + '\\s)', 'gim')
-    }
+    let regex = new RegExp('(\\b' + q + '\\b)', 'gim')
     return val.replace(regex, '<span class="highlight">$1</span>')
   }
 }

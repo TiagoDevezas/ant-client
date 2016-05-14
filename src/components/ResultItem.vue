@@ -19,17 +19,17 @@
        <div class="result-snippet">
          <p>{{ metadata.sources.join(', ') }}</p>
          <span v-for="attr in defaultAttributes">
-           <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q metadata.type.label }}}</p>
+           <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
          </span>
        </div>
         <div class="result-more-data" :class="{ 'toggle': toggled }">
           <span v-for="attr in extraAttributes">
-            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q metadata.type.label }}}</p>
+            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
           </span>
           <div class="result-l2-attributes">
             <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
               <span v-for="attr in attrs">
-                <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q metadata.type.label }}}</p>
+                <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
               </span>
             </div>
           </div>
