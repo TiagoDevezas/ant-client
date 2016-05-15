@@ -82,8 +82,6 @@ export default {
         values.test = true
       }
 
-      console.log(values)
-
       if (!this.clicked && arguments.length === 0) {
         this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
         this.clicked = true
