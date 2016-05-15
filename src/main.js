@@ -6,6 +6,7 @@ import App from './components/App'
 import MainView from './components/MainView'
 import SearchView from './components/SearchView'
 import AboutView from './components/AboutView'
+import NotFoundView from './components/NotFoundView'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -24,6 +25,10 @@ router.map({
   '/about': {
     name: 'about',
     component: AboutView
+  },
+  '*': {
+    name: 'notFound',
+    component: NotFoundView
   }
 })
 
