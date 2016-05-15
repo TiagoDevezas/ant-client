@@ -1,5 +1,5 @@
 <template>
-  <about-link link-text="Início" link-path="home"></about-link>
+  <about-link link-text="Voltar" :link-path="fromPath"></about-link>
   <div id="about-wrapper">
     <h1>Sobre</h1>
     <p>O objetivo do ANT é o de disponibilizar uma plataforma educativa e para Investigação & Desenvolvimento, na área da pesquisa orientada a entidades.</p>
@@ -52,8 +52,18 @@
     components: {
       AboutLink
     },
+    data () {
+      return {
+        fromPath: ''
+      }
+    },
     ready () {
       document.title = 'Sobre - ANT'
+    },
+    route: {
+      data: function (transition) {
+        this.$set('fromPath', { name: transition.from.name, query: transition.from.query })
+      }
     }
   }
 </script>
