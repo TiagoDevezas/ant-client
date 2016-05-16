@@ -1,4 +1,5 @@
 <template>
+  {{ generateFeedLink }}
   <about-link link-text="Sobre" link-path="about"></about-link>
   <div id="search">
   <div id="header-wrapper">
@@ -92,6 +93,27 @@ export default {
         return b.count - a.count
       })
       return entityTypes
+    },
+    generateFeedLink () {
+      if (this.data.metadata.count > 0) {
+        const element = document.getElementById('rss-link')
+        if (this.$route.query.tipoentidade === 'notícia') {
+          if (element) {
+            element.parentNode.removeChild(element)
+          }
+          const feedLink = document.createElement('link')
+          feedLink.href = 'http://ant.fe.up.pt/api/search/atom?q=' + this.$route.query.q + '&tipoentidade=' + this.$route.query.tipoentidade
+          feedLink.rel = 'alternate'
+          feedLink.title = 'Feed RSS de ant.fe.up.pt - Pesquisa: ' + this.$route.query.q + ' Filtro: ' + this.$route.query.tipoentidade
+          feedLink.type = 'application/rss+xml'
+          feedLink.id = 'rss-link'
+          document.head.appendChild(feedLink)
+        } else {
+          if (element) {
+            element.parentNode.removeChild(element)
+          }
+        }
+      }
     }
   },
   route: {
