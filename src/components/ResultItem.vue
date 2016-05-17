@@ -272,13 +272,15 @@ span.result-url {
 .result-more-data {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s;
+  transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
 }
 .result-more-data p:first-of-type {
   margin-top: 0;
 }
 .result-more-data.toggle {
-  max-height: 9000px;
+  max-height: 9999px;
+  transition-timing-function: cubic-bezier(0.5, 0, 1, 0); 
+  transition-delay: 0s;
 }
 .result-more {
   border-bottom: 1px solid #ebebeb;
