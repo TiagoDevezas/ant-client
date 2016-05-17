@@ -55,6 +55,7 @@ export default {
       } else {
         this.buttonFocused = false
       }
+      // if the form input has no value, use value from the query
       if (!val && this.$route.query.q) {
         this.$set('queryParams', this.$route.query.q)
       }

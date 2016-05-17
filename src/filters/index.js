@@ -10,9 +10,14 @@ export function cleanMarkup (value) {
 
 export function highlightQuery (value, query) {
   if (value && query) {
-    let val = value.toString()
-    let q = query.toString()
-    let regex = new RegExp('(\\b' + q + '\\b)', 'gim')
-    return val.replace(regex, '<span class="highlight">$1</span>')
+    const split = query.split(' ')
+    let q = ''
+    if (split.length === 1) {
+      q = split[0]
+    } else if (split.length > 1) {
+      q = split.join('|')
+    }
+    let regex = new RegExp('\\b(' + q + ')\\b', 'gim')
+    return value.replace(regex, '<span class="highlight">$1</span>')
   }
 }
