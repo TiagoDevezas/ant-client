@@ -55,6 +55,9 @@ export default {
       } else {
         this.buttonFocused = false
       }
+      if (!val && this.$route.query.q) {
+        this.$set('queryParams', this.$route.query.q)
+      }
     }
   },
   ready () {
