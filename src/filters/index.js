@@ -17,7 +17,7 @@ export function highlightQuery (value, query) {
     } else if (split.length > 1) {
       q = split.join('|')
     }
-    let regex = new RegExp('\\b(' + q + ')\\b', 'gim')
+    const regex = new RegExp('\\b(' + q + ')(?=\\W)', 'gim')
     return value.replace(regex, '<span class="highlight">$1</span>')
   }
 }

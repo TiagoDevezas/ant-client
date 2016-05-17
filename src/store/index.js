@@ -16,6 +16,12 @@ export default store
 
 let t0
 
+store.getLatestNews = (context, count) => {
+  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {tipoentidade: 'notícia'}}).then(response => {
+    context.$set('latestNews', response.data.data.slice(0, count))
+  })
+}
+
 store.getEntities = (context, startPage) => {
   const query = context.$route.query.q
   const start = context.$route.query.start

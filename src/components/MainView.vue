@@ -17,23 +17,33 @@
         <div class="text-wrap">
           <p class="app-description">Pesquisa de Informação na Universidade do Porto.</p>
         </div>
+        <latest-news :news-data="latestNews"></latest-news>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import store from '../store'
 import SearchForm from './SearchForm'
+import LatestNews from './LatestNews'
 import AboutLink from './AboutLink'
 
 export default {
   name: 'MainView',
   components: {
     SearchForm,
+    LatestNews,
     AboutLink
+  },
+  data () {
+    return {
+      latestNews: []
+    }
   },
   ready () {
     document.title = 'ANT - Pesquisa de Informação na Universidade do Porto'
+    store.getLatestNews(this, 3)
   }
 }
 </script>

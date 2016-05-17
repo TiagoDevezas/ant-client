@@ -37,10 +37,11 @@
      </div>     
     </div>
   <div class="result-more" @click="toggleAccordion" v-if="extraAttributes.length || levelTwoAttributes.length">
-    <div class="more-icon">
+    {{ toggleText }}
+<!--     <div class="more-icon">
       <i class="material-icons">{{ toggleIcon }}</i>
     </div>
-    <div class="more-text">{{ toggleText }}</div>
+    <div class="more-text">{{ toggleText }}</div> -->
   </div>
 </div>
 </template>
@@ -149,7 +150,7 @@ export default {
   },
   computed: {
     toggleText () {
-      return !this.toggled ? 'Ver mais' : 'Ver menos'
+      return !this.toggled ? '[ + ]' : '[ – ]'
     },
     toggleIcon () {
       return !this.toggled ? 'keyboard_arrow_down' : 'keyboard_arrow_up'
@@ -250,6 +251,7 @@ span.result-url {
 .result p {
   margin: 0 0 5px;
   line-height: 1.3;
+  max-width: 650px;
 }
 
 .result-icon {
@@ -283,24 +285,30 @@ span.result-url {
   transition-delay: 0s;
 }
 .result-more {
-  border-bottom: 1px solid #ebebeb;
   cursor: pointer;
-  height: 0px;
-  margin-bottom: -0.5em;
+  height: 20px;
   overflow: hidden;
-  padding: 15px 0;
-  text-align: center;
-  position: relative;
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
   clear: both;
-  display: block;
+  display: inline-block;
+  font-size: 12px;
+  color: #1a0dab;
+  font-weight: bold;
 }
 .l2-attribute {
   background-color: #F4F4F4;
   padding: 1em;
   border-radius: 3px;
-  margin-bottom: 1em;
+  margin-bottom: 25px;
   border: 1px solid #F1F1F1;
 }
+
+.l2-attribute:first-of-type {
+  margin-top: 25px;
+}
+
 .l2-attribute p:last-of-type {
   margin-bottom: 0;
 }
@@ -311,7 +319,7 @@ span.result-url {
 }
 
 .highlight {
-  color: #000;
+  color: #555;
   font-weight: bolder;
 }
 
