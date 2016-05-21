@@ -42,9 +42,9 @@ export default {
       this.formFocused = false
     },
     removeShakeClass () {
-      const that = this
+      const self = this
       setTimeout(function () {
-        that.shakeForm = false
+        self.shakeForm = false
       }, 1500)
     }
   },

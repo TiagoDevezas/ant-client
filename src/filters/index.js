@@ -4,6 +4,7 @@ export function cleanMarkup (value) {
     let clean = val.toString().replace(/(?:<br>\s*){2,}/g, '<p></p>')
                               .replace(/<[\/]?strong>/g, '')
                               .replace(/<[\/]?b>/g, '')
+                              .replace(/\s\s+/g, ' ')
     return clean
   }
 }
@@ -17,7 +18,7 @@ export function highlightQuery (value, query) {
     } else if (split.length > 1) {
       q = split.join('|')
     }
-    const regex = new RegExp('\\b(' + q + ')(?=\\W)', 'gim')
+    const regex = new RegExp('(?=\\b|\\W)?(' + q + ')(?=\\W|\\b)', 'gi')
     return value.replace(regex, '<span class="highlight">$1</span>')
   }
 }

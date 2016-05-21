@@ -27,16 +27,16 @@
   margin-top: 35px;
   margin-bottom: 0;
   line-height: 40px;
-  font-size: 18px;
+  font-size: 16px;
   color: #4C4C4C;
 }
 
 .latest-news {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .news-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   color: #333;
   line-height: 18px;
@@ -49,8 +49,12 @@
   color: #1a0dab;
 }
 
+.news-title a:hover {
+  text-decoration: underline;
+}
+
 .news-meta {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
   margin: 0;
 }

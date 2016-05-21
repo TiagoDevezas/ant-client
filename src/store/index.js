@@ -15,6 +15,7 @@ const store = Object.create(null)
 export default store
 
 let t0
+// let requestQueue = []
 
 store.getLatestNews = (context, count) => {
   return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {tipoentidade: 'notícia'}}).then(response => {
@@ -26,12 +27,13 @@ store.getEntities = (context, startPage) => {
   const query = context.$route.query.q
   const start = context.$route.query.start
   const entityType = context.$route.query.tipoentidade
-  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {q: query, tipoentidade: entityType, start: start}})
+  return context.$http.get(JSON_SEARCH_URL, {q: query, tipoentidade: entityType, start: start, num: 10})
 }
+
 store.getEntityMetada = (context, item) => {
   const entity = item.uri.split('#')[1]
   const type = item.type.uri.split('#')[1]
-  return context.$http({url: METADATA_SEARCH_URL, method: 'GET', params: {entity: entity, type: type}})
+  return context.$http.get(METADATA_SEARCH_URL, {entity: entity, type: type})
 }
 
 store.getEntitiesWithMetadata = (context, startPage) => {
@@ -42,10 +44,12 @@ store.getEntitiesWithMetadata = (context, startPage) => {
       const timeToSearch = ((t1 - t0) * 0.001).toFixed(2)
       context.$set('timeToSearch', timeToSearch)
       const data = response.data.data
+      context.$set('data.metadata', [])
       context.$set('data.metadata', response.data.metadata)
       if (response.data.metadata.facetsCount !== context.entities) {
         context.$set('facets', response.data.metadata.facetsCount)
       }
+      context.$set('data.entities', [])
       data.forEach(d => {
         store.getEntityMetada(context, d)
           .then(response => {
@@ -53,5 +57,7 @@ store.getEntitiesWithMetadata = (context, startPage) => {
             context.data.entities.push(d)
           })
       })
+    }, (response) => {
+      // Error callback - redirect to maintenance page
     })
 }

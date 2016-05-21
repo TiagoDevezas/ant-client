@@ -8,10 +8,10 @@
         <a v-link="'/'" id="header-logo-wrap">
           <span class="header-logo">ANT Pesquisa de Informação na Universidade do Porto</span>
         </a>
-        <search-form :query-params="queryParams.q" class="search-top"></search-form>
+        <search-form :query-params="$route.query.q" class="search-top"></search-form>
       </div>
     </div>
-    <result-filter :query-params="queryParams.q" :entity-types="getEntityTypes"></result-filter>
+    <result-filter :query-params="$route.query.q" :entity-types="getEntityTypes"></result-filter>
   </div>
   <div class="content-wrap-results">
     <div class="cw">
@@ -67,10 +67,6 @@ export default {
         entities: [],
         metadata: []
       },
-      queryParams: {
-        q: '',
-        start: ''
-      },
       timeToSearch: 0,
       facets: []
     }
@@ -117,12 +113,9 @@ export default {
     }
   },
   route: {
-    data () {
-      this.data.entities = []
-      this.data.metadata = []
-      store.getEntitiesWithMetadata(this)
-      this.$set('queryParams.q', this.$route.query.q)
+    data (transition) {
       document.title = this.$route.query.q + ' - ANT'
+      store.getEntitiesWithMetadata(this)
     }
   }
 }

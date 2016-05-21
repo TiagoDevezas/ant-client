@@ -15,6 +15,12 @@
        </div>
        <div class="result-link">
          <span class="result-url">{{ metadata.link }}</span>
+         <div class="dropdown" v-if="extraAttributes.length || levelTwoAttributes.length">
+           <a @click.prevent="toggleDropdown"><i class="material-icons md-custom">arrow_drop_down</i></a>
+           <div :class="['dropdown-panel', {'dropdown-open': dropdownOpen}]" @click="toggleAccordion">
+             <span class="dropdown-text">{{ toggleText }}</span>
+           </div>
+         </div>
        </div>
        <div class="result-snippet">
          <p>{{ metadata.sources.join(', ') }}</p>
@@ -36,12 +42,10 @@
         </div>
      </div>     
     </div>
-  <div class="result-more" @click="toggleAccordion" v-if="extraAttributes.length || levelTwoAttributes.length">
-    {{ toggleText }}
-<!--     <div class="more-icon">
-      <i class="material-icons">{{ toggleIcon }}</i>
+  <div class="result-more" v-if="extraAttributes.length || levelTwoAttributes.length">
+    <div class="result-more-toggled" v-if="toggled" @click="toggleAccordion">
+      <i class="material-icons">arrow_drop_up</i>
     </div>
-    <div class="more-text">{{ toggleText }}</div> -->
   </div>
 </div>
 </template>
@@ -58,12 +62,24 @@ export default {
       extraAttributes: [],
       levelTwoAttributes: [],
       toggled: false,
-      clicked: false
+      clicked: false,
+      dropdownOpen: false
     }
   },
   methods: {
+    toggleDropdown (evt) {
+      this.dropdownOpen = !this.dropdownOpen
+    },
+    closeDropdowns (evt) {
+      if (this.dropdownOpen && (evt.target.className !== 'dropdown-panel' && evt.target.className !== 'dropdown-text')) {
+        this.dropdownOpen = false
+      }
+    },
     toggleAccordion () {
       this.toggled = !this.toggled
+      if (this.dropdownOpen) {
+        this.dropdownOpen = false
+      }
       this.sendClickData()
     },
     sendClickData (event) {
@@ -150,7 +166,7 @@ export default {
   },
   computed: {
     toggleText () {
-      return !this.toggled ? '[ + ]' : '[ – ]'
+      return !this.toggled ? 'Ver mais' : 'Ver menos'
     },
     toggleIcon () {
       return !this.toggled ? 'keyboard_arrow_down' : 'keyboard_arrow_up'
@@ -168,6 +184,7 @@ export default {
     // this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes)
     // this.$set('extraAttributes', this.metadata.metadata.decorations.attributes)
     this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
+    window.addEventListener('mousedown', this.closeDropdowns, false)
   }
 }
 </script>
@@ -230,15 +247,61 @@ export default {
 
 .result-link {
   font-size: 1.1em;
-  line-height: 1.3;
-  max-width: 650px;
+  position: relative;
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-panel {
+  display: none;
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: auto;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.2);
+  font-size: 13px;
+  padding: 6px 0;
+  position: absolute;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  z-index: 10;
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.dropdown-panel:hover {
+  background-color: #D8D8D8;
+}
+
+.dropdown-open {
+  display: inline-block;
+}
+
+.dropdown-text {
+  padding: 0 10px;
+  color: #1a0dab;
 }
 
 span.result-url {
+  display: inline-block;
   color: #0C1F3A;
+  max-width: 550px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.material-icons.md-custom {
+  font-size: 20px;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-top: -8px;
 }
 
 .result-snippet, .result-more-data {
@@ -246,6 +309,19 @@ span.result-url {
   color: #666;
   line-height: 1.38;
   margin: 0 0 0.1em;
+}
+
+.result-more-toggled {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  /*margin-top: -20px;*/
+  border-bottom: 1px solid #eee;
+  margin-top: 10px;
+}
+
+.result-more-toggled:hover {
+  background-color: #F7F7F7;
 }
 
 .result p {
@@ -285,17 +361,9 @@ span.result-url {
   transition-delay: 0s;
 }
 .result-more {
-  cursor: pointer;
   height: 20px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 15px;
-  right: 10px;
-  clear: both;
-  display: inline-block;
-  font-size: 12px;
+  display: block;
   color: #1a0dab;
-  font-weight: bold;
 }
 .l2-attribute {
   background-color: #F4F4F4;
@@ -309,7 +377,7 @@ span.result-url {
   margin-top: 25px;
 }
 
-.l2-attribute p:last-of-type {
+.l2-attribute:last-of-type {
   margin-bottom: 0;
 }
 
