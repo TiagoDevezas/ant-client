@@ -92,7 +92,6 @@ export default {
       this.dropdownOpen = !this.dropdownOpen
     },
     closeDropdowns (evt) {
-      console.log(evt.target.className)
       if (this.dropdownOpen && (evt.target.className.indexOf('dropdown-panel') === -1 && evt.target.className !== 'dropdown-text')) {
         this.dropdownOpen = false
       }
