@@ -76,7 +76,7 @@ import { cleanMarkup, highlightQuery, truncateText, stripTags } from '../filters
 
 export default {
   filters: { cleanMarkup, highlightQuery, truncateText, stripTags },
-  props: ['metadata'],
+  props: ['metadata', 'category'],
   data () {
     return {
       defaultAttributes: [],
@@ -92,7 +92,8 @@ export default {
       this.dropdownOpen = !this.dropdownOpen
     },
     closeDropdowns (evt) {
-      if (this.dropdownOpen && (evt.target.className !== 'dropdown-panel' && evt.target.className !== 'dropdown-text')) {
+      console.log(evt.target.className)
+      if (this.dropdownOpen && (evt.target.className.indexOf('dropdown-panel') === -1 && evt.target.className !== 'dropdown-text')) {
         this.dropdownOpen = false
       }
     },
