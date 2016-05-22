@@ -1,25 +1,26 @@
 <template>
   <about-link link-text="Sobre" link-path="about"></about-link>
   <div class="wrapper">
-    <div class="content-wrap">
-      <div class="content-container">
-        <div class="logo-wrap">
-          <a v-link="{name: 'home'}" id="logo-link">
-            ANT Pesquisa de Informação na Universidade do Porto
-          </a>
-        </div>
-        <div class="text-wrap">
-          <p class="app-name">ANT</p>
-        </div>
-        <div class="search-wrap">
-          <search-form is-focused="true"></search-form>
-        </div>
-        <div class="text-wrap">
-          <p class="app-description">Pesquisa de Informação na Universidade do Porto.</p>
-        </div>
-        <latest-news :news-data="latestNews"></latest-news>
+    <div class="content-container">
+      <div class="logo-wrap">
+        <a v-link="{name: 'home'}" id="logo-link">
+          ANT Pesquisa de Informação na Universidade do Porto
+        </a>
       </div>
+      <div class="text-wrap">
+        <p class="app-name">ANT</p>
+      </div>
+      <div class="search-wrap">
+        <search-form is-focused="true"></search-form>
+      </div>
+      <div class="text-wrap">
+        <p class="app-description">Pesquisa de Informação na Universidade do Porto.</p>
+      </div>
+      <latest-news :news-data="latestNews"></latest-news>
     </div>
+  </div>
+  <div id="footer">
+    InfoLab, FEUP
   </div>
 </template>
 
@@ -50,19 +51,10 @@ export default {
 
 <style>
   .wrapper {
-    height: 100%;
-    min-height: 100%;
     width: 100%;
     overflow: hidden;
-  }
-  .content-wrap {
-    position: absolute;
-    margin: auto;
-    width: 100%;
-    top: 24%;
-    left: 0;
-    right: 0;
-    z-index: 2;
+    padding-top: 200px;
+    padding-bottom: 60px;
   }
   .content-container {
     position: relative;
@@ -77,7 +69,6 @@ export default {
     margin: auto;
     margin-bottom: 0.8em;
   }
-
   .text-wrap {
     margin-bottom: 0;
     text-align: center;
@@ -116,5 +107,17 @@ export default {
     display: block;
     float: none;
     width: 70%;
+  }
+  #footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    line-height: 50px;
+    width: 100%;
+    background-color: #F7F7F7;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+    text-align: center;
+    color: #444444;
+    font-size: 14px;
   }
 </style>
