@@ -22,3 +22,12 @@ export function highlightQuery (value, query) {
     return value.replace(regex, '<span class="highlight">$1</span>')
   }
 }
+
+export function truncateText (text, length) {
+  let split = text.split(' ').splice(0, length).join(' ')
+  return split + ' ...'
+}
+
+export function stripTags (text) {
+  return text.replace(/<(.|\n)*?>/g, '')
+}

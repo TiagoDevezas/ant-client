@@ -23,10 +23,31 @@
          </div>
        </div>
        <div class="result-snippet">
+
+        <div v-if="metadata.type.label !== 'Notícia'">          
          <p>{{ metadata.sources.join(', ') }}</p>
          <span v-for="attr in defaultAttributes">
            <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
          </span>
+        </div>
+
+        <div v-if="metadata.type.label === 'Notícia' && defaultAttributes.length">
+          <p class="news-meta">
+            <span class="news-source">
+              {{ metadata.sources.join(', ') }}
+            </span>
+            <span class="news-date">
+              - {{ defaultAttributes[0].value.split(', ')[1] + ' às ' + defaultAttributes[0].value.split(', ')[2] }}
+            </span>
+          </p>
+          <p v-if="!toggled">
+            {{{ defaultAttributes[1].value | cleanMarkup | stripTags | highlightQuery $route.query.q | truncateText 20 }}}
+          </p>
+          <p v-if="toggled">
+            {{{ defaultAttributes[1].value | cleanMarkup | highlightQuery $route.query.q }}}
+          </p>
+        </div>
+
        </div>
         <div class="result-more-data" :class="{ 'toggle': toggled }">
           <span v-for="attr in extraAttributes">
@@ -42,7 +63,7 @@
         </div>
      </div>     
     </div>
-  <div class="result-more" v-if="extraAttributes.length || levelTwoAttributes.length">
+  <div class="result-more" v-if="extraAttributes.length || levelTwoAttributes.length" :class="{ 'visible': toggled, 'invisible': !toggled }">
     <div class="result-more-toggled" v-if="toggled" @click="toggleAccordion">
       <i class="material-icons">arrow_drop_up</i>
     </div>
@@ -51,11 +72,11 @@
 </template>
 
 <script>
-import { cleanMarkup, highlightQuery } from '../filters'
+import { cleanMarkup, highlightQuery, truncateText, stripTags } from '../filters'
 
 export default {
-  filters: { cleanMarkup, highlightQuery },
-  props: ['metadata', 'category'],
+  filters: { cleanMarkup, highlightQuery, truncateText, stripTags },
+  props: ['metadata'],
   data () {
     return {
       defaultAttributes: [],
@@ -167,9 +188,6 @@ export default {
   computed: {
     toggleText () {
       return !this.toggled ? 'Ver mais' : 'Ver menos'
-    },
-    toggleIcon () {
-      return !this.toggled ? 'keyboard_arrow_down' : 'keyboard_arrow_up'
     },
     getPicture () {
       return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
@@ -360,9 +378,17 @@ span.result-url {
   transition-timing-function: cubic-bezier(0.5, 0, 1, 0); 
   transition-delay: 0s;
 }
+
+.invisible {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
 .result-more {
   height: 20px;
-  display: block;
   color: #1a0dab;
 }
 .l2-attribute {
