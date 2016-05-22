@@ -187,7 +187,7 @@ export default {
   },
   computed: {
     toggleText () {
-      return !this.toggled ? 'Ver mais' : 'Ver menos'
+      return !this.toggled ? 'Expandir' : 'Fechar'
     },
     // getPicture () {
     //   return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
