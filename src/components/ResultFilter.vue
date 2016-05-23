@@ -94,31 +94,31 @@
     color: #4285f4 !important;
     border-bottom: solid 3px #4285f4;
   }
-  .result-filter a.active.funcionário {
+  .result-filter a.active.Funcionário {
     color: #1ABC9C !important;
     border-bottom: solid 3px #1ABC9C;
   }
-  .result-filter a.active.estudante {
+  .result-filter a.active.Estudante {
     color: #2ECC71 !important;
     border-bottom: solid 3px #2ECC71;
   }
-  .result-filter a.active.sala {
+  .result-filter a.active.Sala {
     color: #9B59B6 !important;
     border-bottom: solid 3px #9B59B6;
   }
-  .result-filter a.active.departamento {
+  .result-filter a.active.Departamento {
     color: #34495E !important;
     border-bottom: solid 3px #34495E;
   }
-  .result-filter a.active.notícia {
+  .result-filter a.active.Notícia {
     color: #F39C12 !important;
     border-bottom: solid 3px #F39C12;
   }
-  .result-filter a.active.curso {
+  .result-filter a.active.Curso {
     color: #E67E22 !important;
     border-bottom: solid 3px #E67E22;
   }
-  .result-filter a.active.cadeira {
+  .result-filter a.active.Cadeira {
     color: #C0392B !important;
     border-bottom: solid 3px #C0392B;
   }
