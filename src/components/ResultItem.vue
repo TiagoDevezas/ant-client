@@ -175,7 +175,7 @@ export default {
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Curso':
-          labelsToFilter = ['Área Científica', 'Duração']
+          labelsToFilter = ['Área Científica', 'Diretor']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Cadeira':

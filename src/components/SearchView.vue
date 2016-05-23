@@ -76,24 +76,28 @@ export default {
       let entityTypes = []
       entityTypes.push({value: 'todos', label: 'Todos'})
       const facetsCount = this.facets
-      for (let key in facetsCount) {
-        if (facetsCount[key] > 0) {
-          entityTypes.push({value: key, count: facetsCount[key], label: key.charAt(0).toUpperCase() + key.slice(1) + 's'})
-        }
+      for (let i in facetsCount) {
+        entityTypes.push({ value: facetsCount[i].label, count: facetsCount[i].value, label: facetsCount[i].label + 's'})
       }
-      if (this.data.metadata.count === 0) {
-        const entity = this.$route.query.tipoentidade
-        entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
-      }
-      entityTypes.sort(function (a, b) {
-        return b.count - a.count
-      })
+      // for (let key in facetsCount) {
+      //   console.log(facetsCount[key])
+      //   if (facetsCount[key] > 0) {
+      //     entityTypes.push({value: key, count: facetsCount[key], label: key.charAt(0).toUpperCase() + key.slice(1) + 's'})
+      //   }
+      // }
+      // if (this.data.metadata.count === 0) {
+      //   const entity = this.$route.query.tipoentidade
+      //   entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
+      // }
+      // entityTypes.sort(function (a, b) {
+      //   return b.count - a.count
+      // })
       return entityTypes
     },
     generateFeedLink () {
       if (this.data.metadata.count > 0) {
         const element = document.getElementById('rss-link')
-        if (this.$route.query.tipoentidade === 'notícia') {
+        if (this.$route.query.tipoentidade === 'Notícia') {
           if (element) {
             element.parentNode.removeChild(element)
           }
