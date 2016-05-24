@@ -5,7 +5,7 @@
 // const JSON_SEARCH_URL = SEARCH_URL + '.json'
 // const METADATA_SEARCH_URL = SEARCH_URL + '/decorator/metadata.json'
 
-const API_URL = 'http://172.30.15.79/api/'
+const API_URL = 'http://ant.fe.up.pt/api/'
 const SEARCH_URL = API_URL + 'search'
 const JSON_SEARCH_URL = SEARCH_URL
 const METADATA_SEARCH_URL = SEARCH_URL + '/decorator/metadata'
@@ -46,8 +46,8 @@ store.getEntitiesWithMetadata = (context, startPage) => {
       const data = response.data.data
       context.$set('data.metadata', [])
       context.$set('data.metadata', response.data.metadata)
-      if (response.data.metadata.facetsCount.tipoentidade !== context.entities) {
-        context.$set('facets', response.data.metadata.facetsCount.tipoentidade)
+      if (response.data.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
+        context.$set('facets', response.data.metadata.unfilteredFacetsCount.tipoentidade)
       }
       context.$set('data.entities', [])
       data.forEach(d => {

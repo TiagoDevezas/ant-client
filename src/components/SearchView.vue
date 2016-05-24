@@ -85,10 +85,10 @@ export default {
       //     entityTypes.push({value: key, count: facetsCount[key], label: key.charAt(0).toUpperCase() + key.slice(1) + 's'})
       //   }
       // }
-      // if (this.data.metadata.count === 0) {
-      //   const entity = this.$route.query.tipoentidade
-      //   entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
-      // }
+      if (this.data.metadata.count === 0) {
+        const entity = this.$route.query.tipoentidade
+        entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
+      }
       // entityTypes.sort(function (a, b) {
       //   return b.count - a.count
       // })
