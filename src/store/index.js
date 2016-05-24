@@ -46,9 +46,9 @@ store.getEntitiesWithMetadata = (context, startPage) => {
       const data = response.data.data
       context.$set('data.metadata', [])
       context.$set('data.metadata', response.data.metadata)
-      // if (response.data.metadata.facetsCount.tipoentidade !== context.entities) {
-      context.$set('facets', response.data.metadata.facetsCount.tipoentidade)
-      // }
+      if (response.data.metadata.facetsCount.tipoentidade !== context.entities) {
+        context.$set('facets', response.data.metadata.facetsCount.tipoentidade)
+      }
       context.$set('data.entities', [])
       data.forEach(d => {
         store.getEntityMetada(context, d)
@@ -59,5 +59,6 @@ store.getEntitiesWithMetadata = (context, startPage) => {
       })
     }, (response) => {
       // Error callback - redirect to maintenance page
+      location.href = 'http://ant.fe.up.pt/502.html'
     })
 }
