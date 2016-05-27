@@ -15,25 +15,25 @@
   </div>
   <div class="content-wrap-results">
     <div class="cw">
-      <result-empty v-if="data.metadata.count === 0"></result-empty>
-      <div class="results-wrapper" v-if="data.metadata.count > 0">
+      <result-empty v-if="data.queryData.count === 0"></result-empty>
+      <div class="results-wrapper" v-if="data.queryData.count > 0">
         <result-counter
           v-if="data.entities.length"
-          :count="data.metadata.count"
-          :curr-page="data.metadata.page"
+          :count="data.queryData.count"
+          :curr-page="data.queryData.page"
           :time-to-search="timeToSearch">
         </result-counter>  
         <div class="results">
-          <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity" :category="data.metadata.category">
+          <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity" :category="data.queryData.category">
           </result-item>
         </div>
       </div>
       <result-paginator
-        v-if="data.metadata.pages > 1"
-        :num-pages="data.metadata.pages"
-        :curr-page="data.metadata.page"
-        :start-page="data.metadata.start"
-        :total-results="data.metadata.count">
+        v-if="data.queryData.pages > 1"
+        :num-pages="data.queryData.pages"
+        :curr-page="data.queryData.page"
+        :start-page="data.queryData.start"
+        :total-results="data.queryData.count">
       </result-paginator>
     </div>
   </div>
@@ -65,7 +65,7 @@ export default {
     return {
       data: {
         entities: [],
-        metadata: []
+        queryData: []
       },
       timeToSearch: 0,
       facets: []
@@ -79,14 +79,14 @@ export default {
       for (let i in facetsCount) {
         entityTypes.push({ value: facetsCount[i].label, count: facetsCount[i].value, label: facetsCount[i].label + 's'})
       }
-      if (this.data.metadata.count === 0) {
+      if (this.data.queryData.count === 0) {
         const entity = this.$route.query.tipoentidade
         entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
       }
       return entityTypes
     },
     generateFeedLink () {
-      if (this.data.metadata.count > 0) {
+      if (this.data.queryData.count > 0) {
         const element = document.getElementById('rss-link')
         if (this.$route.query.tipoentidade === 'Notícia') {
           if (element) {
@@ -111,6 +111,7 @@ export default {
     data (transition) {
       document.title = this.$route.query.q + ' - ANT'
       store.getEntitiesWithMetadata(this)
+      // store.getEntitiesNew(this)
     }
   }
 }
