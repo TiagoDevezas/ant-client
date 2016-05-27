@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-news-container">
+  <div class="latest-news-container search-wrap">
     <p class="latest-news-heading">Últimas notícias</p>
     <div class="latest-news" v-for="news in newsData">
       <h2 class="news-title"><a href="{{ news.link }}">{{ news.description }}</a></h2>
