@@ -55,7 +55,10 @@
           </span>
           <div class="result-l2-attributes">
             <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
-              <span v-for="attr in attrs">
+              <span class="attr-relationship">
+                {{ attrs.relationship.label }}
+              </span>
+              <span v-for="attr in attrs.data">
                 <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
               </span>
             </div>
@@ -151,7 +154,7 @@ export default {
       this.$set('extraAttributes', unfiltered)
     },
     setVisibleAttrs (entityType) {
-      let attrsArray = this.metadata.metadata.decorations.attributes
+      let attrsArray = this.metadata.metadata.decorations.attributes.data
       let labelsToFilter = []
       switch (entityType) {
         case 'Funcionário':
@@ -410,6 +413,13 @@ span.result-url {
 .attr-label {
   color: #222;
   font-size: 14px;
+}
+
+.attr-relationship {
+  color: #111;
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 .highlight {

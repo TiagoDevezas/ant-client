@@ -127,7 +127,7 @@ store.getEntitiesWithMetadata = (context, startPage) => {
       // })
     })
     .catch(e => {
-      // location.href = 'http://ant.fe.up.pt/502.html'
+      location.href = 'http://ant.fe.up.pt/502.html'
     })
   }, 500)
 }
