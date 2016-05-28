@@ -24,7 +24,7 @@
           :time-to-search="timeToSearch">
         </result-counter>  
         <div class="results">
-          <result-item v-for="(index, entity) in data.entities | orderBy 'rank'" :metadata="entity" :category="data.queryData.category">
+          <result-item v-for="entity in data.entities | orderBy 'rank'" :metadata="entity" :category="data.queryData.category" track-by="uri">
           </result-item>
         </div>
       </div>

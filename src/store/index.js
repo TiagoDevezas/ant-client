@@ -42,7 +42,10 @@ store.getEntitiesNew = (context) => {
   let lastRequest = new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest()
     xhr.onload = function () {
-      resolve(JSON.parse(xhr.responseText))
+      let data = JSON.parse(xhr.responseText)
+      if (data.data.length) {
+        resolve(data)
+      }
     }
     xhr.open('GET', uri, true)
     xhr.send()
@@ -99,35 +102,36 @@ store.getEntityMetada = (context, item) => {
 store.getEntitiesWithMetadata = (context, startPage) => {
   t0 = performance.now()
   store.getEntitiesNew(context)
-  setTimeout(() => {
-    return requestQueue[0].then(response => {
-      const t1 = performance.now()
-      const timeToSearch = ((t1 - t0) * 0.001).toFixed(2)
-      context.$set('timeToSearch', timeToSearch)
-      const data = response.data
-      context.$set('data.queryData', response.metadata)
-      if (response.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
-        context.$set('facets', response.metadata.unfilteredFacetsCount.tipoentidade)
-      }
-      return data
-    })
-    .then(data => {
-      store.getEntityMetadata(context, data)
-      context.$set('data.entities', [])
-      return Promise.all(itemQueue).then(res => {
-        context.$set('data.entities', res)
+  return requestQueue[0].then(response => {
+    const t1 = performance.now()
+    const timeToSearch = ((t1 - t0) * 0.001).toFixed(2)
+    context.$set('timeToSearch', timeToSearch)
+    const data = response.data
+    context.$set('data.queryData', response.metadata)
+    if (response.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
+      context.$set('facets', response.metadata.unfilteredFacetsCount.tipoentidade)
+    }
+    return data
+  })
+  .then(data => {
+    store.getEntityMetadata(context, data)
+    context.$set('data.entities', [])
+    return Promise.all(itemQueue.map(function (promise) {
+      return promise.then(res => {
+        context.data.entities.push(res)
       })
-      // context.$set('data.entities', [])
-      // data.forEach(d => {
-      //   store.getEntityMetada(context, d)
-      //     .then(response => {
-      //       d.metadata = response.data.data
-      //       context.data.entities.push(d)
-      //     })
-      // })
-    })
-    .catch(e => {
-      location.href = 'http://ant.fe.up.pt/502.html'
-    })
-  }, 500)
+    }))
+    // context.$set('data.entities', [])
+    // data.forEach(d => {
+    //   store.getEntityMetada(context, d)
+    //     .then(response => {
+    //       d.metadata = response.data.data
+    //       context.data.entities.push(d)
+    //     })
+    // })
+  })
+  .catch(e => {
+    console.log(e)
+    // location.href = 'http://ant.fe.up.pt/502.html'
+  })
 }

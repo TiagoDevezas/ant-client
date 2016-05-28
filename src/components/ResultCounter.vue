@@ -14,6 +14,7 @@
   #results-counter {
     font-size: 0.8em;
     color: #888888;
-    text-align: right;
+    text-align: left;
+    padding-left: 10px;
   }
 </style>

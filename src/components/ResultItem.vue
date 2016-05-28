@@ -10,10 +10,10 @@
     </div>
     <div class="result-right" :class="{'pad-left': metadata.metadata.decorations.photo}">
       <div class="result-title">
-         <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
          <h2><a href="{{ metadata.link }}" @click="sendClickData">{{ metadata.description }}</a></h2>
        </div>
        <div class="result-link">
+         <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
          <span class="result-url">{{ metadata.link }}</span>
          <div class="dropdown" v-if="extraAttributes.length || levelTwoAttributes.length">
            <a @click.prevent="toggleDropdown"><i class="material-icons md-custom">arrow_drop_down</i></a>
@@ -24,17 +24,82 @@
        </div>
        <div class="result-snippet">
 
-        <div v-if="metadata.type.label !== 'Notícia'">          
-         <p>{{ metadata.sources.join(', ') }}</p>
-         <span v-for="attr in defaultAttributes">
-           <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
-         </span>
+       <!-- Sala -->
+
+        <div v-if="metadata.type.label === 'Sala' && defaultAttributes.length">
+          <p>
+            <span v-if="defaultAttributes[0].value">{{{ defaultAttributes[0].value + ', '  | highlightQuery $route.query.q }}}</span>
+            <span>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | isSearchable defaultAttributes[0] $route.query.q }}}</span>
+          </p>
+          <p v-if="defaultAttributes[1].value">
+            <span class="attr-label">{{ defaultAttributes[1].label }}:</span> {{{ defaultAttributes[1].value | cleanMarkup | highlightQuery $route.query.q  | isSearchable defaultAttributes[1] $route.query.q }}}
+          </p>
+          <p>
+            <span v-if="defaultAttributes[2].value">
+              <span class="attr-label">{{ defaultAttributes[2].label }}:</span> {{{ defaultAttributes[2].value + '. ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[2] $route.query.q}}}
+            </span>
+            <span v-if="defaultAttributes[3].label">
+              <span class="attr-label">{{ defaultAttributes[3].label }}:</span> {{{ defaultAttributes[3].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[3] $route.query.q }}}
+            </span>
+          </p>
         </div>
 
+        <!-- Funcionário -->
+
+        <div v-if="metadata.type.label === 'Funcionário' && defaultAttributes.length">
+          <p>
+            <span>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+          </p>
+          <p>
+            <span v-if="defaultAttributes[0].value">
+              <span class="attr-label">{{ defaultAttributes[0].label }}:</span> {{{ defaultAttributes[0].value + ', ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[0] $route.query.q }}}
+            </span>
+            <span v-if="defaultAttributes[1].value">
+              <span class="attr-label">{{ defaultAttributes[1].label }}:</span> {{{ defaultAttributes[1].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[1] $route.query.q }}}
+            </span>
+          </p>
+          <p style="display: flex;">
+            <span v-if="defaultAttributes[2].value" style="display: flex; align-items: flex-start;">
+              <span class="attr-label" style="display: inline-flex; margin-right: 3px;">{{{ defaultAttributes[2].label + ':' | iconify 'mail_outline' }}}</span>
+              <span style="display: inline-flex; margin-right: 10px;">
+                {{{ defaultAttributes[2].value.split(',')[0] + ' ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[2] $route.query.q }}}
+              </span>
+            </span>
+            <span v-if="defaultAttributes[3].value" style="display: flex; align-items: flex-start;">
+              <span class="attr-label" style="display: inline-flex; margin-right: 3px;">{{{ defaultAttributes[3].label + ':' | iconify 'phone' }}}</span>
+              <span style="display: inline-flex; margin-right: 10px;">
+                {{{ defaultAttributes[3].value.split(',')[0] + ' ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[3] $route.query.q }}}
+              </span>
+            </span>
+            <span v-if="defaultAttributes[4].value" style="display: flex; align-items: flex-start;">
+              <span class="attr-label" style="display: inline-flex; margin-right: 3px;">{{{ defaultAttributes[4].label + ':' | iconify 'business' }}}</span>
+              <span style="display: inline-flex; margin-right: 10px;">
+                {{{ defaultAttributes[4].value.split(',')[0] + ' ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[4] $route.query.q}}}
+              </span>
+            </span>
+          </p>
+        </div>
+
+        <!-- Departamento -->
+
+        <div v-if="metadata.type.label === 'Departamento' && defaultAttributes.length">
+          <p>
+            <span>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+          </p>
+          <p>
+            <span v-if="defaultAttributes[0].value">
+              <span class="attr-label">{{ defaultAttributes[0].label }}:</span> {{{ defaultAttributes[0].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[0] $route.query.q }}}
+            </span>
+          </p>
+        </div>
+
+
+        <!-- Notícia -->
+        
         <div v-if="metadata.type.label === 'Notícia' && defaultAttributes.length">
           <p class="news-meta">
             <span class="news-source">
-              {{ metadata.sources.join(', ') }}
+              {{{ metadata.sources.join(', ') }}}
             </span>
             <span class="news-date">
               - {{ defaultAttributes[0].value.split(', ')[1] + ' às ' + defaultAttributes[0].value.split(', ')[2] }}
@@ -48,19 +113,97 @@
           </p>
         </div>
 
+        <!-- Outros -->
+
+        <div v-if="metadata.type.label !== 'Notícia' && metadata.type.label !== 'Sala' && metadata.type.label !== 'Funcionário' && metadata.type.label !== 'Departamento'">   
+         <p>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</p>
+         <span v-for="attr in defaultAttributes">
+           <p v-if="attr.value && attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
+         </span>
+        </div>
+
+
        </div>
         <div class="result-more-data" :class="{ 'toggle': toggled }">
-          <span v-for="attr in extraAttributes">
-            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
+
+          <!-- Sala -->
+
+          <div v-if="metadata.type.label === 'Sala' && extraAttributes.length" style="display: flex; align-items: stretch; margin-top: 20px;">
+            <div v-for="attr in extraAttributes" v-if="attr.label === 'Mapa'" style="margin-right: 30px; min-width: 300px; max-width: 300px;">
+              <img :src="attr.value" alt="" style="max-width: 100%;">    
+            </div>
+            <div style="padding: 20px; margin-top: 0; width: 270px;" class="l2-attribute">
+              <span v-for="attr in extraAttributes">
+                <p v-if="attr.value !== metadata.description && attr.label !== 'Mapa' && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
+              </span>
+            </div>
+          </div>
+
+          <!-- Departamento -->
+
+          <div v-if="metadata.type.label === 'Departamento'">
+            <div class="l2-attribute" style="margin: 20px 0; padding: 30px;">
+              <p>
+                <span v-if="defaultAttributes[1].value" style="display: block;">
+                  <span class="attr-label">{{ defaultAttributes[1].label }}:</span> {{{ defaultAttributes[1].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[1] $route.query.q }}}
+                </span>
+                <span v-if="defaultAttributes[2].value" style="display: block;">
+                  <span class="attr-label">{{ defaultAttributes[2].label }}:</span> {{{ defaultAttributes[2].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[2] $route.query.q}}}
+                </span>
+                <span v-if="defaultAttributes[3].value" style="display: block;">
+                  <span class="attr-label">{{ defaultAttributes[3].label }}:</span> {{{ defaultAttributes[3].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[3] $route.query.q}}}
+                </span>
+              </p>
+              <p style="margin-top: 25px;">
+                <span v-if="defaultAttributes[4].value" style="display: flex;">
+                  <span class="attr-label" style="margin-right: 5px;">{{{ defaultAttributes[4].label | iconify 'local_printshop' }}}</span> {{{ defaultAttributes[4].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[4] $route.query.q }}}
+                </span>
+                <span v-if="defaultAttributes[5].value" style="display: flex;">
+                  <span class="attr-label" style="margin-right: 5px;">{{{ defaultAttributes[5].label | iconify 'mail_outline' }}}</span> {{{ defaultAttributes[5].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[5] $route.query.q }}}
+                </span>
+                <span v-if="defaultAttributes[6].value" style="display: flex;">
+                  <span class="attr-label" style="margin-right: 5px;">{{{ defaultAttributes[6].label | iconify 'phone' }}}</span> {{{ defaultAttributes[6].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[6] $route.query.q }}}
+                </span>                
+              </p>
+              <p style="margin-top: 25px;">
+                <span v-if="defaultAttributes[7].value" style="display: block;">
+                  <span class="attr-label">{{ defaultAttributes[7].label }}:</span> {{{ defaultAttributes[7].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[7] $route.query.q }}}
+                </span>
+                <span v-if="defaultAttributes[8].value" style="display: block;">
+                  <span class="attr-label">{{ defaultAttributes[8].label }}:</span> {{{ defaultAttributes[8].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[8] $route.query.q }}}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <span v-for="attr in extraAttributes" v-if="metadata.type.label !== 'Sala'&& extraAttributes.length">
+            <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
           </span>
           <div class="result-l2-attributes">
-            <div class="l2-attribute" v-for="attrs in levelTwoAttributes">
-              <span class="attr-relationship">
-                {{ attrs.relationship.label }}
-              </span>
-              <span v-for="attr in attrs.data">
-                <p v-if="attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q }}}</p>
-              </span>
+            <div v-for="attrs in levelTwoAttributes">
+
+              <div v-if="metadata.type.label !== 'Estudante'">              
+                <span class="attr-relationship" v-if="attrs.relationship">
+                  {{ attrs.relationship.label }}
+                </span>
+                <div class="l2-attribute">                
+                  <span v-for="attr in attrs.data">
+                    <p v-if="attr.value !== metadata.description"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}</p>
+                  </span>
+                </div>
+              </div>
+
+              <div v-if="metadata.type.label === 'Estudante'" style="display: flex; align-items: center; margin-top: 10px;" class="l2-attribute">
+                <div style="margin: 0 30px;">
+                  <i class="material-icons" style="font-size: 38px;">school</i>
+                </div>
+                <div>                
+                  <span v-for="attr in attrs.data">
+                    <p v-if="attr.value !== metadata.description"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}</p>
+                  </span>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -75,10 +218,10 @@
 </template>
 
 <script>
-import { cleanMarkup, highlightQuery, truncateText, stripTags } from '../filters'
+import { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify } from '../filters'
 
 export default {
-  filters: { cleanMarkup, highlightQuery, truncateText, stripTags },
+  filters: { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify },
   props: ['metadata', 'category'],
   data () {
     return {
@@ -144,6 +287,18 @@ export default {
           }
         }
       }
+
+      if (filtered.length < labelsToFilter.length) {
+        let values = filtered.map((el) => {
+          return el.order
+        })
+        for (let i in labelsToFilter) {
+          if (values.indexOf(i) === -1) {
+            filtered.push({value: '', label: '', order: i})
+          }
+        }
+      }
+
       unfiltered = attrsArray.filter(function (obj) {
         return filtered.indexOf(obj) === -1
       })
@@ -158,7 +313,7 @@ export default {
       let labelsToFilter = []
       switch (entityType) {
         case 'Funcionário':
-          labelsToFilter = ['Estado', 'Sala']
+          labelsToFilter = ['Código', 'Sigla', 'E-mail', 'Telefone', 'Sala']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Estudante':
@@ -166,11 +321,11 @@ export default {
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Sala':
-          labelsToFilter = ['Edifício', 'Piso']
+          labelsToFilter = ['Descrição', 'Responsável', 'Edifício', 'Piso']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Departamento':
-          labelsToFilter = ['Responsável']
+          labelsToFilter = ['Responsável', 'Sigla', 'Sala', 'Código', 'Fax', 'E-mail', 'Telefone', 'Morada', 'Localização']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Notícia':
@@ -186,6 +341,32 @@ export default {
           this.filterByLabels(attrsArray, labelsToFilter)
           break
       }
+    },
+    setSearchableAttrs () {
+      let searchableAttrs = [
+        'Sala',
+        'Professor',
+        'Diretor',
+        'Responsável',
+        'Ocupante',
+        'Departamento',
+        'Curso',
+        'Faculdade'
+      ]
+      let data = this.metadata.metadata.decorations.attributes.data
+      for (let i in data) {
+        if (searchableAttrs.indexOf(data[i].label) !== -1) {
+          data[i].searchable = true
+        }
+      }
+      let l2Attrs = this.metadata.metadata.decorations.levelTwoAttributes
+      for (let i in l2Attrs) {
+        for (let j in l2Attrs[i].data) {
+          if (searchableAttrs.indexOf(l2Attrs[i].data[j].label) !== -1) {
+            l2Attrs[i].data[j].searchable = true
+          }
+        }
+      }
     }
   },
   computed: {
@@ -200,8 +381,8 @@ export default {
     }
   },
   ready () {
+    this.setSearchableAttrs()
     this.setVisibleAttrs(this.metadata.type.label)
-    // console.log(this.filterByLabels(this.metadata.metadata.decorations.attributes, ['Faculdade']))
     // this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes)
     // this.$set('extraAttributes', this.metadata.metadata.decorations.attributes)
     this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
@@ -250,6 +431,7 @@ export default {
   color: #333;
   line-height: 1;
   margin: 0;
+  margin-bottom: 5px;
   /*padding-left: 10px;*/
 }
 
@@ -311,7 +493,7 @@ export default {
 span.result-url {
   display: inline-block;
   color: #0C1F3A;
-  max-width: 550px;
+  max-width: 450px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -330,6 +512,14 @@ span.result-url {
   color: #666;
   line-height: 1.38;
   margin: 0 0 0.1em;
+}
+
+.result-snippet a, .result-more-data a {
+  text-decoration: none;
+}
+
+.result-snippet a:hover, .result-more-data a:hover {
+  text-decoration: underline;
 }
 
 .result-more-toggled {
@@ -395,15 +585,15 @@ span.result-url {
   color: #1a0dab;
 }
 .l2-attribute {
-  background-color: #F4F4F4;
+  background-color: #f7f7f7;
   padding: 1em;
-  border-radius: 3px;
+  border-radius: 5px;
   margin-bottom: 25px;
-  border: 1px solid #F1F1F1;
+  border: 1px solid #e0e0e0;
 }
 
 .l2-attribute:first-of-type {
-  margin-top: 25px;
+  /*margin-top: 25px;*/
 }
 
 .l2-attribute:last-of-type {
@@ -412,18 +602,18 @@ span.result-url {
 
 .attr-label {
   color: #222;
-  font-size: 14px;
+  font-size: 1em;
 }
 
 .attr-relationship {
   color: #111;
   font-size: 16px;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 5px;
   display: block;
 }
 
 .highlight {
-  color: #555;
   font-weight: bolder;
 }
 
@@ -456,17 +646,19 @@ span.result-url {
 
 .tag {
   background: #69707a;
-  border-radius: 3px;
+  border-radius: 5px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   color: #f5f7fa;
   display: inline-block;
-  font-size: .7em;
+  font-size: 10px;
   line-height: 1.2em;
-  padding: 4px 10px;
+  padding: 4px 20px;
   white-space: nowrap;
   top: 0;
   font-weight: bold;
-  float: right;
+  float: left;
+  margin-right: 5px;
+  margin-top: 2px; 
 }
 .tag-sala {
   background: #9B59B6;
