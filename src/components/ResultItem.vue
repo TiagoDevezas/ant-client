@@ -461,7 +461,7 @@ export default {
       }
     },
     sortCourses (courseData) {
-      if (courseData && courseData[0].relationship.label === 'Inscrição') {
+      if (courseData && courseData[0].relationship && courseData[0].relationship.label === 'Inscrição') {
         let objs = []
         for (let i in courseData) {
           let obj = {}
