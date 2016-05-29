@@ -75,13 +75,15 @@ export default {
     getEntityTypes () {
       let entityTypes = []
       entityTypes.push({value: 'todos', label: 'Todos'})
-      const facetsCount = this.facets
+      let facetsCount = this.facets
       for (let i in facetsCount) {
         entityTypes.push({ value: facetsCount[i].label, count: facetsCount[i].value, label: facetsCount[i].label + 's'})
       }
       if (this.data.queryData.count === 0) {
-        const entity = this.$route.query.tipoentidade
-        entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
+        let entity = this.$route.query.tipoentidade
+        if (entity) {
+          entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
+        }
       }
       return entityTypes
     },

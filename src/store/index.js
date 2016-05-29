@@ -106,8 +106,10 @@ store.getEntitiesWithMetadata = (context, startPage) => {
     context.$set('timeToSearch', timeToSearch)
     const data = response.data
     context.$set('data.queryData', response.metadata)
-    if (response.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
+    if (response.metadata.unfilteredFacetsCount.tipoentidade && response.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
       context.$set('facets', response.metadata.unfilteredFacetsCount.tipoentidade)
+    } else {
+      context.$set('facets', [])
     }
     return data
   })
