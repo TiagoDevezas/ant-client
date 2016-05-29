@@ -9,11 +9,13 @@ export function cleanMarkup (value) {
                               .replace(/\s\s+/g, ' ')
     return clean
   }
+  return value
 }
 
 export function highlightQuery (value, query) {
   if (value && query) {
-    const split = query.split(' ')
+    let queryClean = query.replace('"', '')
+    const split = queryClean.split(' ')
     if (!split.length) {
       return value
     }
@@ -35,27 +37,52 @@ export function highlightQuery (value, query) {
 }
 
 export function truncateText (text, length) {
-  let split = text.split(' ').splice(0, length).join(' ')
-  return split + ' ...'
+  if (text) {
+    let split = text.split(' ').splice(0, length).join(' ')
+    return split + ' ...'
+  }
+  return text
 }
 
 export function stripTags (text) {
-  return text.replace(/<(.|\n)*?>/g, '')
+  if (text) {
+    return text.replace(/<(.|\n)*?>/g, '')
+  }
+  return text
 }
 
 export function isSearchable (value, attrObj, query) {
-  let newVal = stripTags(value)
-  let split = newVal.split(',')
-  let links = []
-  if (attrObj.searchable) {
-    for (let i in split) {
-      links.push('<a href="search?q=' + split[i] + '">' + highlightQuery(split[i], query) + '</a>')
+  if (value && attrObj && query) {
+    let newVal = stripTags(value)
+    let split = newVal.split(',')
+    let links = []
+    if (attrObj.searchable) {
+      for (let i in split) {
+        links.push('<a href="search?q=' + '%22' + split[i].trim() + '%22' + '">' + highlightQuery(split[i], query) + '</a>')
+      }
+      return links.join(', ')
     }
-    return links.join(', ')
+    return value
   }
   return value
 }
 
 export function iconify (value, iconName) {
-  return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
+  if (value && iconName) {
+    return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
+  }
+  return value
+}
+
+export function truncateSources (sources) {
+  if (sources) {
+    let sourcesArr = sources.split(', ')
+    if (sourcesArr.length === 1) {
+      return sourcesArr
+    }
+    if (sourcesArr.length > 1) {
+      return sourcesArr[0] + ' (mais ' + sourcesArr.slice(1, sourcesArr.length).length + ')'
+    }
+  }
+  return sources
 }

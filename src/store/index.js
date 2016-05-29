@@ -43,9 +43,7 @@ store.getEntitiesNew = (context) => {
     var xhr = new XMLHttpRequest()
     xhr.onload = function () {
       let data = JSON.parse(xhr.responseText)
-      if (data.data.length) {
-        resolve(data)
-      }
+      resolve(data)
     }
     xhr.open('GET', uri, true)
     xhr.send()
@@ -132,6 +130,6 @@ store.getEntitiesWithMetadata = (context, startPage) => {
   })
   .catch(e => {
     console.log(e)
-    // location.href = 'http://ant.fe.up.pt/502.html'
+    location.href = 'http://ant.fe.up.pt/502.html'
   })
 }

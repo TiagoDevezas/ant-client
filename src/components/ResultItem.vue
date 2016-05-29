@@ -4,7 +4,7 @@
     <div class="result-left">
       <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
         <div class="image-wrapper" v-if="metadata.metadata.decorations.photo" style="float: left; width: 75px;">
-          <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="90%">  
+          <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="100%">  
         </div>
       </div>
     </div>
@@ -48,7 +48,8 @@
 
         <div v-if="metadata.type.label === 'Funcionário' && defaultAttributes.length">
           <p>
-            <span>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+            <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
+            <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
           </p>
           <p>
             <span v-if="defaultAttributes[0].value">
@@ -59,19 +60,19 @@
             </span>
           </p>
           <p style="display: flex;">
-            <span v-if="defaultAttributes[2].value" style="display: flex; align-items: flex-start;">
+            <span v-if="defaultAttributes[2].value" style="display: flex; align-items: flex-end;">
               <span class="attr-label" style="display: inline-flex; margin-right: 3px;">{{{ defaultAttributes[2].label + ':' | iconify 'mail_outline' }}}</span>
               <span style="display: inline-flex; margin-right: 10px;">
                 {{{ defaultAttributes[2].value.split(',')[0] + ' ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[2] $route.query.q }}}
               </span>
             </span>
-            <span v-if="defaultAttributes[3].value" style="display: flex; align-items: flex-start;">
+            <span v-if="defaultAttributes[3].value" style="display: flex; align-items: flex-end;">
               <span class="attr-label" style="display: inline-flex; margin-right: 3px;">{{{ defaultAttributes[3].label + ':' | iconify 'phone' }}}</span>
               <span style="display: inline-flex; margin-right: 10px;">
                 {{{ defaultAttributes[3].value.split(',')[0] + ' ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[3] $route.query.q }}}
               </span>
             </span>
-            <span v-if="defaultAttributes[4].value" style="display: flex; align-items: flex-start;">
+            <span v-if="defaultAttributes[4].value" style="display: flex; align-items: flex-end;">
               <span class="attr-label" style="display: inline-flex; margin-right: 3px;">{{{ defaultAttributes[4].label + ':' | iconify 'business' }}}</span>
               <span style="display: inline-flex; margin-right: 10px;">
                 {{{ defaultAttributes[4].value.split(',')[0] + ' ' | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[4] $route.query.q}}}
@@ -84,7 +85,8 @@
 
         <div v-if="metadata.type.label === 'Departamento' && defaultAttributes.length">
           <p>
-            <span>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+            <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
+            <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
           </p>
           <p>
             <span v-if="defaultAttributes[0].value">
@@ -115,8 +117,50 @@
 
         <!-- Outros -->
 
-        <div v-if="metadata.type.label !== 'Notícia' && metadata.type.label !== 'Sala' && metadata.type.label !== 'Funcionário' && metadata.type.label !== 'Departamento'">   
-         <p>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</p>
+        <div v-if="metadata.type.label !== 'Notícia' && metadata.type.label !== 'Sala' && metadata.type.label !== 'Funcionário' && metadata.type.label !== 'Departamento'">
+
+        <!-- Estudante -->
+
+        <p v-if="metadata.type.label === 'Estudante'">
+          <span v-if="lastCourse !== ''">
+
+            <span v-if="!toggled">
+
+             <span style="display: block; margin: 4px 0; font-size: 13px; line-height: 1.15;">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
+             
+             <span style="display: block; margin: 4px 0; font-size: 13px; line-height: 1.15;" v-if="lastCourse.value">
+               <span class="attr-label">{{ lastCourse.label }}:</span> {{{ lastCourse.value | cleanMarkup | highlightQuery $route.query.q | isSearchable lastCourse $route.query.q}}}
+             </span>
+            </span>
+
+            <span v-if="toggled">
+             <span style="display: block; margin: 4px 0; font-size: 13px; line-height: 1.15;">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+             <span style="display: block; margin: 4px 0; font-size: 13px; line-height: 1.15;" v-if="lastCourse.value"> 
+              <span class="attr-label">{{ lastCourse.label }}:</span> {{{ lastCourse.value | cleanMarkup | highlightQuery $route.query.q | isSearchable lastCourse $route.query.q}}}
+             </span>
+            </span>
+            
+          </span>
+
+          <span v-if="lastCourse === ''">
+
+            <span v-if="!toggled">
+             <span style="display: block;">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
+            </span>
+
+            <span v-if="toggled">
+             <span style="display: block;">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+            </span>
+            
+          </span>     
+        </p>
+
+        <!-- Outros -->
+
+         <p v-if="metadata.type.label !== 'Estudante'">
+           <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
+           <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
+         </p>
          <span v-for="attr in defaultAttributes">
            <p v-if="attr.value && attr.value !== metadata.description"><span class="attr-label">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
          </span>
@@ -129,11 +173,11 @@
           <!-- Sala -->
 
           <div v-if="metadata.type.label === 'Sala' && extraAttributes.length" style="display: flex; align-items: stretch; margin-top: 20px;">
-            <div v-for="attr in extraAttributes" v-if="attr.label === 'Mapa'" style="margin-right: 30px; min-width: 300px; max-width: 300px;">
+            <div v-for="attr in defaultAttributes.slice(4, defaultAttributes.length)" v-if="attr.label === 'Mapa'" style="margin-right: 30px; min-width: 300px; max-width: 300px;">
               <img :src="attr.value" alt="" style="max-width: 100%;">    
             </div>
-            <div style="padding: 20px; margin-top: 0; width: 270px;" class="l2-attribute">
-              <span v-for="attr in extraAttributes">
+            <div style="padding: 20px; margin-top: 0; width: 300px;" class="l2-attribute">
+              <span v-for="attr in defaultAttributes.slice(4, defaultAttributes.length)" v-if="attr.value">
                 <p v-if="attr.value !== metadata.description && attr.label !== 'Mapa' && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
               </span>
             </div>
@@ -180,9 +224,8 @@
             <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
           </span>
           <div class="result-l2-attributes">
-            <div v-for="attrs in levelTwoAttributes">
-
-              <div v-if="metadata.type.label !== 'Estudante'">              
+            <div v-for="attrs in levelTwoAttributes" v-if="metadata.type.label !== 'Estudante'">
+              <div>              
                 <span class="attr-relationship" v-if="attrs.relationship">
                   {{ attrs.relationship.label }}
                 </span>
@@ -192,19 +235,31 @@
                   </span>
                 </div>
               </div>
+            </div>
 
-              <div v-if="metadata.type.label === 'Estudante'" style="display: flex; align-items: center; margin-top: 10px;" class="l2-attribute">
+            <!-- Estudante -->
+
+            <div v-for="attr in sortedCourses" v-if="metadata.type.label === 'Estudante'">
+              <div style="display: flex; align-items: center; margin-top: 10px;" class="l2-attribute">
                 <div style="margin: 0 30px;">
                   <i class="material-icons" style="font-size: 38px;">school</i>
                 </div>
-                <div>                
-                  <span v-for="attr in attrs.data">
-                    <p v-if="attr.value !== metadata.description"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}</p>
-                  </span>
+                <div>
+                <p v-if="attr.course">           
+                <span class="attr-label" style="font-weight: bold;">Curso:</span> {{{ attr.course | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}
+                </p>
+                <p v-if="attr.type">
+                  
+                <span class="attr-label" style="font-weight: bold;">Tipo de Inscrição:</span> {{{ attr.type | cleanMarkup | highlightQuery $route.query.q }}}
+                </p>
+                <p v-if="attr.year">
+                  
+                <span class="attr-label" style="font-weight: bold;">Ano Letivo:</span> {{{ attr.year | cleanMarkup | highlightQuery $route.query.q }}}
+                </p>
                 </div>
               </div>
-
             </div>
+
           </div>
         </div>
      </div>     
@@ -218,10 +273,10 @@
 </template>
 
 <script>
-import { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify } from '../filters'
+import { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify, truncateSources } from '../filters'
 
 export default {
-  filters: { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify },
+  filters: { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify, truncateSources },
   props: ['metadata', 'category'],
   data () {
     return {
@@ -230,7 +285,9 @@ export default {
       levelTwoAttributes: [],
       toggled: false,
       clicked: false,
-      dropdownOpen: false
+      dropdownOpen: false,
+      lastCourse: '',
+      sortedCourses: []
     }
   },
   methods: {
@@ -321,7 +378,7 @@ export default {
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Sala':
-          labelsToFilter = ['Descrição', 'Responsável', 'Edifício', 'Piso']
+          labelsToFilter = ['Descrição', 'Responsável', 'Edifício', 'Piso', 'Mapa', 'Utilização', 'Telefone', 'Código', 'Acesso Mobilidade Reduzida', 'Ativo', 'Computador', 'Projetor', 'Área']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Departamento':
@@ -367,6 +424,31 @@ export default {
           }
         }
       }
+    },
+    sortCourses (courseData) {
+      if (courseData && courseData[0].relationship.label === 'Inscrição') {
+        let objs = []
+        for (let i in courseData) {
+          let obj = {}
+          for (let j in courseData[i].data) {
+            if (courseData[i].data[j].label === 'Curso') {
+              obj.course = courseData[i].data[j].value
+              obj.searchable = true
+            } else if (courseData[i].data[j].label === 'Tipo de Inscrição') {
+              obj.type = courseData[i].data[j].value
+            } else if (courseData[i].data[j].label === 'Ano Letivo') {
+              obj.year = courseData[i].data[j].value
+            }
+          }
+          objs.push(obj)
+        }
+        objs.sort((a, b) => {
+          return parseInt(b.year.split('/')[1], 10) - parseInt(a.year.split('/')[1], 10)
+        })
+        let lastCourse = { label: 'Curso', value: objs[0].course, searchable: true }
+        this.$set('lastCourse', lastCourse)
+        this.$set('sortedCourses', objs)
+      }
     }
   },
   computed: {
@@ -386,6 +468,9 @@ export default {
     // this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes)
     // this.$set('extraAttributes', this.metadata.metadata.decorations.attributes)
     this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
+    if ((this.$route.query.tipoentidade === 'Estudante' || !this.$route.query.tipoentidade) && this.levelTwoAttributes.length) {
+      this.sortCourses(this.metadata.metadata.decorations.levelTwoAttributes)
+    }
     window.addEventListener('mousedown', this.closeDropdowns, false)
   }
 }
@@ -419,25 +504,26 @@ export default {
 
 .result-title {
   position: relative;
-  overflow: hidden;
   padding: 0;
   margin: 0;
-  /*margin-bottom: 0.2em;*/
-  max-width: 100%;
 }
+
 .result-title h2 {
   font-size: 18px;
   font-weight: normal;
   color: #333;
   line-height: 1;
   margin: 0;
-  margin-bottom: 5px;
-  /*padding-left: 10px;*/
 }
 
 .result-title h2 a {
+  display: inline-block;
   text-decoration: none;
   color: #1a0dab;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 650px;
 }
 
 .result-title h2 a:hover {
@@ -449,8 +535,11 @@ export default {
 }
 
 .result-link {
-  font-size: 1.1em;
+/*  font-size: 16px;
   position: relative;
+  line-height: 14px;*/
+  display: flex;
+  align-items: center;
 }
 
 .dropdown {
@@ -497,7 +586,8 @@ span.result-url {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .material-icons.md-custom {
@@ -536,9 +626,10 @@ span.result-url {
 }
 
 .result p {
-  margin: 0 0 5px;
-  line-height: 1.3;
+  margin: 4px 0;
   max-width: 650px;
+  font-size: 13px;
+  line-height: 1.15;
 }
 
 .result-icon {
@@ -651,14 +742,13 @@ span.result-url {
   color: #f5f7fa;
   display: inline-block;
   font-size: 10px;
-  line-height: 1.2em;
-  padding: 4px 20px;
+  line-height: 16px;
+  padding: 0 20px;
   white-space: nowrap;
   top: 0;
   font-weight: bold;
-  float: left;
   margin-right: 5px;
-  margin-top: 2px; 
+  margin-top: 3px;
 }
 .tag-sala {
   background: #9B59B6;
