@@ -103,14 +103,14 @@
             <span class="news-source">
               {{{ metadata.sources.join(', ') }}}
             </span>
-            <span class="news-date">
+            <span class="news-date" v-if="defaultAttributes[0].value">
               - {{ defaultAttributes[0].value.split(', ')[1] + ' às ' + defaultAttributes[0].value.split(', ')[2] }}
             </span>
           </p>
-          <p v-if="!toggled">
+          <p v-if="!toggled && defaultAttributes[1].value">
             {{{ defaultAttributes[1].value | cleanMarkup | stripTags | highlightQuery $route.query.q | truncateText 20 }}}
           </p>
-          <p v-if="toggled">
+          <p v-if="toggled && defaultAttributes[1].value">
             {{{ defaultAttributes[1].value | cleanMarkup | highlightQuery $route.query.q }}}
           </p>
         </div>
@@ -176,7 +176,7 @@
             <div v-for="attr in defaultAttributes.slice(4, defaultAttributes.length)" v-if="attr.label === 'Mapa'" style="margin-right: 30px; min-width: 300px; max-width: 300px;">
               <img :src="attr.value" alt="" style="max-width: 100%;">    
             </div>
-            <div style="padding: 20px; margin-top: 0; width: 300px;" class="l2-attribute">
+            <div style="padding: 20px; margin-top: 0; width: 100%;" class="l2-attribute">
               <span v-for="attr in defaultAttributes.slice(4, defaultAttributes.length)" v-if="attr.value">
                 <p v-if="attr.value !== metadata.description && attr.label !== 'Mapa' && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
               </span>
@@ -224,7 +224,10 @@
             <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
           </span>
           <div class="result-l2-attributes">
-            <div v-for="attrs in levelTwoAttributes" v-if="metadata.type.label !== 'Estudante'">
+
+            <!-- Geral -->
+
+            <div v-for="attrs in levelTwoAttributes" v-if="metadata.type.label !== 'Estudante' && metadata.type.label !== 'Funcionário'">
               <div>              
                 <span class="attr-relationship" v-if="attrs.relationship">
                   {{ attrs.relationship.label }}
@@ -235,6 +238,38 @@
                   </span>
                 </div>
               </div>
+            </div>
+
+            <!-- Funcionário -->
+
+            <div v-if="metadata.type.label === 'Funcionário' && levelTwoAttributes">
+              <div v-for="attrs in levelTwoAttributes | filterBy 'Posição' in 'relationship.label'" v-if="attrs.relationship.label === 'Posição'">
+                <p v-if="$index === 0" style="font-size: 16px; margin-top: 15px;">Posições</p>
+                <div class="l2-attribute">                
+                  <span v-for="attr in attrs.data | orderBy 'label' -1">
+                    <p v-if="attr.value !== metadata.description"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}</p>
+                  </span>
+                </div>
+              </div>
+
+              <div v-for="attrs in levelTwoAttributes | filterBy 'Função' in 'relationship.label'" v-if="attrs.relationship.label === 'Função'">
+                <p v-if="$index === 0" style="font-size: 16px; margin-top: 15px;">Funções</p>
+                <div class="l2-attribute">                
+                  <span v-for="attr in attrs.data | orderBy 'label' -1">
+                    <p v-if="attr.value !== metadata.description"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}</p>
+                  </span>
+                </div>
+              </div>
+
+              <div v-for="attrs in levelTwoAttributes | filterBy 'Investigação' in 'relationship.label'" v-if="attrs.relationship.label === 'Investigação'">
+                <p v-if="$index === 0" style="font-size: 16px; margin-top: 15px;">Investigação</p>
+                <div class="l2-attribute">                
+                  <span v-for="attr in attrs.data | orderBy 'label' -1">
+                    <p v-if="attr.value !== metadata.description"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q}}}</p>
+                  </span>
+                </div>
+              </div>
+
             </div>
 
             <!-- Estudante -->
@@ -679,6 +714,7 @@ span.result-url {
   background-color: #f7f7f7;
   padding: 1em;
   border-radius: 5px;
+  margin-top: 10px;
   margin-bottom: 25px;
   border: 1px solid #e0e0e0;
 }
