@@ -137,7 +137,7 @@ export default {
         client_resolution: (window.screen.width + 'x' + window.screen.height).toString()
       }
       if (process.env.NODE_ENV === 'development') {
-        values.test = true
+        values.is_test = true
       }
       this.$http.post('http://ant.fe.up.pt/api/log/event/search', values, {emulateJSON: true})
     }

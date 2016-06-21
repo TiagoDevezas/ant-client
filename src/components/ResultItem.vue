@@ -355,7 +355,7 @@ export default {
       }
 
       if (process.env.NODE_ENV === 'development') {
-        values.test = true
+        values.is_test = true
       }
 
       if (!this.clicked && arguments.length === 0) {
