@@ -1,5 +1,4 @@
 <template>
-  {{ generateFeedLink }}
   <about-link link-text="Sobre" link-path="about"></about-link>
   <div id="search">
   <div id="header-wrapper">
@@ -14,7 +13,7 @@
     <result-filter :query-params="$route.query.q" :entity-types="getEntityTypes"></result-filter>
   </div>
   <div class="content-wrap-results">
-    <div class="cw">
+    <div class="cw"> 
       <result-empty v-if="data.queryData.count === 0"></result-empty>
       <div class="results-wrapper" v-if="data.queryData.count > 0">
         <result-counter
@@ -22,7 +21,8 @@
           :count="data.queryData.count"
           :curr-page="data.queryData.page"
           :time-to-search="timeToSearch">
-        </result-counter>  
+          <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
+        </result-counter>
         <div class="results">
           <result-item v-for="entity in data.entities | orderBy 'rank'" :metadata="entity" :category="data.queryData.category" track-by="uri">
           </result-item>
@@ -49,6 +49,7 @@ import ResultPaginator from './ResultGPaginator'
 import ResultFilter from './ResultFilter'
 import ResultEmpty from './ResultEmpty'
 import AboutLink from './AboutLink'
+import FeedButton from './FeedButton'
 
 export default {
   components: {
@@ -58,7 +59,8 @@ export default {
     ResultPaginator,
     ResultFilter,
     ResultEmpty,
-    AboutLink
+    AboutLink,
+    FeedButton
   },
 
   data () {
@@ -109,11 +111,35 @@ export default {
       }
     }
   },
+  watch: {
+    'data.queryData': function (val, oldVal) {
+      if (val && this.$route.query.q) {
+        this.logSearchData()
+      }
+    }
+  },
   route: {
     data (transition) {
       document.title = this.$route.query.q + ' - ANT'
       store.getEntitiesWithMetadata(this)
       // store.getEntitiesNew(this)
+    }
+  },
+  methods: {
+    logSearchData () {
+      // console.log(this.data.queryData.length)
+      let values = {
+        query: this.$route.query.q.toString(),
+        query_category: this.data.queryData.category.toString(),
+        results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
+        results_count: this.data.queryData.count.toString(),
+        client_user_agent: window.navigator.userAgent.toString(),
+        client_resolution: (window.screen.width + 'x' + window.screen.height).toString()
+      }
+      if (process.env.NODE_ENV === 'development') {
+        values.test = true
+      }
+      this.$http.post('http://ant.fe.up.pt/api/log/event/search', values, {emulateJSON: true})
     }
   }
 }
