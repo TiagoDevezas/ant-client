@@ -52,11 +52,28 @@ store.getEntitiesNew = (context) => {
   requestQueue.push(lastRequest)
 }
 
-store.getEntities = (context, startPage) => {
+store.getEntities = (context) => {
   const query = context.$route.query.q
   const start = context.$route.query.start
   const entityType = context.$route.query.tipoentidade
   return context.$http.get(JSON_SEARCH_URL, { q: query, tipoentidade: entityType, start: start })
+}
+
+store.getData = (context) => {
+  t0 = performance.now()
+  store.getEntities(context).then(response => {
+    let t1 = performance.now()
+    let timeToSearch = ((t1 - t0) * 0.001).toFixed(2)
+    context.$set('timeToSearch', timeToSearch)
+    let data = response.data
+    context.$set('data.queryData', data.metadata)
+    context.$set('data.entities', data.data)
+    if (data.metadata.unfilteredFacetsCount.tipoentidade && data.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
+      context.$set('facets', data.metadata.unfilteredFacetsCount.tipoentidade)
+    } else {
+      context.$set('facets', [])
+    }
+  })
 }
 
 store.getEntityMetadata = (context, dataArray) => {

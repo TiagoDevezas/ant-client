@@ -121,7 +121,8 @@ export default {
   route: {
     data (transition) {
       document.title = this.$route.query.q + ' - ANT'
-      store.getEntitiesWithMetadata(this)
+      // store.getEntitiesWithMetadata(this)
+      store.getData(this)
       // store.getEntitiesNew(this)
     }
   },

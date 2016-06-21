@@ -41,6 +41,7 @@ export default {
     margin-left: 10px;
     /*border: 1px solid rgba(0, 0, 0, .15);*/
     background-color: #e19126;
+    border-radius: 20%;
   }
   .feed-link {
     color: #fff;

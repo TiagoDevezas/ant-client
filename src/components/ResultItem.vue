@@ -3,12 +3,12 @@
   <div class="result-body">
     <div class="result-left">
       <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
-        <div class="image-wrapper" v-if="metadata.metadata.decorations.photo" style="float: left; width: 75px;">
-          <img :src="metadata.metadata.decorations.photo" :alt="setAltText" :title="metadata.description" width="100%">  
+        <div class="image-wrapper" style="float: left; width: 75px;">
+          <img :src="getPicture" :alt="setAltText" :title="metadata.description" width="100%">  
         </div>
       </div>
     </div>
-    <div class="result-right" :class="{'pad-left': metadata.metadata.decorations.photo}">
+    <div class="result-right" :class="{'pad-left': getPicture}">
       <div class="result-title">
          <h2><a href="{{ metadata.link }}" @click="sendClickData">{{ metadata.description }}</a></h2>
        </div>
@@ -490,9 +490,9 @@ export default {
     toggleText () {
       return !this.toggled ? 'Expandir' : 'Fechar'
     },
-    // getPicture () {
-    //   return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
-    // },
+    getPicture () {
+      return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
+    },
     setAltText () {
       return 'Foto de ' + this.metadata.description
     }
@@ -500,8 +500,6 @@ export default {
   ready () {
     this.setSearchableAttrs()
     this.setVisibleAttrs(this.metadata.type.label)
-    // this.$set('defaultAttributes', this.metadata.metadata.decorations.attributes)
-    // this.$set('extraAttributes', this.metadata.metadata.decorations.attributes)
     this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
     if ((this.$route.query.tipoentidade === 'Estudante' || !this.$route.query.tipoentidade) && this.levelTwoAttributes.length) {
       this.sortCourses(this.metadata.metadata.decorations.levelTwoAttributes)
