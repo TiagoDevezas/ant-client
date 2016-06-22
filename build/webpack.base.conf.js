@@ -64,5 +64,10 @@ module.exports = {
   },
   eslint: {
     formatter: require('eslint-friendly-formatter')
+  },
+  vue: {
+    loaders: {
+      'scss': 'vue-style!css!sass'
+    }
   }
 }

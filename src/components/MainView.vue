@@ -49,7 +49,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  
   .wrapper {
     width: 100%;
     overflow: hidden;
