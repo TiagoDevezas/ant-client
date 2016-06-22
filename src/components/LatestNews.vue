@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-news-container search-wrap">
+  <div class="latest-news-container">
     <p class="latest-news-heading">Últimas notícias</p>
     <div class="latest-news" v-for="news in newsData">
       <h2 class="news-title"><a href="{{ news.link }}">{{ news.description }}</a></h2>
@@ -46,7 +46,6 @@
 
 .news-title a {
   text-decoration: none;
-  color: #1a0dab;
 }
 
 .news-title a:hover {

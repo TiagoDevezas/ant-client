@@ -36,19 +36,17 @@ export default {
 
 <style lang="scss">
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+$body-background: #fff;
+$link: #1a0dab;
+
 @import "../../node_modules/bulma/bulma";
+
 
 html {
   height: 100%;
 }
 body {
-  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
-  font-size: 100%;
-  background-color: #fff;
-  padding: 0;
-  border: 0;
-  margin: 0;
-  vertical-align: baseline;
   height: 100%;
 }
 #main {

@@ -1,25 +1,35 @@
 <template>
   <about-link link-text="Sobre" link-path="about"></about-link>
-  <div class="wrapper">
-    <div class="content-container">
-      <div class="logo-wrap">
+  <div class="wrapper">  
+    <div class="columns is-marginless is-desktop">
+      <div class="column is-half is-offset-one-quarter is-paddingless">
         <a v-link="{name: 'home'}" id="logo-link">
           ANT Pesquisa de Informação na Universidade do Porto
         </a>
       </div>
-      <div class="text-wrap">
+    </div>
+    <div class="columns is-marginless is-desktop">
+      <div class="column is-half is-offset-one-quarter center-text is-paddingless">
         <p class="app-name">ANT</p>
       </div>
-      <div class="search-wrap">
+    </div>
+    <div class="columns is-marginless is-desktop">
+      <div class="column is-4 is-offset-one-third center-text">
         <search-form is-focused="true"></search-form>
       </div>
-      <div class="text-wrap">
+    </div>
+    <div class="columns is-marginless is-desktop">
+      <div class="column is-half is-offset-one-quarter center-text">
         <p class="app-description">Pesquisa de Informação na Universidade do Porto.</p>
       </div>
-      <latest-news :news-data="latestNews"></latest-news>
+    </div>
+    <div class="columns is-marginless is-desktop">
+      <div class="column is-half is-offset-one-quarter">
+        <latest-news :news-data="latestNews"></latest-news>
+      </div>
     </div>
   </div>
-  <div id="footer">
+  <div id="footer" class="center-text">
     InfoLab, FEUP
   </div>
 </template>
@@ -49,65 +59,34 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  
+<style lang="scss"> 
   .wrapper {
-    width: 100%;
-    overflow: hidden;
     padding-top: 200px;
     padding-bottom: 60px;
   }
-  .content-container {
-    position: relative;
-    margin: 0 auto;
-    max-width: 1008px;
-    padding: 0 7px;
-  }
-  .logo-wrap, .text-wrap {
-    position: relative;
-    display: block;
-    max-width: 500px;
-    margin: auto;
-    margin-bottom: 0.8em;
-  }
-  .text-wrap {
-    margin-bottom: 0;
-    text-align: center;
-  }
-  .app-name {
-    margin: 0;
-    font-size: 35px;
-    line-height: 1;
-    color: #4C4C4C;
-  }
-  .app-description {
-    font-size: 1em;
-    line-height: 1;
-    color: #A3A3A3;
-  }
-
   #logo-link {
     background-image: url("../assets/ant-logo.svg");
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: 150px 100px;
-    width: 150px;
     height: 100px;
-    margin: auto;
     display: block;
-    position: relative;
-    text-align: center;
-    color: transparent;
     text-indent: -9999px;
-    font-size: 0px;
   }
-  .search-wrap {
-    padding: 1.3em 0.8em 1em;
-    max-width: 634px;
-    margin: 0 auto;
-    display: block;
-    float: none;
-    width: 70%;
+  .center-text {
+    text-align: center;
+  }
+  .is-paddingless {
+    padding: 0;
+  }
+  .app-name {
+    font-size: 35px;
+    color: #4C4C4C;
+  }
+  .app-description {
+    font-size: 16px;
+    line-height: 1;
+    color: #A3A3A3;
   }
   #footer {
     position: absolute;
@@ -117,7 +96,6 @@ export default {
     width: 100%;
     background-color: #F7F7F7;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
-    text-align: center;
     color: #444444;
     font-size: 14px;
   }
