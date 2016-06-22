@@ -51,7 +51,6 @@
 
         <div v-if="metadata.type.label === 'Funcionário' && defaultAttributes.length">
           <p>
-            {{{ metadata.sources.join(', ') }}}
             <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
             <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
           </p>
@@ -401,6 +400,7 @@ export default {
       filtered.sort(function (a, b) {
         return a.order - b.order
       })
+      console.log(JSON.stringify(filtered))
       this.$set('defaultAttributes', filtered)
       this.$set('extraAttributes', unfiltered)
     },
@@ -495,7 +495,6 @@ export default {
       Object.keys(docData).forEach(key => {
         formatted.push({label: this.$t(key), value: docData[key]})
       })
-      console.log(JSON.stringify(this.metadata))
       this.$set('metadata.document', formatted)
     }
   },
