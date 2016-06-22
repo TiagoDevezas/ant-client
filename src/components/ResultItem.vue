@@ -1,5 +1,8 @@
 <template>
 <div class="result">
+  <span v-for="value in metadata.document">
+      {{ value | json }} <br>
+  </span>
   <div class="result-body">
     <div class="result-left">
       <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
@@ -48,6 +51,7 @@
 
         <div v-if="metadata.type.label === 'Funcionário' && defaultAttributes.length">
           <p>
+            {{{ metadata.sources.join(', ') }}}
             <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
             <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
           </p>
@@ -401,11 +405,11 @@ export default {
       this.$set('extraAttributes', unfiltered)
     },
     setVisibleAttrs (entityType) {
-      let attrsArray = this.metadata.metadata.decorations.attributes.data
+      let attrsArray = this.metadata.document
       let labelsToFilter = []
       switch (entityType) {
         case 'Funcionário':
-          labelsToFilter = ['Código', 'Sigla', 'E-mail', 'Telefone', 'Sala']
+          labelsToFilter = ['Código', 'Sigla', 'E-mail', 'Telefone', 'Voip', 'Sala']
           this.filterByLabels(attrsArray, labelsToFilter)
           break
         case 'Estudante':
@@ -484,6 +488,15 @@ export default {
         this.$set('lastCourse', lastCourse)
         this.$set('sortedCourses', objs)
       }
+    },
+    formatData () {
+      let docData = this.metadata.document
+      let formatted = []
+      Object.keys(docData).forEach(key => {
+        formatted.push({label: this.$t(key), value: docData[key]})
+      })
+      console.log(JSON.stringify(this.metadata))
+      this.$set('metadata.document', formatted)
     }
   },
   computed: {
@@ -498,11 +511,12 @@ export default {
     }
   },
   ready () {
-    this.setSearchableAttrs()
+    this.formatData()
+    // this.setSearchableAttrs()
     this.setVisibleAttrs(this.metadata.type.label)
-    this.$set('levelTwoAttributes', this.metadata.metadata.decorations.levelTwoAttributes)
+    this.$set('levelTwoAttributes', this.metadata.document)
     if ((this.$route.query.tipoentidade === 'Estudante' || !this.$route.query.tipoentidade) && this.levelTwoAttributes.length) {
-      this.sortCourses(this.metadata.metadata.decorations.levelTwoAttributes)
+      // this.sortCourses(this.metadata.metadata.decorations.levelTwoAttributes)
     }
     window.addEventListener('mousedown', this.closeDropdowns, false)
   }

@@ -1,6 +1,9 @@
 import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+
+import Locales from './locales/locales'
 
 import App from './components/App'
 import MainView from './components/MainView'
@@ -10,6 +13,14 @@ import NotFoundView from './components/NotFoundView'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.use(VueI18n)
+
+Vue.config.lang = 'pt'
+
+// set locales
+Object.keys(Locales).forEach(function (lang) {
+  Vue.locale(lang, Locales[lang])
+})
 
 export var router = new VueRouter({history: true})
 
