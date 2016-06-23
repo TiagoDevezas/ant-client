@@ -37,10 +37,9 @@ export default {
 <style lang="scss">
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-$body-background: #fff;
-$link: #1a0dab;
+$blue: #4285F4;
 
-@import "../../node_modules/bulma/bulma";
+@import "../../node_modules/picnic/src/picnic";
 
 
 html {

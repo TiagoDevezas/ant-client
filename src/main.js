@@ -24,17 +24,6 @@ Object.keys(Locales).forEach(function (lang) {
 
 export var router = new VueRouter({history: true})
 
-// Vue.http.interceptors.push(function () {
-//   return {
-//     request: function (request) {
-//       return request
-//     },
-//     response: function (response) {
-//       return response
-//     }
-//   }
-// })
-
 router.map({
   '/': {
     name: 'home',

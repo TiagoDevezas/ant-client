@@ -62,13 +62,17 @@
     },
     route: {
       data: function (transition) {
-        this.$set('fromPath', { name: transition.from.name, query: transition.from.query })
+        if (Object.keys(transition.from).length) {
+          this.$set('fromPath', { name: transition.from.name, query: transition.from.query })
+        } else {
+          this.$set('fromPath', { name: 'home' })
+        }
       }
     }
   }
 </script>
 
-<style>
+<style lang="scss">
   #about-wrapper {
     padding-top: 0.5em;
     position: relative;
@@ -104,7 +108,9 @@
 
   #about-wrapper a {
     text-decoration: none;
-    color: #1a0dab;
+    &:hover, &:focus, &:active {
+      text-decoration: underline;
+    }
   }
 
   .dev-link {

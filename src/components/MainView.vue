@@ -1,32 +1,24 @@
 <template>
   <about-link link-text="Sobre" link-path="about"></about-link>
-  <div class="wrapper">  
-    <div class="columns is-marginless is-desktop">
-      <div class="column is-half is-offset-one-quarter is-paddingless">
-        <a v-link="{name: 'home'}" id="logo-link">
-          ANT Pesquisa de Informação na Universidade do Porto
-        </a>
-      </div>
+  <div class="wrapper flex">  
+    <div class="full">   
+      <a v-link="{name: 'home'}" id="logo-link">
+        ANT Pesquisa de Informação na Universidade do Porto
+      </a>
     </div>
-    <div class="columns is-marginless is-desktop">
-      <div class="column is-half is-offset-one-quarter center-text is-paddingless">
-        <p class="app-name">ANT</p>
-      </div>
+    <div class="full center-text">
+      <span class="app-name">ANT</span>
     </div>
-    <div class="columns is-marginless is-desktop">
-      <div class="column is-6 is-offset-3 center-text">
+    <div class="flex form-container">
+      <div class="full is-paddingless">
         <search-form is-focused="true"></search-form>
       </div>
     </div>
-    <div class="columns is-marginless is-desktop">
-      <div class="column is-half is-offset-one-quarter center-text">
-        <p class="app-description">Pesquisa de Informação na Universidade do Porto.</p>
-      </div>
+    <div class="full center-text">
+        <span class="app-description">Pesquisa de Informação na Universidade do Porto.</span>
     </div>
-    <div class="columns is-marginless is-desktop">
-      <div class="column is-half is-offset-one-quarter">
+    <div class="full">
         <latest-news :news-data="latestNews"></latest-news>
-      </div>
     </div>
   </div>
   <div id="footer" class="center-text">
@@ -61,8 +53,11 @@ export default {
 
 <style lang="scss"> 
   .wrapper {
-    padding-top: 200px;
-    padding-bottom: 60px;
+    padding: 150px 10px 60px 10px;
+    .form-container {
+      margin: 0 auto;
+      max-width: 650px;
+    }
   }
   #logo-link {
     background-image: url("../assets/ant-logo.svg");
@@ -70,8 +65,10 @@ export default {
     background-repeat: no-repeat;
     background-size: 150px 100px;
     height: 100px;
+    width: 150px;
     display: block;
     text-indent: -9999px;
+    margin: 0 auto;
   }
   .center-text {
     text-align: center;

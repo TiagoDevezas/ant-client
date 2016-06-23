@@ -1,7 +1,7 @@
 <template>
-  <div class="latest-news-container">
-    <p class="latest-news-heading">Últimas notícias</p>
-    <div class="latest-news" v-for="news in newsData">
+  <div class="flex latest-news-container">
+    <p class="latest-news-heading full">Últimas notícias</p>
+    <div class="latest-news full" v-for="news in newsData">
       <h2 class="news-title"><a href="{{ news.link }}">{{ news.description }}</a></h2>
       <p class="news-meta">
         <span class="news-source">{{ news.sources.join(', ')}}</span>
@@ -32,15 +32,16 @@
 }
 
 .latest-news {
-  margin-bottom: 14px;
+  margin-bottom: 5px;
 }
 
 .news-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: normal;
-  color: #333;
+  /*color: #333;*/
   line-height: 18px;
   margin: 0;
+  padding: 0;
   /*padding-left: 10px;*/
 }
 
@@ -53,7 +54,7 @@
 }
 
 .news-meta {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 16px;
   margin: 0;
 }

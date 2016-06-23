@@ -86,7 +86,6 @@ export default {
   }
 
   #search-form-home, .unfocused {
-    font-size: 1.14em;
     padding: 0.5em 3.5em 0.5em 0.75em;
     box-sizing: border-box;
     border-radius: 2px;
@@ -100,7 +99,6 @@ export default {
     border: 1px solid #4285f4;
   }
   #search-input-home {
-    font-size: 1.1em;
     font-weight: normal;
     color: #333333;
     display: block;
@@ -116,18 +114,18 @@ export default {
   }
 
   ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-      color:    #ddd;
+      color:    #ccc;
   }
   :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-     color:    #ddd;
+     color:    #ccc;
      opacity:  1;
   }
   ::-moz-placeholder { /* Mozilla Firefox 19+ */
-     color:    #ddd;
+     color:    #ccc;
      opacity:  1;
   }
   :-ms-input-placeholder { /* Internet Explorer 10-11 */
-     color:    #ddd;
+     color:    #ccc;
   }
 
   #search-button-home {
