@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="columns is-marginless is-desktop">
-      <div class="column is-4 is-offset-one-third center-text">
+      <div class="column is-6 is-offset-3 center-text">
         <search-form is-focused="true"></search-form>
       </div>
     </div>

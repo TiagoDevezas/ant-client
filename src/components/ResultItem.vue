@@ -1,9 +1,8 @@
 <template>
 <div class="result">
-  <span v-for="value in metadata.document">
-      {{ value | json }} <br>
-  </span>
-  <div class="result-body">
+  <test-component :metadata="metadata" :entity-type="selectedEntityType" :category="category">
+  </test-component>
+<!--   <div class="result-body">
     <div class="result-left">
       <div class="result-picture" v-if="metadata.type.label === 'Estudante' || metadata.type.label === 'Funcionário'">
         <div class="image-wrapper" style="float: left; width: 75px;">
@@ -16,7 +15,7 @@
          <h2><a href="{{ metadata.link }}" @click="sendClickData">{{ metadata.description }}</a></h2>
        </div>
        <div class="result-link">
-         <div class="tag tag-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</div>
+         <span class="tag tag-{{ metadata.type.label | lowercase }} is-small">{{ metadata.type.label }}</span>
          <span class="result-url">{{ metadata.link }}</span>
          <div class="dropdown" v-if="extraAttributes.length || levelTwoAttributes.length">
            <a @click.prevent="toggleDropdown"><i class="material-icons md-custom">arrow_drop_down</i></a>
@@ -24,12 +23,13 @@
              <span class="dropdown-text">{{ toggleText }}</span>
            </div>
          </div>
-       </div>
-       <div class="result-snippet">
+       </div> -->
+
+       <!-- <div class="result-snippet"> -->
 
        <!-- Sala -->
 
-        <div v-if="metadata.type.label === 'Sala' && defaultAttributes.length">
+        <!-- <div v-if="metadata.type.label === 'Sala' && defaultAttributes.length">
           <p>
             <span v-if="defaultAttributes[0].value">{{{ defaultAttributes[0].value + ', '  | highlightQuery $route.query.q }}}</span>
             <span>{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | isSearchable defaultAttributes[0] $route.query.q }}}</span>
@@ -45,11 +45,11 @@
               <span class="attr-label">{{ defaultAttributes[3].label }}:</span> {{{ defaultAttributes[3].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[3] $route.query.q }}}
             </span>
           </p>
-        </div>
+        </div> -->
 
         <!-- Funcionário -->
 
-        <div v-if="metadata.type.label === 'Funcionário' && defaultAttributes.length">
+        <!-- <div v-if="metadata.type.label === 'Funcionário' && defaultAttributes.length">
           <p>
             <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
             <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
@@ -82,11 +82,11 @@
               </span>
             </span>
           </p>
-        </div>
+        </div> -->
 
         <!-- Departamento -->
 
-        <div v-if="metadata.type.label === 'Departamento' && defaultAttributes.length">
+        <!-- <div v-if="metadata.type.label === 'Departamento' && defaultAttributes.length">
           <p>
             <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
             <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
@@ -96,12 +96,12 @@
               <span class="attr-label">{{ defaultAttributes[0].label }}:</span> {{{ defaultAttributes[0].value | cleanMarkup | highlightQuery $route.query.q | isSearchable defaultAttributes[0] $route.query.q }}}
             </span>
           </p>
-        </div>
+        </div> -->
 
 
         <!-- Notícia -->
         
-        <div v-if="metadata.type.label === 'Notícia' && defaultAttributes.length">
+        <!-- <div v-if="metadata.type.label === 'Notícia' && defaultAttributes.length">
           <p class="news-meta">
             <span class="news-source">
               {{{ metadata.sources.join(', ') }}}
@@ -116,15 +116,15 @@
           <p v-if="toggled && defaultAttributes[1].value">
             {{{ defaultAttributes[1].value | cleanMarkup | highlightQuery $route.query.q }}}
           </p>
-        </div>
+        </div> -->
 
         <!-- Outros -->
 
-        <div v-if="metadata.type.label !== 'Notícia' && metadata.type.label !== 'Sala' && metadata.type.label !== 'Funcionário' && metadata.type.label !== 'Departamento'">
+        <!-- <div v-if="metadata.type.label !== 'Notícia' && metadata.type.label !== 'Sala' && metadata.type.label !== 'Funcionário' && metadata.type.label !== 'Departamento'"> -->
 
         <!-- Estudante -->
 
-        <p v-if="metadata.type.label === 'Estudante'">
+        <!-- <p v-if="metadata.type.label === 'Estudante'">
           <span v-if="lastCourse !== ''">
 
             <span v-if="!toggled">
@@ -156,11 +156,11 @@
             </span>
             
           </span>     
-        </p>
+        </p> -->
 
         <!-- Outros -->
 
-         <p v-if="metadata.type.label !== 'Estudante'">
+         <!-- <p v-if="metadata.type.label !== 'Estudante'">
            <span v-if="!toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}</span>
            <span v-if="toggled">{{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}</span>
          </p>
@@ -171,11 +171,11 @@
 
 
        </div>
-        <div class="result-more-data" :class="{ 'toggle': toggled }">
+        <div class="result-more-data" :class="{ 'toggle': toggled }"> -->
 
           <!-- Sala -->
 
-          <div v-if="metadata.type.label === 'Sala' && extraAttributes.length" style="display: flex; align-items: stretch; margin-top: 20px;">
+          <!-- <div v-if="metadata.type.label === 'Sala' && extraAttributes.length" style="display: flex; align-items: stretch; margin-top: 20px;">
             <div v-for="attr in defaultAttributes.slice(4, defaultAttributes.length)" v-if="attr.label === 'Mapa'" style="margin-right: 30px; min-width: 300px; max-width: 300px;">
               <img :src="attr.value" alt="" style="max-width: 100%;">    
             </div>
@@ -184,11 +184,11 @@
                 <p v-if="attr.value !== metadata.description && attr.label !== 'Mapa' && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
               </span>
             </div>
-          </div>
+          </div> -->
 
           <!-- Departamento -->
 
-          <div v-if="metadata.type.label === 'Departamento'">
+          <!-- <div v-if="metadata.type.label === 'Departamento'">
             <div class="l2-attribute" style="margin: 20px 0; padding: 30px;">
               <p>
                 <span v-if="defaultAttributes[1].value" style="display: block;">
@@ -226,11 +226,11 @@
           <span v-for="attr in extraAttributes" v-if="metadata.type.label !== 'Sala'&& extraAttributes.length">
             <p v-if="attr.value !== metadata.description && attr.label !== 'Faculdade'"><span class="attr-label" style="font-weight: bold;">{{ attr.label }}:</span> {{{ attr.value | cleanMarkup | highlightQuery $route.query.q | isSearchable attr $route.query.q }}}</p>
           </span>
-          <div class="result-l2-attributes">
+          <div class="result-l2-attributes"> -->
 
             <!-- Geral -->
 
-            <div v-for="attrs in levelTwoAttributes" v-if="metadata.type.label !== 'Estudante' && metadata.type.label !== 'Funcionário'">
+            <!-- <div v-for="attrs in levelTwoAttributes" v-if="metadata.type.label !== 'Estudante' && metadata.type.label !== 'Funcionário'">
               <div>              
                 <span class="attr-relationship" v-if="attrs.relationship">
                   {{ attrs.relationship.label }}
@@ -241,11 +241,11 @@
                   </span>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- Funcionário -->
 
-            <div v-if="metadata.type.label === 'Funcionário' && levelTwoAttributes">
+            <!-- <div v-if="metadata.type.label === 'Funcionário' && levelTwoAttributes">
               <div v-for="attrs in levelTwoAttributes | filterBy 'Posição' in 'relationship.label'" v-if="attrs.relationship.label === 'Posição'">
                 <p v-if="$index === 0" style="font-size: 16px; margin-top: 15px;">Posições</p>
                 <div class="l2-attribute">                
@@ -273,11 +273,11 @@
                 </div>
               </div>
 
-            </div>
+            </div> -->
 
             <!-- Estudante -->
 
-            <div v-for="attr in sortedCourses" v-if="metadata.type.label === 'Estudante'">
+            <!-- <div v-for="attr in sortedCourses" v-if="metadata.type.label === 'Estudante'">
               <div style="display: flex; align-items: center; margin-top: 10px;" class="l2-attribute">
                 <div style="margin: 0 30px;">
                   <i class="material-icons" style="font-size: 38px;">school</i>
@@ -306,12 +306,14 @@
     <div class="result-more-toggled" v-if="toggled" @click="toggleAccordion">
       <i class="material-icons">arrow_drop_up</i>
     </div>
-  </div>
+  </div> -->
 </div>
 </template>
 
 <script>
 import { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify, truncateSources } from '../filters'
+
+import TestComponent from './TestComponent'
 
 export default {
   filters: { cleanMarkup, highlightQuery, truncateText, stripTags, isSearchable, iconify, truncateSources },
@@ -325,8 +327,14 @@ export default {
       clicked: false,
       dropdownOpen: false,
       lastCourse: '',
-      sortedCourses: []
+      sortedCourses: [],
+      selectedEntityType: this.metadata.type.label
     }
+  },
+  components: {
+    TestComponent
+    // Funcionário: TestComponent,
+    // Estudante: TestComponent
   },
   methods: {
     toggleDropdown (evt) {
@@ -343,32 +351,6 @@ export default {
         this.dropdownOpen = false
       }
       this.sendClickData()
-    },
-    sendClickData (event) {
-      let values = {
-        active_query: this.$route.query.q.toString(),
-        active_query_category: this.category.toString(),
-        active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
-        clicked_result_rank: this.metadata.rank.toString(),
-        clicked_result_score: this.metadata.score.toString(),
-        clicked_result_uri: this.metadata.uri.toString(),
-        client_user_agent: window.navigator.userAgent.toString(),
-        client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
-        Referer: document.referrer
-      }
-
-      if (process.env.NODE_ENV === 'development') {
-        values.is_test = true
-      }
-
-      if (!this.clicked && arguments.length === 0) {
-        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
-        this.clicked = true
-      }
-      if (arguments.length > 0 && arguments[0]) {
-        values['target_url'] = arguments[0]
-        this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
-      }
     },
     filterByLabels (attrsArray, labelsToFilter) {
       let filtered = []
@@ -400,7 +382,6 @@ export default {
       filtered.sort(function (a, b) {
         return a.order - b.order
       })
-      console.log(JSON.stringify(filtered))
       this.$set('defaultAttributes', filtered)
       this.$set('extraAttributes', unfiltered)
     },
@@ -464,31 +445,6 @@ export default {
         }
       }
     },
-    sortCourses (courseData) {
-      if (courseData && courseData[0].relationship && courseData[0].relationship.label === 'Inscrição') {
-        let objs = []
-        for (let i in courseData) {
-          let obj = {}
-          for (let j in courseData[i].data) {
-            if (courseData[i].data[j].label === 'Curso') {
-              obj.course = courseData[i].data[j].value
-              obj.searchable = true
-            } else if (courseData[i].data[j].label === 'Tipo de Inscrição') {
-              obj.type = courseData[i].data[j].value
-            } else if (courseData[i].data[j].label === 'Ano Letivo') {
-              obj.year = courseData[i].data[j].value
-            }
-          }
-          objs.push(obj)
-        }
-        objs.sort((a, b) => {
-          return parseInt(b.year.split('/')[1], 10) - parseInt(a.year.split('/')[1], 10)
-        })
-        let lastCourse = { label: 'Curso', value: objs[0].course, searchable: true }
-        this.$set('lastCourse', lastCourse)
-        this.$set('sortedCourses', objs)
-      }
-    },
     formatData () {
       let docData = this.metadata.document
       let formatted = []
@@ -501,22 +457,16 @@ export default {
   computed: {
     toggleText () {
       return !this.toggled ? 'Expandir' : 'Fechar'
-    },
-    getPicture () {
-      return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.metadata.link.split('=')[1] + ''
-    },
-    setAltText () {
-      return 'Foto de ' + this.metadata.description
     }
   },
   ready () {
-    this.formatData()
+    // this.formatData()
     // this.setSearchableAttrs()
-    this.setVisibleAttrs(this.metadata.type.label)
-    this.$set('levelTwoAttributes', this.metadata.document)
-    if ((this.$route.query.tipoentidade === 'Estudante' || !this.$route.query.tipoentidade) && this.levelTwoAttributes.length) {
-      // this.sortCourses(this.metadata.metadata.decorations.levelTwoAttributes)
-    }
+    // this.setVisibleAttrs(this.metadata.type.label)
+    // this.$set('levelTwoAttributes', this.metadata.document)
+    // if ((this.$route.query.tipoentidade === 'Estudante' || !this.$route.query.tipoentidade) && this.levelTwoAttributes.length) {
+    //   this.sortCourses(this.metadata.metadata.decorations.levelTwoAttributes)
+    // }
     window.addEventListener('mousedown', this.closeDropdowns, false)
   }
 }
@@ -623,17 +573,6 @@ export default {
 .dropdown-text {
   padding: 0 10px;
   color: #1a0dab;
-}
-
-span.result-url {
-  display: inline-block;
-  color: #0C1F3A;
-  max-width: 450px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 14px;
-  line-height: 20px;
 }
 
 .material-icons.md-custom {
@@ -780,45 +719,5 @@ span.result-url {
 
 .pad-left {
   padding-left: 10px;
-}
-
-.tag {
-  background: #69707a;
-  border-radius: 5px;
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  color: #f5f7fa;
-  display: inline-block;
-  font-size: 10px;
-  line-height: 16px;
-  padding: 0 20px;
-  white-space: nowrap;
-  top: 0;
-  font-weight: bold;
-  margin-right: 5px;
-  margin-top: 3px;
-}
-.tag-sala {
-  background: #9B59B6;
-  color: white;
-}
-.tag-estudante {
-  background: #2ECC71;
-  color: white;
-}
-.tag-funcionário {
-  background: #1ABC9C;
-  color: white;
-}
-.tag-notícia {
-  background: #F39C12;
-  color: white;
-}
-.tag-curso {
-  background: #E67E22;
-  color: white;
-}
-.tag-cadeira {
-  background: #C0392B;
-  color: white;
 }
 </style>
