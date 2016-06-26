@@ -37,7 +37,7 @@ export default {
 <style lang="scss">
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-$blue: #4285F4;
+$blue: #4285f4;
 
 @import "../../node_modules/picnic/src/picnic";
 

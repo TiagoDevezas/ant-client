@@ -1,5 +1,5 @@
 <template>
-  <div class="column is-narrow">
+  <div class="shrink">
     <img :src="getPicture" :alt="setAltText" :title="title" width="75px">
   </div>
 </template>
@@ -19,4 +19,11 @@
 </script>
 
 <style>
+  .shrink {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
 </style>

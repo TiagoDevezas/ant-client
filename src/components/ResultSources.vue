@@ -1,8 +1,6 @@
 <template>
-  <div class="columns">
-    <div class="column is-12">
-      {{ sources.join(', ') }}
-    </div>
+  <div class="full">
+    <span class="result-sources">{{ sources.join(', ') }}</span>
   </div>
 </template>
 
@@ -11,3 +9,12 @@
     props: ['sources']
   }
 </script>
+
+<style>
+	.result-sources {
+		font-size: 13px;
+		line-height: 1.15;
+		color: #666;
+		display: block;
+	}
+</style>

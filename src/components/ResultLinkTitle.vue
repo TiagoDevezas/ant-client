@@ -1,15 +1,13 @@
 <template>
-  <div class="columns is-gapless is-multiline is-marginless">
-    <div class="column is-12 has-bottom-margin">
-      <h2 class="title is-5"><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
-    </div>
-    <div class="column is-narrow">
-      <span class="tag is-small is-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</span>
-    </div>
-    <div class="column">
-      <span class="result-url">{{ metadata.link }}</span>
-    </div>
+<div class="flex">
+  <div class="full no-b-padding">
+      <h2 class="result-link"><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
   </div>
+  <div class="full no-b-padding" style="display: flex; align-items: center;">
+      <span class="label is-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</span>
+      <span class="result-url">{{ metadata.link }}</span>
+  </div>
+</div>
 </template>
 
 <script>
@@ -47,6 +45,11 @@
 </script>
 
 <style lang="scss">
+  .result-link {
+    font-size: 18px;
+    font-weight: normal;
+    padding: 0;
+  }
   span.result-url {
     margin-left: 5px;
     display: inline-block;
@@ -56,14 +59,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 14px;
-    line-height: 20px;
+    line-height: 1.2;
   }
-  .has-bottom-margin {
-    margin-bottom: 3px !important;
+  .no-b-padding {
+    padding-bottom: 0;
   }
-  .tag {
+  .label {
     background: #69707a;
     color: #f5f7fa;
+    margin: 0;
   }
   .is-sala {
     background: #9B59B6;
