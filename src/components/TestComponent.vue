@@ -1,15 +1,19 @@
 <template>
 <div class="flex">
   <person-picture v-if="entityType === 'Funcionário' || entityType === 'Estudante'" :title="metadata.description" :link="metadata.link"></person-picture>
-  <div :class="{
+  <div :class="['no-bottom-padding', {
     'full': entityType !== 'Funcionário' || entityType !== 'Estudante',
     'four-fifth': entityType === 'Funcionário' || entityType === 'Estudante'
-    }">
+    }]">
     <result-link-title :metadata="metadata" :category="category"></result-link-title>
-    <result-sources :sources="metadata.sources"></result-sources>
-    <span>
+    <result-sources :sources="metadata.sources" :is-toggled="toggled"></result-sources>
+    <visible-attributes :is-toggled="toggled"></visible-attributes>
+<!--     <span class="result-sources">
       {{ translateAttributes(primaryAttributes) }}
-    </span>
+    </span> -->
+  </div>
+  <div class="full no-bottom-padding">
+    <more-content></more-content>
   </div>
 </div>
 </template>
@@ -18,19 +22,29 @@
   import PersonPicture from './PersonPicture'
   import ResultLinkTitle from './ResultLinkTitle'
   import ResultSources from './ResultSources'
+  import VisibleAttributes from './VisibleAttributes'
+  import MoreContent from './MoreContent'
 
   export default {
     props: ['metadata', 'entityType', 'category'],
     components: {
       PersonPicture,
       ResultLinkTitle,
-      ResultSources
+      ResultSources,
+      VisibleAttributes,
+      MoreContent
     },
     data () {
       return {
         primaryAttributes: [],
         secondaryAttributes: [],
-        extraAttributes: []
+        extraAttributes: [],
+        toggled: false
+      }
+    },
+    events: {
+      'isToggled' (val) {
+        this.toggled = !this.toggled
       }
     },
     methods: {
@@ -75,10 +89,16 @@
       filterByLabels (labelsToFilter) {
         let attrsObj = this.metadata.document
         let attrsObjkeys = Object.keys(attrsObj)
-        labelsToFilter.primary.line_1.forEach(label => {
-          if (attrsObjkeys.indexOf(label) !== -1) {
-            this.primaryAttributes.push({[label]: attrsObj[label]})
-          }
+        Object.keys(labelsToFilter).forEach(key => {
+          let labelObj = labelsToFilter[key]
+          Object.keys(labelObj).forEach(label => {
+            let labelArray = labelObj[label]
+            labelArray.forEach(l => {
+              if (attrsObjkeys.indexOf(l) !== -1) {
+                this.primaryAttributes.push({[l]: attrsObj[l]})
+              }
+            })
+          })
         })
       },
       translateAttributes (attrArray) {
@@ -99,5 +119,7 @@
 </script>
 
 <style>
-  
+  .no-bottom-padding {
+    padding-bottom: 0;
+  }
 </style>

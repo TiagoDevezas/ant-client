@@ -1,5 +1,5 @@
 <template>
-  <div class="shrink">
+  <div class="shrink no-bottom-padding">
     <img :src="getPicture" :alt="setAltText" :title="title" width="75px">
   </div>
 </template>

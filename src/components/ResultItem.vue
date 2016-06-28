@@ -480,8 +480,8 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 0.3em;
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
+  padding-bottom: 0;
+  margin-bottom: 0;
   position: relative;
   word-wrap: break-word;
   /*box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);*/
