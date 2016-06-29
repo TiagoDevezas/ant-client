@@ -68,10 +68,23 @@ export function isSearchable (value, attrObj, query) {
 }
 
 export function iconify (value, iconName) {
+  if (value) {
+    let iconName
+    if (value === 'Telefone Alternativo' || value === 'Voip') {
+      iconName = 'phone'
+    } else if (value === 'Salas') {
+      iconName = 'business'
+    } else if (value === 'E-mails Institucionais') {
+      iconName = 'mail_outline'
+    }
+    if (iconName) {
+      return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
+    }
+  }
   if (value && iconName) {
     return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
   }
-  return value
+  return value + ':&nbsp;'
 }
 
 export function truncateSources (sources) {

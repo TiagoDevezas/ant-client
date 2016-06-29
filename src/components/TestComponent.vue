@@ -6,8 +6,8 @@
     'four-fifth': entityType === 'Funcionário' || entityType === 'Estudante'
     }]">
     <result-link-title :metadata="metadata" :category="category"></result-link-title>
-    <result-sources :sources="metadata.sources" :is-toggled="toggled"></result-sources>
-    <visible-attributes :is-toggled="toggled"></visible-attributes>
+    <result-sources :metadata="metadata" :is-toggled="toggled"></result-sources>
+    <result-attributes :is-toggled="toggled" :metadata="metadata" :labels="setVisibleAttrs(entityType)"></result-attributes>
 <!--     <span class="result-sources">
       {{ translateAttributes(primaryAttributes) }}
     </span> -->
@@ -22,7 +22,7 @@
   import PersonPicture from './PersonPicture'
   import ResultLinkTitle from './ResultLinkTitle'
   import ResultSources from './ResultSources'
-  import VisibleAttributes from './VisibleAttributes'
+  import ResultAttributes from './ResultAttributes'
   import MoreContent from './MoreContent'
 
   export default {
@@ -31,14 +31,11 @@
       PersonPicture,
       ResultLinkTitle,
       ResultSources,
-      VisibleAttributes,
+      ResultAttributes,
       MoreContent
     },
     data () {
       return {
-        primaryAttributes: [],
-        secondaryAttributes: [],
-        extraAttributes: [],
         toggled: false
       }
     },
@@ -49,67 +46,84 @@
     },
     methods: {
       setVisibleAttrs (entityType) {
-        let labelsToFilter = []
+        let labels
         switch (entityType) {
           case 'Funcionário':
-            labelsToFilter = {
+            labels = {
               primary: {
                 line_1: ['code', 'acronym'],
                 line_2: ['institutional_emails', 'alternative_telephone', 'voip', 'rooms']
               }
             }
-            this.filterByLabels(labelsToFilter)
-            break
-          // case 'Estudante':
-          //   labelsToFilter = ['Código']
-          //   this.filterByLabels(labelsToFilter)
-          //   break
-          // case 'Sala':
-          //   labelsToFilter = ['Descrição', 'Responsável', 'Edifício', 'Piso', 'Mapa', 'Utilização', 'Telefone', 'Código', 'Acesso Mobilidade Reduzida', 'Ativo', 'Computador', 'Projetor', 'Área']
-          //   this.filterByLabels(labelsToFilter)
-          //   break
-          // case 'Departamento':
-          //   labelsToFilter = ['Responsável', 'Sigla', 'Sala', 'Código', 'Fax', 'E-mail', 'Telefone', 'Morada', 'Localização']
-          //   this.filterByLabels(labelsToFilter)
-          //   break
-          // case 'Notícia':
-          //   labelsToFilter = ['Data de Publicação', 'Conteúdo']
-          //   this.filterByLabels(labelsToFilter)
-          //   break
-          // case 'Curso':
-          //   labelsToFilter = ['Área Científica', 'Diretor']
-          //   this.filterByLabels(labelsToFilter)
-          //   break
-          // case 'Cadeira':
-          //   labelsToFilter = ['Ativo', 'Professor']
-          //   this.filterByLabels(labelsToFilter)
-          //   break
+            return labels
+            // this.filterByLabels(labelsToFilter)
+            // break
+          case 'Estudante':
+            labels = {
+              primary: {
+                line_1: ['code']
+              }
+            }
+            return labels
+            // this.filterByLabels(labelsToFilter)
+            // break
+          case 'Sala':
+            labels = {
+              primary: {
+                line_1: ['people_in_charge'],
+                line_2: ['building', 'floor']
+              }
+            }
+            return labels
+            // break
+          case 'Departamento':
+            labels = {
+              primary: {
+                line_1: ['person_in_charge']
+              }
+            }
+            return labels
+          case 'Notícia':
+            labels = {
+              primary: {
+                line_1: [],
+                line_2: []
+              }
+            }
+            return labels
+          case 'Curso':
+            labels = {
+              primary: {
+                line_1: ['predominant_scientific_areas'],
+                line_2: ['directors']
+              }
+            }
+            return labels
+          case 'Cadeira':
+            labels = {
+              primary: {
+                line_1: ['active'],
+                line_2: ['teachers_in_charge']
+              }
+            }
+            return labels
+            // break
         }
       },
       filterByLabels (labelsToFilter) {
-        let attrsObj = this.metadata.document
-        let attrsObjkeys = Object.keys(attrsObj)
-        Object.keys(labelsToFilter).forEach(key => {
-          let labelObj = labelsToFilter[key]
-          Object.keys(labelObj).forEach(label => {
-            let labelArray = labelObj[label]
-            labelArray.forEach(l => {
-              if (attrsObjkeys.indexOf(l) !== -1) {
-                this.primaryAttributes.push({[l]: attrsObj[l]})
-              }
-            })
-          })
-        })
-      },
-      translateAttributes (attrArray) {
-        let translated = []
-        for (let i in attrArray) {
-          if (typeof (attrArray[i]) === 'object') {
-            let key = Object.keys(attrArray[i])
-            translated.push('' + this.$t(key) + ': ' + attrArray[i][key])
-          }
-        }
-        return translated.join(', ')
+        // let attrsObj = this.metadata.document
+        // let attrsObjkeys = Object.keys(attrsObj)
+        // Object.keys(labelsToFilter).forEach(key => {
+        //   let labelObj = labelsToFilter[key]
+        //   Object.keys(labelObj).forEach(label => {
+        //     let labelArray = labelObj[label]
+        //     labelArray.forEach(l => {
+        //       if (attrsObjkeys.indexOf(l) !== -1) {
+        //         this.primaryAttributes.push({[l]: attrsObj[l]})
+        //       }
+        //     })
+        //   })
+        // })
       }
     },
     ready () {

@@ -1,10 +1,16 @@
 <template>
-  <div class="full">
-    <span v-if="!isToggled" class="result-sources">
-      {{{ sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}
+  <div class="full result-sources">
+    <span v-if="metadata.type.label === 'Sala' && metadata.document.description">
+      {{{ metadata.document.description + ', ' }}}
     </span>
-    <span v-if="isToggled" class="result-sources">
-      {{{ sources.join(', ') | highlightQuery $route.query.q }}}
+    <span v-if="!isToggled">
+      {{{ metadata.sources.join(', ') | highlightQuery $route.query.q | truncateSources }}}
+    </span>
+    <span v-if="isToggled">
+      {{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}
+    </span>
+    <span v-if="metadata.type.label === 'Notícia'">
+      {{{ ' - ' + metadata.document.published_date.split(', ')[1] + ' às ' +  metadata.document.published_date.split(', ')[2] }}}
     </span>
   </div>
 </template>
@@ -14,7 +20,7 @@
 
   export default {
     filters: { highlightQuery, truncateSources },
-    props: ['sources', 'isToggled']
+    props: ['metadata', 'isToggled', 'entityType']
   }
 </script>
 
@@ -23,7 +29,6 @@
 		font-size: 13px;
 		line-height: 1.15;
 		color: #666;
-		display: block;
     padding-top: 5px;
 	}
 </style>
