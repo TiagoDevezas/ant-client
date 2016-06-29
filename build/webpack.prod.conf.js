@@ -24,10 +24,10 @@ function generateExtractLoaders (loaders) {
 // http://vuejs.github.io/vue-loader/configurations/extract-css.html
 var cssExtractLoaders = {
   css: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css']), {publicPath: './'}),
-  less: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'less'])),
-  sass: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'sass'])),
-  scss: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'sass'])),
-  stylus: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'stylus']))
+  less: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'less']), {publicPath: './'}),
+  sass: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'sass']), {publicPath: './'}),
+  scss: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'sass']), {publicPath: './'}),
+  stylus: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'stylus']), {publicPath: './'})
 }
 
 config.vue = config.vue || {}

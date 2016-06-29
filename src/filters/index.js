@@ -99,3 +99,14 @@ export function truncateSources (sources) {
   }
   return sources
 }
+
+export function commaSeparate (value, index, length) {
+  if (value && index && length) {
+    if (index < length - 1) {
+      return value + ', '
+    } else {
+      return value
+    }
+  }
+  return value
+}

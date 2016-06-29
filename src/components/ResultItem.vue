@@ -320,14 +320,14 @@ export default {
   props: ['metadata', 'category'],
   data () {
     return {
-      defaultAttributes: [],
-      extraAttributes: [],
-      levelTwoAttributes: [],
-      toggled: false,
-      clicked: false,
-      dropdownOpen: false,
-      lastCourse: '',
-      sortedCourses: [],
+      // defaultAttributes: [],
+      // extraAttributes: [],
+      // levelTwoAttributes: [],
+      // toggled: false,
+      // clicked: false,
+      // dropdownOpen: false,
+      // lastCourse: '',
+      // sortedCourses: [],
       selectedEntityType: this.metadata.type.label
     }
   },
@@ -336,129 +336,129 @@ export default {
     // Funcionário: TestComponent,
     // Estudante: TestComponent
   },
-  methods: {
-    toggleDropdown (evt) {
-      this.dropdownOpen = !this.dropdownOpen
-    },
-    closeDropdowns (evt) {
-      if (this.dropdownOpen && (evt.target.className.indexOf('dropdown-panel') === -1 && evt.target.className !== 'dropdown-text')) {
-        this.dropdownOpen = false
-      }
-    },
-    toggleAccordion () {
-      this.toggled = !this.toggled
-      if (this.dropdownOpen) {
-        this.dropdownOpen = false
-      }
-      this.sendClickData()
-    },
-    filterByLabels (attrsArray, labelsToFilter) {
-      let filtered = []
-      let unfiltered = []
-      for (let j in attrsArray) {
-        if (attrsArray[j].value.constructor === Array) attrsArray[j].value = attrsArray[j].value.join(', ')
-        for (let i in labelsToFilter) {
-          if (attrsArray[j].label === labelsToFilter[i]) {
-            attrsArray[j].order = i
-            filtered.push(attrsArray[j])
-          }
-        }
-      }
+  // methods: {
+  //   toggleDropdown (evt) {
+  //     this.dropdownOpen = !this.dropdownOpen
+  //   },
+  //   closeDropdowns (evt) {
+  //     if (this.dropdownOpen && (evt.target.className.indexOf('dropdown-panel') === -1 && evt.target.className !== 'dropdown-text')) {
+  //       this.dropdownOpen = false
+  //     }
+  //   },
+  //   toggleAccordion () {
+  //     this.toggled = !this.toggled
+  //     if (this.dropdownOpen) {
+  //       this.dropdownOpen = false
+  //     }
+  //     this.sendClickData()
+  //   },
+  //   filterByLabels (attrsArray, labelsToFilter) {
+  //     let filtered = []
+  //     let unfiltered = []
+  //     for (let j in attrsArray) {
+  //       if (attrsArray[j].value.constructor === Array) attrsArray[j].value = attrsArray[j].value.join(', ')
+  //       for (let i in labelsToFilter) {
+  //         if (attrsArray[j].label === labelsToFilter[i]) {
+  //           attrsArray[j].order = i
+  //           filtered.push(attrsArray[j])
+  //         }
+  //       }
+  //     }
 
-      if (filtered.length < labelsToFilter.length) {
-        let values = filtered.map((el) => {
-          return el.order
-        })
-        for (let i in labelsToFilter) {
-          if (values.indexOf(i) === -1) {
-            filtered.push({value: '', label: '', order: i})
-          }
-        }
-      }
+  //     if (filtered.length < labelsToFilter.length) {
+  //       let values = filtered.map((el) => {
+  //         return el.order
+  //       })
+  //       for (let i in labelsToFilter) {
+  //         if (values.indexOf(i) === -1) {
+  //           filtered.push({value: '', label: '', order: i})
+  //         }
+  //       }
+  //     }
 
-      unfiltered = attrsArray.filter(function (obj) {
-        return filtered.indexOf(obj) === -1
-      })
-      filtered.sort(function (a, b) {
-        return a.order - b.order
-      })
-      this.$set('defaultAttributes', filtered)
-      this.$set('extraAttributes', unfiltered)
-    },
-    setVisibleAttrs (entityType) {
-      let attrsArray = this.metadata.document
-      let labelsToFilter = []
-      switch (entityType) {
-        case 'Funcionário':
-          labelsToFilter = ['Código', 'Sigla', 'E-mail', 'Telefone', 'Voip', 'Sala']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-        case 'Estudante':
-          labelsToFilter = ['Código']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-        case 'Sala':
-          labelsToFilter = ['Descrição', 'Responsável', 'Edifício', 'Piso', 'Mapa', 'Utilização', 'Telefone', 'Código', 'Acesso Mobilidade Reduzida', 'Ativo', 'Computador', 'Projetor', 'Área']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-        case 'Departamento':
-          labelsToFilter = ['Responsável', 'Sigla', 'Sala', 'Código', 'Fax', 'E-mail', 'Telefone', 'Morada', 'Localização']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-        case 'Notícia':
-          labelsToFilter = ['Data de Publicação', 'Conteúdo']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-        case 'Curso':
-          labelsToFilter = ['Área Científica', 'Diretor']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-        case 'Cadeira':
-          labelsToFilter = ['Ativo', 'Professor']
-          this.filterByLabels(attrsArray, labelsToFilter)
-          break
-      }
-    },
-    setSearchableAttrs () {
-      let searchableAttrs = [
-        'Sala',
-        'Professor',
-        'Diretor',
-        'Responsável',
-        'Ocupante',
-        'Departamento',
-        'Curso',
-        'Faculdade'
-      ]
-      let data = this.metadata.metadata.decorations.attributes.data
-      for (let i in data) {
-        if (searchableAttrs.indexOf(data[i].label) !== -1) {
-          data[i].searchable = true
-        }
-      }
-      let l2Attrs = this.metadata.metadata.decorations.levelTwoAttributes
-      for (let i in l2Attrs) {
-        for (let j in l2Attrs[i].data) {
-          if (searchableAttrs.indexOf(l2Attrs[i].data[j].label) !== -1) {
-            l2Attrs[i].data[j].searchable = true
-          }
-        }
-      }
-    },
-    formatData () {
-      let docData = this.metadata.document
-      let formatted = []
-      Object.keys(docData).forEach(key => {
-        formatted.push({label: this.$t(key), value: docData[key]})
-      })
-      this.$set('metadata.document', formatted)
-    }
-  },
-  computed: {
-    toggleText () {
-      return !this.toggled ? 'Expandir' : 'Fechar'
-    }
-  },
+  //     unfiltered = attrsArray.filter(function (obj) {
+  //       return filtered.indexOf(obj) === -1
+  //     })
+  //     filtered.sort(function (a, b) {
+  //       return a.order - b.order
+  //     })
+  //     this.$set('defaultAttributes', filtered)
+  //     this.$set('extraAttributes', unfiltered)
+  //   },
+  //   setVisibleAttrs (entityType) {
+  //     let attrsArray = this.metadata.document
+  //     let labelsToFilter = []
+  //     switch (entityType) {
+  //       case 'Funcionário':
+  //         labelsToFilter = ['Código', 'Sigla', 'E-mail', 'Telefone', 'Voip', 'Sala']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //       case 'Estudante':
+  //         labelsToFilter = ['Código']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //       case 'Sala':
+  //         labelsToFilter = ['Descrição', 'Responsável', 'Edifício', 'Piso', 'Mapa', 'Utilização', 'Telefone', 'Código', 'Acesso Mobilidade Reduzida', 'Ativo', 'Computador', 'Projetor', 'Área']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //       case 'Departamento':
+  //         labelsToFilter = ['Responsável', 'Sigla', 'Sala', 'Código', 'Fax', 'E-mail', 'Telefone', 'Morada', 'Localização']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //       case 'Notícia':
+  //         labelsToFilter = ['Data de Publicação', 'Conteúdo']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //       case 'Curso':
+  //         labelsToFilter = ['Área Científica', 'Diretor']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //       case 'Cadeira':
+  //         labelsToFilter = ['Ativo', 'Professor']
+  //         this.filterByLabels(attrsArray, labelsToFilter)
+  //         break
+  //     }
+  //   },
+  //   setSearchableAttrs () {
+  //     let searchableAttrs = [
+  //       'Sala',
+  //       'Professor',
+  //       'Diretor',
+  //       'Responsável',
+  //       'Ocupante',
+  //       'Departamento',
+  //       'Curso',
+  //       'Faculdade'
+  //     ]
+  //     let data = this.metadata.metadata.decorations.attributes.data
+  //     for (let i in data) {
+  //       if (searchableAttrs.indexOf(data[i].label) !== -1) {
+  //         data[i].searchable = true
+  //       }
+  //     }
+  //     let l2Attrs = this.metadata.metadata.decorations.levelTwoAttributes
+  //     for (let i in l2Attrs) {
+  //       for (let j in l2Attrs[i].data) {
+  //         if (searchableAttrs.indexOf(l2Attrs[i].data[j].label) !== -1) {
+  //           l2Attrs[i].data[j].searchable = true
+  //         }
+  //       }
+  //     }
+  //   },
+  //   formatData () {
+  //     let docData = this.metadata.document
+  //     let formatted = []
+  //     Object.keys(docData).forEach(key => {
+  //       formatted.push({label: this.$t(key), value: docData[key]})
+  //     })
+  //     this.$set('metadata.document', formatted)
+  //   }
+  // },
+  // computed: {
+  //   toggleText () {
+  //     return !this.toggled ? 'Expandir' : 'Fechar'
+  //   }
+  // },
   ready () {
     // this.formatData()
     // this.setSearchableAttrs()

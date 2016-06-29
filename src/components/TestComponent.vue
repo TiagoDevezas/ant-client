@@ -8,9 +8,6 @@
     <result-link-title :metadata="metadata" :category="category"></result-link-title>
     <result-sources :metadata="metadata" :is-toggled="toggled"></result-sources>
     <result-attributes :is-toggled="toggled" :metadata="metadata" :labels="setVisibleAttrs(entityType)"></result-attributes>
-<!--     <span class="result-sources">
-      {{ translateAttributes(primaryAttributes) }}
-    </span> -->
   </div>
   <div class="full no-bottom-padding">
     <more-content></more-content>
@@ -28,10 +25,10 @@
   export default {
     props: ['metadata', 'entityType', 'category'],
     components: {
+      ResultAttributes,
       PersonPicture,
       ResultLinkTitle,
       ResultSources,
-      ResultAttributes,
       MoreContent
     },
     data () {
@@ -53,7 +50,9 @@
               primary: {
                 line_1: ['code', 'acronym'],
                 line_2: ['institutional_emails', 'alternative_telephone', 'voip', 'rooms']
-              }
+              },
+              secondary: ['status'],
+              special: ['positions', 'teaching', 'functions', 'research']
             }
             return labels
             // this.filterByLabels(labelsToFilter)
@@ -62,7 +61,9 @@
             labels = {
               primary: {
                 line_1: ['code']
-              }
+              },
+              secondary: ['sites'],
+              special: ['courses']
             }
             return labels
             // this.filterByLabels(labelsToFilter)
@@ -104,7 +105,8 @@
               primary: {
                 line_1: ['active'],
                 line_2: ['teachers_in_charge']
-              }
+              },
+              special: ['study_plan']
             }
             return labels
             // break

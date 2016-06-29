@@ -1,5 +1,6 @@
 let locales = {
   pt: {
+    photo_url: 'Foto',
     code: 'Código',
     name: 'Nome',
     sites: 'Página Pessoal',
