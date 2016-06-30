@@ -8,13 +8,13 @@
     <div v-if="labels.primary.line_1" class="attributes">
       <p v-for="obj in formatLabels(labels.primary.line_1)">
         <span class="attr-label">{{{ obj.label | iconify }}}</span> 
-        <span>{{{ obj.value }}}{{{ $index < formatLabels(labels.primary.line_1).length - 1 ? ',&nbsp;' : '' }}}</span>
+        <span>{{{ obj.value }}} &nbsp;</span>
       </p>
     </div>
     <div v-if="labels.primary.line_2" class="attributes">
       <p v-for="obj in formatLabels(labels.primary.line_2)">
         <span class="attr-label">{{{ obj.label | iconify }}}</span>
-        <span>{{{ obj.value }}}{{{ $index < formatLabels(labels.primary.line_2).length - 1 ? ',&nbsp;' : '' }}}</span>
+        <span>{{{ obj.value }}} &nbsp;</span>
       </p>
     </div>
     <span v-if="entityType === 'Notícia' && !isToggled">
@@ -29,18 +29,11 @@
     <div v-if="labels.secondary" class="attributes">
       <p v-for="obj in formatLabels(labels.secondary)">
         <span class="attr-label">{{{ obj.label | iconify }}}</span>
-        <span>{{{ obj.value }}}{{{ $index < formatLabels(labels.secondary).length - 1 ? ',&nbsp;' : '' }}}</span>
-      </p>
-    </div>
-
-    <div v-if="remainingLabels().length">
-      <p v-for="obj in remainingLabels()" style="display: block;">
-        <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
         <span>{{{ obj.value }}}</span>
       </p>
     </div>
 
-    <div v-for="label in labels.special">
+    <div v-for="label in labels.special" v-if="entityType !== 'Sala' && entityType !== 'Departamento'">
       <div v-if="label">
         <div v-for="element in formatLabelArray(label)" class="attr-well">
           <div style="margin: 0 30px;" v-if="label === 'courses'">
@@ -54,6 +47,33 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div v-if="entityType === 'Departamento'" class="attr-well-no-flex">
+      <div v-for="element in formatLabels(labels.special)">
+        <span class="attr-label">{{{ element.label | iconify }}}</span>
+        <span>{{{ element.value }}}</span>
+      </div>
+      
+    </div>
+
+    <div v-if="entityType === 'Sala'" style="margin: 20px 0; display: flex;">
+      <div class="map-url" v-if="metadata.document.map_url">
+        <img src="{{ metadata.document.map_url }}" alt="">
+      </div>
+      <div class="attr-well-no-flex">
+        <div v-for="element in formatLabels(labels.special)">       
+          <span class="attr-label">{{{ element.label + ':&nbsp;' }}}</span>
+          <span>{{{ element.value }}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="remainingLabels().length">
+      <p v-for="obj in remainingLabels()" style="display: block;">
+        <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
+        <span>{{{ obj.value }}}</span>
+      </p>
     </div>
 
   </div>
@@ -114,20 +134,14 @@
         return formatted
       },
       remainingLabels () {
-        let labelsToHide = ['courses_in_charge', 'content', 'publication_date', 'name', 'display_name', 'photo_url', 'schools']
+        // let labelsToHide = ['courses_in_charge', 'content', 'publication_date', 'name', 'display_name', 'photo_url', 'schools', 'description', 'school', 'space', 'map_url']
+        let labelsToHide = ['courses_in_charge', 'photo_url', 'content', 'publication_date']
         let formatted = []
         let keys = Object.keys(this.metadata.document)
         let allLabels = [].concat(this.labels.primary.line_1)
                           .concat(this.labels.primary.line_2)
                           .concat(this.labels.secondary)
                           .concat(this.labels.special)
-        // this.labels.primary.line_1 ? allLabels.splice(0, 0, this.labels.primary.line_1) : null
-        // this.labels.primary.line_2 ? allLabels.splice(1, 0, this.labels.primary.line_2) : null
-        // this.labels.secondary ? allLabels.splice(2, 0, this.labels.secondary) : null
-        // this.labels.special ? allLabels.splice(3, 0, this.labels.special) : null
-        // allLabels = allLabels.reduce((a, b) => {
-        //   return a.concat(b)
-        // })
         keys.forEach(key => {
           if (allLabels.indexOf(key) === -1 && labelsToHide.indexOf(key) === -1) {
             formatted.push(key)
@@ -156,5 +170,16 @@
     border-radius: 5px;
     margin-bottom: 25px;
     border: 1px solid #e0e0e0;
+  }
+  .attr-well-no-flex {
+    margin-bottom: 10px;
+    background-color: #f7f7f7;
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+  }
+  .map-url > img {
+    max-width: 90%;
+    margin: 0 auto;
   }
 </style>

@@ -7,7 +7,8 @@
     }]">
     <result-link-title :metadata="metadata" :category="category"></result-link-title>
     <result-sources :metadata="metadata" :is-toggled="toggled"></result-sources>
-    <result-attributes :is-toggled="toggled" :metadata="metadata" :labels="setVisibleAttrs(entityType)"></result-attributes>
+    <result-attributes :is-toggled="toggled" :metadata="metadata" :labels="setVisibleAttrs(entityType)">
+    </result-attributes>
   </div>
   <div class="full no-bottom-padding">
     <more-content></more-content>
@@ -73,7 +74,9 @@
               primary: {
                 line_1: ['people_in_charge'],
                 line_2: ['building', 'floor']
-              }
+              },
+              secondary: [],
+              special: ['usage', 'telephone', 'code', 'active', 'area_m2']
             }
             return labels
             // break
@@ -81,7 +84,9 @@
             labels = {
               primary: {
                 line_1: ['person_in_charge']
-              }
+              },
+              secondary: [],
+              special: ['acronym', 'room', 'code', 'fax', 'email', 'telephone', 'address']
             }
             return labels
           case 'Notícia':

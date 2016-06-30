@@ -70,12 +70,14 @@ export function isSearchable (value, attrObj, query) {
 export function iconify (value, iconName) {
   if (value) {
     let iconName
-    if (value === 'Telefone Alternativo' || value === 'Voip') {
+    if (value === 'Telefone Alternativo' || value === 'Voip' || value === 'Telefone') {
       iconName = 'phone'
     } else if (value === 'Salas') {
       iconName = 'business'
-    } else if (value === 'E-mails Institucionais') {
+    } else if (value === 'E-mails Institucionais' || value === 'E-mail') {
       iconName = 'mail_outline'
+    } else if (value === 'Fax') {
+      iconName = 'local_printshop'
     }
     if (iconName) {
       return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'

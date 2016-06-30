@@ -11,14 +11,18 @@
           {{ eType.label }}
           </a>
         </li>
+        <search-tools></search-tools>
       </ul> 
   </div>
 </div>
 </template>
 
 <script>
+  import SearchTools from './SearchTools'
+
   export default {
     props: ['queryParams', 'entityTypes'],
+    components: { SearchTools },
     data () {
       return {
         // entityTypes: {
