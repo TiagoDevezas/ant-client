@@ -11,30 +11,20 @@
           {{ eType.label }}
           </a>
         </li>
-        <search-tools></search-tools>
+        <!-- <search-tools-button v-if="filterData"></search-tools> -->
       </ul> 
   </div>
 </div>
 </template>
 
 <script>
-  import SearchTools from './SearchTools'
+  import SearchToolsButton from './SearchToolsButton'
 
   export default {
-    props: ['queryParams', 'entityTypes'],
-    components: { SearchTools },
+    props: ['queryParams', 'entityTypes', 'filterData'],
+    components: { SearchToolsButton },
     data () {
       return {
-        // entityTypes: {
-        //   all: {value: 'todos', label: 'Todos'},
-        //   funcionário: {value: 'funcionário', label: 'Funcionários'},
-        //   estudante: {value: 'estudante', label: 'Estudantes'},
-        //   sala: {value: 'sala', label: 'Salas'},
-        //   departamento: {value: 'departamento', label: 'Departamentos'},
-        //   notícia: {value: 'notícia', label: 'Notícias'},
-        //   curso: {value: 'curso', label: 'Cursos'},
-        //   cadeira: {value: 'cadeira', label: 'Cadeiras'}
-        // },
         selectedEntityType: ''
       }
     },
@@ -88,7 +78,7 @@
     font-size: .75em;
     position: relative;
     margin: 0 7px;
-    height: 37px;
+    height: 39px;
     line-height: 38px;
     font-weight: 600;
     outline: none;

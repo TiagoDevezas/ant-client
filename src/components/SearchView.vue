@@ -10,12 +10,13 @@
         <search-form :query-params="$route.query.q" class="search-top"></search-form>
       </div>
     </div>
-    <result-filter :query-params="$route.query.q" :entity-types="getEntityTypes"></result-filter>
+    <result-filter :query-params="$route.query.q" :entity-types="getEntityTypes" :filter-data="data.queryData.unfilteredFacetsCount"></result-filter>
   </div>
   <div class="content-wrap-results">
     <div class="cw"> 
       <result-empty v-if="data.queryData.count === 0"></result-empty>
       <div class="results-wrapper" v-if="data.queryData.count > 0">
+        <search-tools :filter-data="data.queryData.unfilteredFacetsCount"></search-tools>
         <result-counter
           v-if="data.entities.length"
           :count="data.queryData.count"
@@ -50,6 +51,7 @@ import ResultFilter from './ResultFilter'
 import ResultEmpty from './ResultEmpty'
 import AboutLink from './AboutLink'
 import FeedButton from './FeedButton'
+import SearchTools from './SearchTools'
 
 export default {
   components: {
@@ -60,7 +62,8 @@ export default {
     ResultFilter,
     ResultEmpty,
     AboutLink,
-    FeedButton
+    FeedButton,
+    SearchTools
   },
 
   data () {
@@ -70,7 +73,8 @@ export default {
         queryData: []
       },
       timeToSearch: 0,
-      facets: []
+      facets: [],
+      error: ''
     }
   },
   computed: {
@@ -216,6 +220,6 @@ export default {
     padding-left: 94px;
   }
   .results {
-    margin: 0.5em 0 0;
+    margin: 25px 0 0;
   }
 </style>

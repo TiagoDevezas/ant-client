@@ -1,6 +1,6 @@
 <template>
   <div id="results-counter" v-if="count">
-    <span style="line-height: 18px;">{{ count }} resultados ({{ timeToSearch }} segundos)</span>
+    <span style="line-height: 1;">{{ count }} resultados ({{ timeToSearch }} segundos)</span>
     <slot></slot>
   </div>
 </template>
@@ -16,8 +16,12 @@
     font-size: 0.8em;
     color: #888888;
     text-align: left;
-    padding-left: 10px;
     display: flex;
-    align-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    padding: 10px 0 11px 10px;
+    z-index: 1;
+    transition: top 220ms ease-in-out;
   }
 </style>

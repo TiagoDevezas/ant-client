@@ -1,5 +1,7 @@
 let locales = {
   pt: {
+    true: 'Sim',
+    false: 'Não',
     photo_url: 'Foto',
     code: 'Código',
     name: 'Nome',

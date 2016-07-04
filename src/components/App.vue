@@ -52,4 +52,11 @@ body {
   min-height: 100%;
   position: relative;
 }
+a {
+  color: #1a0dab;
+  transition: none;
+  &:focus, &:visited, &:active {
+    color: #609
+  }
+}
 </style>

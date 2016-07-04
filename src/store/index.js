@@ -37,6 +37,8 @@ store.getData = (context) => {
     }
   }, (response) => {
     console.log(response)
-    location.href = 'http://ant.fe.up.pt/502.html'
+    context.$set('error', 'Erro de comunicação com a API. Por favor aguarde.')
+    // TODO: Present message to user informing about API communication error
+    // location.href = 'http://ant.fe.up.pt/502.html'
   })
 }

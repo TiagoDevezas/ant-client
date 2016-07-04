@@ -34,12 +34,14 @@
     },
     data () {
       return {
-        toggled: false
+        toggled: false,
+        clicked: false
       }
     },
     events: {
       'isToggled' (val) {
         this.toggled = !this.toggled
+        this.sendClickData()
       }
     },
     methods: {
@@ -56,8 +58,6 @@
               special: ['positions', 'teaching', 'functions', 'research']
             }
             return labels
-            // this.filterByLabels(labelsToFilter)
-            // break
           case 'Estudante':
             labels = {
               primary: {
@@ -67,8 +67,6 @@
               special: ['courses']
             }
             return labels
-            // this.filterByLabels(labelsToFilter)
-            // break
           case 'Sala':
             labels = {
               primary: {
@@ -79,7 +77,6 @@
               special: ['usage', 'telephone', 'code', 'active', 'area_m2']
             }
             return labels
-            // break
           case 'Departamento':
             labels = {
               primary: {
@@ -114,23 +111,31 @@
               special: ['study_plan']
             }
             return labels
-            // break
         }
       },
-      filterByLabels (labelsToFilter) {
-        // let attrsObj = this.metadata.document
-        // let attrsObjkeys = Object.keys(attrsObj)
-        // Object.keys(labelsToFilter).forEach(key => {
-        //   let labelObj = labelsToFilter[key]
-        //   Object.keys(labelObj).forEach(label => {
-        //     let labelArray = labelObj[label]
-        //     labelArray.forEach(l => {
-        //       if (attrsObjkeys.indexOf(l) !== -1) {
-        //         this.primaryAttributes.push({[l]: attrsObj[l]})
-        //       }
-        //     })
-        //   })
-        // })
+      sendClickData () {
+        let values = {
+          active_query: this.$route.query.q.toString(),
+          active_query_category: this.category.toString(),
+          active_results_page: this.$route.query.start ? (this.$route.query.start / 10 + 1).toString() : '1',
+          clicked_result_rank: this.metadata.rank.toString(),
+          clicked_result_score: this.metadata.score.toString(),
+          clicked_result_uri: this.metadata.uri.toString(),
+          client_user_agent: window.navigator.userAgent.toString(),
+          client_resolution: (window.screen.width + 'x' + window.screen.height).toString(),
+          Referer: document.referrer
+        }
+        if (process.env.NODE_ENV === 'development') {
+          values.is_test = true
+        }
+        if (!this.clicked && arguments.length === 0) {
+          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+          this.clicked = true
+        }
+        if (arguments.length > 0 && arguments[0]) {
+          values['target_url'] = arguments[0]
+          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+        }
       }
     },
     ready () {

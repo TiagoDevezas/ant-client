@@ -52,13 +52,25 @@ export function stripTags (text) {
 }
 
 export function isSearchable (value, attrObj, query) {
+  if (attrObj.course !== undefined) {
+    return '<a href="search?q=' + '%22' + attrObj.course +
+           '%22&tipoentidade=' + 'Curso' + '">' +
+            highlightQuery(attrObj.course, query) +
+           '</a>'
+  }
   if (value && attrObj && query) {
     let newVal = stripTags(value)
     let split = newVal.split(',')
     let links = []
     if (attrObj.searchable) {
       for (let i in split) {
-        links.push('<a href="search?q=' + '%22' + split[i].trim() + '%22' + '">' + highlightQuery(split[i], query) + '</a>')
+        let urlParam
+        if (attrObj.entityType) {
+          urlParam = '&tipoentidade=' + attrObj.entityType
+        } else {
+          urlParam = ''
+        }
+        links.push('<a href="search?q=' + '%22' + split[i].trim() + '%22' + urlParam + '">' + highlightQuery(split[i], query) + '</a>')
       }
       return links.join(', ')
     }
@@ -67,25 +79,25 @@ export function isSearchable (value, attrObj, query) {
   return value
 }
 
-export function iconify (value, iconName) {
-  if (value) {
+export function iconify (value, origLabel) {
+  if (origLabel) {
     let iconName
-    if (value === 'Telefone Alternativo' || value === 'Voip' || value === 'Telefone') {
+    if (origLabel === 'alternative_telephone' || origLabel === 'voip' || origLabel === 'telephone') {
       iconName = 'phone'
-    } else if (value === 'Salas') {
+    } else if (origLabel === 'rooms') {
       iconName = 'business'
-    } else if (value === 'E-mails Institucionais' || value === 'E-mail') {
+    } else if (origLabel === 'institutional_emails' || origLabel === 'email') {
       iconName = 'mail_outline'
-    } else if (value === 'Fax') {
+    } else if (origLabel === 'fax') {
       iconName = 'local_printshop'
     }
     if (iconName) {
       return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
     }
   }
-  if (value && iconName) {
-    return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
-  }
+  // if (origLabel && iconName) {
+  //   return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
+  // }
   return value + ':&nbsp;'
 }
 

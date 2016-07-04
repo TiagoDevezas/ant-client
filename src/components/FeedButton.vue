@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .feed-icon {
 /*    position: absolute;
     top: 5px;
@@ -45,6 +45,9 @@ export default {
   }
   .feed-link {
     color: #fff;
+    &:visited, &:focus, &:active {
+      color: #fff;
+    }
     /*cursor: pointer;*/
   }
   .feed-link i.material-icons {
