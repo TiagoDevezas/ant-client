@@ -15,10 +15,12 @@ store.getLatestNews = (context, count) => {
 }
 
 store.getEntities = (context) => {
-  const query = context.$route.query.q
-  const start = context.$route.query.start
-  const entityType = context.$route.query.tipoentidade
-  return context.$http.get(JSON_SEARCH_URL, { q: query, tipoentidade: entityType, start: start })
+  // TODO: variable with allowed query params
+
+  // const query = context.$route.query.q
+  // const start = context.$route.query.start
+  // const entityType = context.$route.query.tipoentidade
+  return context.$http.get(JSON_SEARCH_URL, context.$route.query)
 }
 
 store.getData = (context) => {

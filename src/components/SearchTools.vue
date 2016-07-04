@@ -1,12 +1,15 @@
 <template>
   <div id="search-tools" :class="{'show': isToggled }">
-    <span>{{ isToggled }}</span>
+    <filter-dropdown v-for="data in filterData" :data="data" :label="$key"></filter-dropdown>
   </div>
 </template>
 
 <script>
+  import FilterDropdown from './FilterDropdown'
+
   export default {
     props: ['filterData'],
+    components: { FilterDropdown },
     data () {
       return {
         isToggled: false
@@ -22,11 +25,6 @@
           resultCounter.classList.remove('slide-out')
         }
       }
-    },
-    methods: {
-    },
-    ready () {
-      console.log(this.filterData)
     }
   }
 </script>
@@ -39,7 +37,7 @@
     display: flex;
     align-content: center;
     position: absolute;
-    top: -25px;
+    top: -30px;
     padding: 10px 0 11px 10px;
     line-height: 1;
     transition: top 220ms ease-in-out;
@@ -50,6 +48,6 @@
   }
 
   .slide-out {
-    top: 25px !important;
+    top: 30px !important;
   }
 </style>

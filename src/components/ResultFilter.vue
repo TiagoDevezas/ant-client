@@ -11,7 +11,7 @@
           {{ eType.label }}
           </a>
         </li>
-        <!-- <search-tools-button v-if="filterData"></search-tools> -->
+        <search-tools-button v-if="filterData"></search-tools>
       </ul> 
   </div>
 </div>

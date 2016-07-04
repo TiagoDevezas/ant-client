@@ -14,19 +14,21 @@
   </div>
   <div class="content-wrap-results">
     <div class="cw"> 
-      <result-empty v-if="data.queryData.count === 0"></result-empty>
-      <div class="results-wrapper" v-if="data.queryData.count > 0">
+      <div class="results-wrapper">
         <search-tools :filter-data="data.queryData.unfilteredFacetsCount"></search-tools>
-        <result-counter
-          v-if="data.entities.length"
-          :count="data.queryData.count"
-          :curr-page="data.queryData.page"
-          :time-to-search="timeToSearch">
-          <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
-        </result-counter>
-        <div class="results">
-          <result-item v-for="entity in data.entities | orderBy 'rank'" :metadata="entity" :category="data.queryData.category" track-by="uri">
-          </result-item>
+        <result-empty v-if="data.queryData.count === 0"></result-empty>
+        <div v-if="data.queryData.count > 0">        
+          <result-counter
+            v-if="data.entities.length"
+            :count="data.queryData.count"
+            :curr-page="data.queryData.page"
+            :time-to-search="timeToSearch">
+            <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
+          </result-counter>
+          <div class="results">
+            <result-item v-for="entity in data.entities | orderBy 'rank'" :metadata="entity" :category="data.queryData.category" track-by="uri">
+            </result-item>
+          </div>
         </div>
       </div>
       <result-paginator
@@ -220,6 +222,6 @@ export default {
     padding-left: 94px;
   }
   .results {
-    margin: 25px 0 0;
+    margin: 30px 0 0;
   }
 </style>
