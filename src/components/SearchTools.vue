@@ -24,6 +24,9 @@
       }
     },
     methods: {
+    },
+    ready () {
+      console.log(this.filterData)
     }
   }
 </script>
