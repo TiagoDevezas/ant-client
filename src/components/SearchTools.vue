@@ -1,6 +1,6 @@
 <template>
   <div id="search-tools" :class="{'show': isToggled }">
-    <filter-dropdown v-for="data in filterData" :data="data" :label="$key"></filter-dropdown>
+    <filter-dropdown v-for="data in filterData" :data="data" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
   </div>
 </template>
 

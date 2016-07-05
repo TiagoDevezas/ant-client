@@ -3,7 +3,7 @@
     <span class="dropdown-label">{{ selectedItem }}</span>
     <span class="dropdown-icon"><i class="material-icons">arrow_drop_down</i></span>
     <div :class="['dropdown-panel', { 'dropdown-open': isToggled }]">
-      <div v-for="d in data" class="dropdown-item" @click="selectItem($event, this.label, d.label)">
+      <div v-for="d in newData" class="dropdown-item" @click="selectItem($event, this.label, d.label)">
         {{ d.label }}
       </div>
     </div>
@@ -18,12 +18,13 @@
         isToggled: false,
         selectedItem: '',
         defaultLabels: {
-          fontesentidade: 'Qualquer fonte',
+          fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
           tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento'
-        }
+        },
+        newData: null
       }
     },
     computed: {
@@ -36,32 +37,55 @@
         this.isToggled = false
       },
       selectItem (event, key, label) {
-        console.log(key)
-        if (label !== this.selectedItem) {
-          let currentQuery = this.$route.query
-          currentQuery[key] = label
-          this.$set('selectedItem', label)
+        let currentQuery = this.$route.query
+        if (label === this.defaultLabels[key]) {
+          currentQuery[key] = undefined
           this.$router.go({
             name: 'search',
             query: currentQuery
           })
+          this.$set('selectedItem', label)
+        }
+        if (label !== this.selectedItem) {
+          currentQuery[key] = label
+          this.$router.go({
+            name: 'search',
+            query: currentQuery
+          })
+          this.$set('selectedItem', label)
         }
       },
       setDefaultLabel () {
         let defaultKeys = Object.keys(this.defaultLabels)
         let queryKeys = Object.keys(this.$route.query)
-        if (!this.selectedItem) {
-          this.$set('selectedItem', this.defaultLabels[this.label])
-        }
         queryKeys.forEach(key => {
-          console.log(this.label, key)
           if (defaultKeys.indexOf(key) !== -1 && this.label === key) {
             this.$set('selectedItem', this.$route.query[key])
           }
         })
+        if (!this.selectedItem) {
+          this.$set('selectedItem', this.defaultLabels[this.label])
+        }
+      },
+      formatData () {
+        let newData = this.data
+        let checkLabel = newData.filter(obj => {
+          return obj.label === this.defaultLabels[this.label]
+        })
+        if (!checkLabel.length) {
+          newData.unshift({ label: this.defaultLabels[this.label], value: null })
+        }
+        this.$set('newData', newData)
+      }
+    },
+    events: {
+      'routeChange' (newRoute) {
+        this.formatData()
+        this.setDefaultLabel()
       }
     },
     ready () {
+      this.formatData()
       this.setDefaultLabel()
     }
   }

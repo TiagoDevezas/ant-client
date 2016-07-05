@@ -15,7 +15,7 @@
   <div class="content-wrap-results">
     <div class="cw"> 
       <div class="results-wrapper">
-        <search-tools :filter-data="data.queryData.unfilteredFacetsCount"></search-tools>
+        <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
         <result-empty v-if="data.queryData.count === 0"></result-empty>
         <div v-if="data.queryData.count > 0">        
           <result-counter
@@ -127,9 +127,8 @@ export default {
   route: {
     data (transition) {
       document.title = this.$route.query.q + ' - ANT'
-      // store.getEntitiesWithMetadata(this)
+      this.$broadcast('routeChange', transition.to)
       store.getData(this)
-      // store.getEntitiesNew(this)
     }
   },
   methods: {
