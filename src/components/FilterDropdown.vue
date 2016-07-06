@@ -26,7 +26,8 @@
           estado: 'Qualquer estado',
           tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
-          departamento: 'Qualquer departamento'
+          departamento: 'Qualquer departamento',
+          s: 'Ordenado por relevância'
         }
       }
     },
@@ -50,7 +51,11 @@
           })
         }
         if (label !== this.selectedItem) {
-          currentQuery[key] = label
+          if (this.label === 's') {
+            currentQuery[key] = 'dataentidade'
+          } else {
+            currentQuery[key] = label
+          }
           this.$set('selectedItem', label)
           this.$router.go({
             name: 'search',
@@ -61,34 +66,34 @@
       setLabel () {
         let defaultKeys = Object.keys(this.defaultLabels)
         let queryKeys = Object.keys(this.$route.query)
-        // this.$set('selectedItem', this.defaultLabels[this.label])
         queryKeys.forEach(key => {
           if (defaultKeys.indexOf(key) !== -1 && this.label === key) {
-            // console.log(key, this.$route.query[key])
-            // this.selectItem(key, this.$route.query[key])
-            this.$set('selectedItem', this.$route.query[key])
+            if (this.$route.query[key] === 'dataentidade') {
+              this.$set('selectedItem', 'Ordenado por data')
+            } else {
+              this.$set('selectedItem', this.$route.query[key])
+            }
           }
         })
         if (!this.selectedItem) {
-          // this.selectItem(this.label, this.defaultLabels[this.label])
           this.$set('selectedItem', this.defaultLabels[this.label])
         }
       }
     },
     events: {
       'routeChange' (newRoute) {
-        let currentQuery = newRoute.query
-        // console.log(this.selectedItem, currentQuery[this.label])
-        setTimeout(() => {
-          if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label]) {
-            currentQuery[this.label] = this.selectedItem
-            this.$router.replace({
-              name: 'search',
-              query: currentQuery
-            })
-          }
-          this.setLabel()
-        }, 100)
+        // let currentQuery = newRoute.query
+        // setTimeout(() => {
+        //   if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label]) {
+        //     currentQuery[this.label] = this.selectedItem
+        //     this.$router.replace({
+        //       name: 'search',
+        //       query: currentQuery
+        //     })
+        //   }
+        //   this.setLabel()
+        // }, 100)
+        this.setLabel()
       }
     },
     ready () {
@@ -123,7 +128,7 @@
     }
     .dropdown-panel {
       display: none;
-      top: 25px;
+      top: 20px;
       left: 0;
       right: auto;
       background: #fff;

@@ -13,9 +13,9 @@
     <result-filter :query-params="$route.query.q" :entity-types="getEntityTypes" :filter-data="data.queryData.unfilteredFacetsCount"></result-filter>
   </div>
   <div class="content-wrap-results">
+    <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
     <div class="cw"> 
       <div class="results-wrapper">
-        <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
         <result-empty v-if="data.queryData.count === 0"></result-empty>
         <div v-if="data.queryData.count > 0">        
           <result-counter
@@ -214,6 +214,7 @@ export default {
     max-width: 800px;
     margin-left: 0;
     margin-right: auto;
+    z-index: 0;
   }
   .results-wrapper {
     padding-top: 0.5em;
@@ -221,6 +222,6 @@ export default {
     padding-left: 94px;
   }
   .results {
-    margin: 30px 0 0;
+    margin: 34px 0 0;
   }
 </style>

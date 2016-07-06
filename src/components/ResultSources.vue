@@ -10,7 +10,7 @@
       {{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}
     </span>
     <span v-if="metadata.type.label === 'Notícia'">
-      {{{ ' - ' + metadata.document.published_date.split(', ')[1] + ' às ' +  metadata.document.published_date.split(', ')[2] }}}
+      {{{ ' - ' + metadata.date.split(', ')[1] + ' às ' +  metadata.date.split(', ')[2] }}}
     </span>
   </div>
 </template>
