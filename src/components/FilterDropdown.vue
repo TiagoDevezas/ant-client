@@ -82,18 +82,18 @@
     },
     events: {
       'routeChange' (newRoute) {
-        // let currentQuery = newRoute.query
-        // setTimeout(() => {
-        //   if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label]) {
-        //     currentQuery[this.label] = this.selectedItem
-        //     this.$router.replace({
-        //       name: 'search',
-        //       query: currentQuery
-        //     })
-        //   }
-        //   this.setLabel()
-        // }, 100)
-        this.setLabel()
+        let currentQuery = newRoute.query
+        setTimeout(() => {
+          if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label] && this.label !== 's') {
+            currentQuery[this.label] = this.selectedItem
+            this.$router.replace({
+              name: 'search',
+              query: currentQuery
+            })
+            this.setLabel()
+          }
+        }, 100)
+        // this.setLabel()
       }
     },
     ready () {
@@ -156,7 +156,7 @@
     }
     .dropdown-open {
       display: block;
-      z-index: 10000;
+      z-index: 5000;
     }
   }
 </style>

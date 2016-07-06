@@ -3,7 +3,7 @@
 <div id="filter-nav">
   <div class="filter-wrapper">
       <ul class="result-filter">
-        <li v-for="eType in entityTypes" track-by="label">
+        <li v-for="eType in entityTypes" track-by="$index">
           <a
             v-link="{ name: 'search', query: { q: queryParams, tipoentidade: eType.value !== 'todos' ? eType.value : null }}"
             :class="[eType.value, { 'active': selectedEntityType === eType.value }]"

@@ -26,16 +26,18 @@
       }
     },
     events: {
-      'toggleSearchOptions': function (toggled) {
+      'toggleSearchOptions' (toggled) {
         this.$set('isToggled', toggled)
         let resultCounter = document.getElementById('results-counter')
-        // let headerWrapper = document.getElementById('header-wrapper')
         if (this.isToggled) {
           resultCounter.classList.add('slide-out')
-          // headerWrapper.style['box-shadow'] = 'none'
         } else {
           resultCounter.classList.remove('slide-out')
         }
+      },
+      'routeChange' (newRoute) {
+        let queryKeys = Object.keys(newRoute.query)
+        this.toggleFilterBar(queryKeys)
       }
     },
     methods: {
@@ -47,7 +49,6 @@
           data = this.filterData
         }
         let keys = Object.keys(data)
-        console.log()
         keys.forEach(key => {
           let checkLabel = data[key].filter(obj => {
             return obj.label === this.defaultLabels[key]
@@ -57,6 +58,15 @@
           }
         })
         return data
+      },
+      toggleFilterBar (keys) {
+        if (keys.indexOf('estado') !== -1) {
+          // let facetFilterBar = document.getElementById('search-tools')
+          // let resultCounter = document.getElementById('results-counter')
+          // facetFilterBar.classList.remove('show')
+          // resultCounter.classList.remove('slide-out')
+          this.$root.$broadcast('hideSearchOptions', false)
+        }
       }
     }
   }

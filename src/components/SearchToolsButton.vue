@@ -16,6 +16,12 @@
         this.$set('isToggled', !this.isToggled)
         this.$root.$broadcast('toggleSearchOptions', this.isToggled)
       }
+    },
+    events: {
+      'hideSearchOptions' (val) {
+        this.$set('isToggled', val)
+        this.$root.$broadcast('toggleSearchOptions', this.isToggled)
+      }
     }
   }
 </script>

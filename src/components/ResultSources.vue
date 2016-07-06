@@ -9,7 +9,7 @@
     <span v-if="isToggled">
       {{{ metadata.sources.join(', ') | highlightQuery $route.query.q }}}
     </span>
-    <span v-if="metadata.type.label === 'Notícia'">
+    <span v-if="metadata.type.label === 'Notícia' && metadata.date">
       {{{ ' - ' + metadata.date.split(', ')[1] + ' às ' +  metadata.date.split(', ')[2] }}}
     </span>
   </div>
