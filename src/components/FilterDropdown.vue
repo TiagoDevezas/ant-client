@@ -1,10 +1,14 @@
 <template>
   <div class="dropdown" @click="toggleDropdown" @blur="closeDropdown" tabindex="0">
-    <span class="dropdown-label">{{ selectedItem }}</span>
+    <span class="dropdown-label">
+      <span :class="{'dropdown-highlight': selectedItem !== defaultLabels[label]}">{{ selectedItem }}
+      </span>
+    </span>
     <span class="dropdown-icon"><i class="material-icons">arrow_drop_down</i></span>
     <div :class="['dropdown-panel', { 'dropdown-open': isToggled }]">
-      <div v-for="d in newData" class="dropdown-item" @click="selectItem($event, this.label, d.label)">
-        {{ d.label }}
+      <div v-for="d in data" class="dropdown-item" @click="selectItem(this.label, d.label)">
+        <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
+        <span>{{ d.label }}</span>
       </div>
     </div>
   </div>
@@ -23,8 +27,7 @@
           tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento'
-        },
-        newData: null
+        }
       }
     },
     computed: {
@@ -36,57 +39,60 @@
       closeDropdown (event) {
         this.isToggled = false
       },
-      selectItem (event, key, label) {
+      selectItem (key, label) {
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
           currentQuery[key] = undefined
+          this.$set('selectedItem', label)
           this.$router.go({
             name: 'search',
             query: currentQuery
           })
-          this.$set('selectedItem', label)
         }
         if (label !== this.selectedItem) {
           currentQuery[key] = label
+          this.$set('selectedItem', label)
           this.$router.go({
             name: 'search',
             query: currentQuery
           })
-          this.$set('selectedItem', label)
         }
       },
-      setDefaultLabel () {
+      setLabel () {
         let defaultKeys = Object.keys(this.defaultLabels)
         let queryKeys = Object.keys(this.$route.query)
+        // this.$set('selectedItem', this.defaultLabels[this.label])
         queryKeys.forEach(key => {
           if (defaultKeys.indexOf(key) !== -1 && this.label === key) {
+            // console.log(key, this.$route.query[key])
+            // this.selectItem(key, this.$route.query[key])
             this.$set('selectedItem', this.$route.query[key])
           }
         })
         if (!this.selectedItem) {
+          // this.selectItem(this.label, this.defaultLabels[this.label])
           this.$set('selectedItem', this.defaultLabels[this.label])
         }
-      },
-      formatData () {
-        let newData = this.data
-        let checkLabel = newData.filter(obj => {
-          return obj.label === this.defaultLabels[this.label]
-        })
-        if (!checkLabel.length) {
-          newData.unshift({ label: this.defaultLabels[this.label], value: null })
-        }
-        this.$set('newData', newData)
       }
     },
     events: {
       'routeChange' (newRoute) {
-        this.formatData()
-        this.setDefaultLabel()
+        let currentQuery = newRoute.query
+        // console.log(this.selectedItem, currentQuery[this.label])
+        setTimeout(() => {
+          if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label]) {
+            currentQuery[this.label] = this.selectedItem
+            this.$router.replace({
+              name: 'search',
+              query: currentQuery
+            })
+          }
+          this.setLabel()
+        }, 100)
       }
     },
     ready () {
-      this.formatData()
-      this.setDefaultLabel()
+      this.setLabel()
     }
   }
 </script>
@@ -94,7 +100,6 @@
 <style lang="scss">
   .dropdown {
     position: relative;
-    font-weight: bold;
     margin-right: 10px;
     display: flex;
     align-items: center;
@@ -111,6 +116,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      .dropdown-highlight {
+        color: #222;
+        font-weight: bold;
+      }
     }
     .dropdown-panel {
       display: none;
@@ -127,10 +136,16 @@
       box-shadow: 0 2px 4px rgba(0,0,0,.2);
       cursor: pointer;
       .dropdown-item {
+        display: flex;
+        align-items: center;
         padding: 5px 10px;
         font-weight: normal;
         &:hover, &:focus, &:active {
           background-color: #F1F1F1;
+        }
+        .item-selected {
+          width: 24px;
+          text-align: center;
         }
       }
     }

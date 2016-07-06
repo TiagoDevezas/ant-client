@@ -1,6 +1,6 @@
 <template>
   <div id="search-tools" :class="{'show': isToggled }">
-    <filter-dropdown v-for="data in filterData" :data="data" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
+    <filter-dropdown v-for="data in newData()" :data="data" :label="$key" v-if="filterData && $key !== 'tipoentidade'"></filter-dropdown>
   </div>
 </template>
 
@@ -12,7 +12,14 @@
     components: { FilterDropdown },
     data () {
       return {
-        isToggled: false
+        isToggled: false,
+        defaultLabels: {
+          fontesentidade: 'Qualquer origem',
+          estado: 'Qualquer estado',
+          tipoentidade: 'Qualquer tipo',
+          curso: 'Qualquer curso',
+          departamento: 'Qualquer departamento'
+        }
       }
     },
     events: {
@@ -24,6 +31,21 @@
         } else {
           resultCounter.classList.remove('slide-out')
         }
+      }
+    },
+    methods: {
+      newData () {
+        let data = this.filterData
+        let keys = Object.keys(data)
+        keys.forEach(key => {
+          let checkLabel = data[key].filter(obj => {
+            return obj.label === this.defaultLabels[key]
+          })
+          if (!checkLabel.length) {
+            data[key].unshift({ label: this.defaultLabels[key], value: null })
+          }
+        })
+        return data
       }
     }
   }
