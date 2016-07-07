@@ -10,7 +10,7 @@
         <search-form :query-params="$route.query.q" class="search-top"></search-form>
       </div>
     </div>
-    <result-filter :query-params="$route.query.q" :entity-types="getEntityTypes" :filter-data="data.queryData.unfilteredFacetsCount"></result-filter>
+    <result-filter :query-params="$route.query" :entity-types="getEntityTypes" :filter-data="data.queryData.unfilteredFacetsCount"></result-filter>
   </div>
   <div class="content-wrap-results">
     <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
@@ -130,7 +130,7 @@ export default {
   route: {
     data (transition) {
       document.title = this.$route.query.q + ' - ANT'
-      this.$broadcast('routeChange', transition.to)
+      this.$broadcast('routeChange', transition)
       store.getData(this)
     }
   },

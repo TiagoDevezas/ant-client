@@ -17,7 +17,7 @@
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
-          tipoentidade: 'Qualquer tipo',
+          // tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância'
@@ -29,15 +29,16 @@
       'toggleSearchOptions' (toggled) {
         this.$set('isToggled', toggled)
         let resultCounter = document.getElementById('results-counter')
-        if (this.isToggled) {
+        if (this.isToggled && resultCounter) {
           resultCounter.classList.add('slide-out')
         } else {
           resultCounter.classList.remove('slide-out')
         }
       },
       'routeChange' (newRoute) {
-        let queryKeys = Object.keys(newRoute.query)
+        let queryKeys = Object.keys(newRoute.to.query)
         this.toggleFilterBar(queryKeys)
+        return true
       }
     },
     methods: {
@@ -60,12 +61,22 @@
         return data
       },
       toggleFilterBar (keys) {
-        if (keys.indexOf('estado') !== -1) {
-          // let facetFilterBar = document.getElementById('search-tools')
-          // let resultCounter = document.getElementById('results-counter')
-          // facetFilterBar.classList.remove('show')
-          // resultCounter.classList.remove('slide-out')
-          this.$root.$broadcast('hideSearchOptions', false)
+        // this.$root.$broadcast('clickButton')
+        let defaultKeys = Object.keys(this.defaultLabels)
+        let counter = 0
+        defaultKeys.forEach(key => {
+          if (keys.indexOf(key) !== -1) {
+            counter += 1
+          }
+        })
+        if (counter === 0 && this.isToggled) {
+          this.$root.$broadcast('clickButton')
+        } else if (counter > 0 && !this.isToggled) {
+          setTimeout(() => {
+            let facetBar = document.getElementById('search-tools')
+            facetBar.classList.add('show')
+            this.$root.$broadcast('clickButton')
+          }, 10)
         }
       }
     }

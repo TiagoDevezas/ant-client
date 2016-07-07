@@ -18,9 +18,12 @@
       }
     },
     events: {
-      'hideSearchOptions' (val) {
-        this.$set('isToggled', val)
-        this.$root.$broadcast('toggleSearchOptions', this.isToggled)
+      'toggleButton' () {
+        this.$set('isToggled', !this.isToggled)
+        // this.$root.$broadcast('toggleSearchOptions', this.isToggled)
+      },
+      'clickButton' () {
+        this.toggleSearchOptions()
       }
     }
   }

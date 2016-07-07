@@ -24,14 +24,12 @@
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
-          tipoentidade: 'Qualquer tipo',
+          // tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância'
         }
       }
-    },
-    computed: {
     },
     methods: {
       toggleDropdown (event) {
@@ -82,18 +80,20 @@
     },
     events: {
       'routeChange' (newRoute) {
-        let currentQuery = newRoute.query
-        setTimeout(() => {
-          if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label] && this.label !== 's') {
-            currentQuery[this.label] = this.selectedItem
-            this.$router.replace({
-              name: 'search',
-              query: currentQuery
-            })
-            this.setLabel()
-          }
-        }, 100)
-        // this.setLabel()
+        // let currentQuery = newRoute.to.query
+        // let previousQuery = newRoute.from.query
+
+        // if (currentQuery !== previousQuery) {
+        //   if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label] && this.label !== 's') {
+        //     currentQuery[this.label] = this.selectedItem
+        //     this.$router.replace({
+        //       name: 'search',
+        //       query: currentQuery
+        //     })
+        //     this.setLabel()
+        //   }
+        // }
+        this.setLabel()
       }
     },
     ready () {
