@@ -11,7 +11,7 @@
           {{ eType.label }}
           </a>
         </li>
-        <search-tools-button v-if="filterData"></search-tools>
+        <search-tools-button></search-tools-button>
       </ul> 
   </div>
 </div>
@@ -35,6 +35,12 @@
           this.$set('selectedEntityType', type)
         } else {
           this.$set('selectedEntityType', 'todos')
+        }
+      },
+      filterDataLength () {
+        if (typeof (this.filterData) === 'object') {
+          let length = Object.keys(this.filterData).length
+          return length
         }
       }
     }

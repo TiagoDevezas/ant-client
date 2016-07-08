@@ -2,14 +2,17 @@
   <div id="search-tools" :class="{'show': isToggled }">
     <filter-dropdown v-for="data in newData()" :data="data" :label="$key" v-if="checkFilterData && $key !== 'tipoentidade'"></filter-dropdown>
     <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
+    <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
     <div v-if="!checkFilterData" style="display: inline-flex;" v-for="newData in getFiltersFromURL">
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
     </div>
+    <filter-clear v-if="activeFilters.length" :active-filters="activeFilters" btn-label="Limpar"></filter-clear>
   </div>
 </template>
 
 <script>
   import FilterDropdown from './FilterDropdown'
+  import FilterClear from './FilterClear'
 
   export default {
     props: {
@@ -20,7 +23,7 @@
         }
       }
     },
-    components: { FilterDropdown },
+    components: { FilterDropdown, FilterClear },
     data () {
       return {
         isToggled: false,
@@ -30,9 +33,20 @@
           // tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
-          s: 'Ordenado por relevância'
+          s: 'Ordenado por relevância',
+          d: 'Qualquer altura'
         },
-        orderFacetData: { s: [{ label: 'Ordenado por data', value: null}] },
+        orderFacetData: {
+          s: [{ label: 'Ordenado por data', value: null}]
+        },
+        dateFacetData: {
+          d: [
+            { label: 'Últimas 24 horas', value: null },
+            { label: 'Última semana', value: null },
+            { label: 'Último mês', value: null },
+            { label: 'Último ano', value: null }
+          ]
+        },
         activeFilters: []
       }
     },
@@ -50,9 +64,19 @@
       },
       'routeChange' (newRoute) {
         let queryKeys = Object.keys(newRoute.to.query)
-        // console.log(queryKeys)
         this.toggleFilterBar(queryKeys)
-        // return true
+        return true
+      },
+      'removeFromActiveFilters' (key) {
+        let idx = this.activeFilters.indexOf(key)
+        if (idx !== -1) {
+          this.activeFilters.splice(idx, 1)
+        }
+      },
+      'addtoActiveFilters' (key) {
+        if (key && this.activeFilters.indexOf(key) === -1) {
+          this.activeFilters.push(key)
+        }
       }
     },
     computed: {
@@ -93,6 +117,7 @@
         return data
       },
       toggleFilterBar (keys) {
+        // this.$root.$broadcast('clickButton')
         let defaultKeys = Object.keys(this.defaultLabels)
         let counter = 0
         defaultKeys.forEach(key => {
@@ -102,13 +127,14 @@
         })
         if (counter === 0 && this.isToggled) {
           // this.$root.$broadcast('clickButton')
-        } else if (counter > 0 && !this.isToggled) {
-          this.$root.$broadcast('clickButton')
+        }
+        if (counter > 0 && !this.toggled) {
+          // this.$root.$broadcast('clickButton')
           setTimeout(() => {
-            let facetBar = document.getElementById('search-tools')
-            facetBar.classList.add('show')
-            this.$root.$broadcast('clickButton')
-          }, 10)
+            // let facetBar = document.getElementById('search-tools')
+            // facetBar.classList.add('show')
+            // this.$root.$broadcast('clickButton')
+          }, 1)
         }
       }
     }

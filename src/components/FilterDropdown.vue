@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default {
     props: ['data', 'label'],
     data () {
@@ -27,7 +29,8 @@
           // tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
-          s: 'Ordenado por relevância'
+          s: 'Ordenado por relevância',
+          d: 'Qualquer altura'
         }
       }
     },
@@ -39,16 +42,39 @@
         this.isToggled = false
       },
       selectItem (key, label) {
+        console.log(key, label)
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
-          currentQuery[key] = undefined
+          if (key !== 'd') {
+            console.log('key not equal to d')
+            currentQuery[key] = undefined
+          } else {
+            ['ed', 'sd'].forEach(str => {
+              currentQuery[str] = undefined
+            })
+          }
         } else if (label !== this.selectedItem) {
           if (this.label === 's') {
             currentQuery[key] = 'dataentidade'
+          } else if (this.label === 'd') {
+            if (label === 'Últimas 24 horas') {
+              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              currentQuery['sd'] = moment().subtract(1, 'day').format('YYYYMMDDHHMM')
+            } else if (label === 'Última semana') {
+              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              currentQuery['sd'] = moment().subtract(1, 'week').format('YYYYMMDDHHMM')
+            } else if (label === 'Último mês') {
+              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              currentQuery['sd'] = moment().subtract(1, 'month').format('YYYYMMDDHHMM')
+            } else if (label === 'Último ano') {
+              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              currentQuery['sd'] = moment().subtract(1, 'year').format('YYYYMMDDHHMM')
+            }
           } else {
             currentQuery[key] = label
           }
         }
+        this.$dispatch('addtoActiveFilters', key)
         this.$router.go({
           name: 'search',
           query: currentQuery
@@ -65,6 +91,7 @@
             } else {
               this.$set('selectedItem', this.$route.query[key])
             }
+            this.$dispatch('addtoActiveFilters', key)
           }
         })
         if (!this.selectedItem) {
@@ -74,6 +101,12 @@
     },
     events: {
       'routeChange' (newRoute) {
+        let queryKeys = Object.keys(newRoute.to.query)
+        if (queryKeys.indexOf(this.label) === -1) {
+          this.$set('selectedItem', this.defaultLabels[this.label])
+          this.$dispatch('removeFromActiveFilters', this.label)
+        }
+
         // let currentQuery = newRoute.to.query
         // let previousQuery = newRoute.from.query
 

@@ -10,7 +10,7 @@
         <search-form :query-params="$route.query.q" class="search-top"></search-form>
       </div>
     </div>
-    <result-filter :query-params="$route.query" :entity-types="getEntityTypes" :filter-data="data.queryData.unfilteredFacetsCount"></result-filter>
+    <result-filter :query-params="$route.query" :entity-types="getEntityTypes" :filter-data="data.queryData.filteredFacetsCount"></result-filter>
   </div>
   <div class="content-wrap-results">
     <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>

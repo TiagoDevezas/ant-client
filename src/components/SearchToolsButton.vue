@@ -1,6 +1,8 @@
 <template>
   <li class="search-tools-button">
-    <div @click="toggleSearchOptions" :class="{ 'search-button-active': isToggled }">Ferramentas de Pesquisa</div>
+    <div @click="toggleSearchOptions" :class="{ 'search-button-active': isToggled }">
+      Ferramentas de Pesquisa
+    </div>
   </li>
 </template>
 
