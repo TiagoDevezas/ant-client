@@ -42,24 +42,18 @@
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
           currentQuery[key] = undefined
-          this.$set('selectedItem', label)
-          this.$router.go({
-            name: 'search',
-            query: currentQuery
-          })
-        }
-        if (label !== this.selectedItem) {
+        } else if (label !== this.selectedItem) {
           if (this.label === 's') {
             currentQuery[key] = 'dataentidade'
           } else {
             currentQuery[key] = label
           }
-          this.$set('selectedItem', label)
-          this.$router.go({
-            name: 'search',
-            query: currentQuery
-          })
         }
+        this.$router.go({
+          name: 'search',
+          query: currentQuery
+        })
+        this.$set('selectedItem', label)
       },
       setLabel () {
         let defaultKeys = Object.keys(this.defaultLabels)
@@ -93,7 +87,7 @@
         //     this.setLabel()
         //   }
         // }
-        this.setLabel()
+        // this.setLabel()
       }
     },
     ready () {

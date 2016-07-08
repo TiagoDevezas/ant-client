@@ -55,7 +55,7 @@ import ResultEmpty from './ResultEmpty'
 import AboutLink from './AboutLink'
 import FeedButton from './FeedButton'
 import SearchTools from './SearchTools'
-import MzDatepicker from '../../node_modules/vue-datepicker/src/vue.datepicker'
+// import MzDatepicker from '../../node_modules/vue-datepicker/src/vue.datepicker'
 
 export default {
   components: {
@@ -67,8 +67,9 @@ export default {
     ResultEmpty,
     AboutLink,
     FeedButton,
-    SearchTools,
-    MzDatepicker
+    SearchTools
+    // ,
+    // MzDatepicker
   },
 
   data () {
@@ -157,7 +158,7 @@ export default {
 
 <style lang="scss">
 
-  @import "../../node_modules/vue-datepicker/src/vue.datepicker";
+  // @import "../../node_modules/vue-datepicker/src/vue.datepicker";
 
   #search {
     height: 100%;

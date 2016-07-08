@@ -1,7 +1,10 @@
 <template>
   <div id="search-tools" :class="{'show': isToggled }">
-    <filter-dropdown v-for="data in newData()" :data="data" :label="$key" v-if="filterData && $key !== 'tipoentidade'"></filter-dropdown>
-    <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia'" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
+    <filter-dropdown v-for="data in newData()" :data="data" :label="$key" v-if="checkFilterData && $key !== 'tipoentidade'"></filter-dropdown>
+    <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
+    <div v-if="!checkFilterData" style="display: inline-flex;" v-for="newData in getFiltersFromURL">
+      <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
+    </div>
   </div>
 </template>
 
@@ -9,7 +12,14 @@
   import FilterDropdown from './FilterDropdown'
 
   export default {
-    props: ['filterData'],
+    props: {
+      filterData: {
+        type: Object,
+        default (val) {
+          return { label: '', value: ''}
+        }
+      }
+    },
     components: { FilterDropdown },
     data () {
       return {
@@ -22,23 +32,45 @@
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância'
         },
-        orderFacetData: { s: [{ label: 'Ordenado por data', value: null}] }
+        orderFacetData: { s: [{ label: 'Ordenado por data', value: null}] },
+        activeFilters: []
       }
     },
     events: {
-      'toggleSearchOptions' (toggled) {
+      'toggleFacetsBar' (toggled) {
         this.$set('isToggled', toggled)
         let resultCounter = document.getElementById('results-counter')
-        if (this.isToggled && resultCounter) {
-          resultCounter.classList.add('slide-out')
-        } else {
-          resultCounter.classList.remove('slide-out')
+        if (resultCounter) {
+          if (this.isToggled) {
+            resultCounter.classList.add('slide-out')
+          } else {
+            resultCounter.classList.remove('slide-out')
+          }
         }
       },
       'routeChange' (newRoute) {
         let queryKeys = Object.keys(newRoute.to.query)
+        // console.log(queryKeys)
         this.toggleFilterBar(queryKeys)
-        return true
+        // return true
+      }
+    },
+    computed: {
+      checkFilterData () {
+        return Object.keys(this.filterData).length
+      },
+      getFiltersFromURL () {
+        let filters = {}
+        let queryKeys = Object.keys(this.$route.query)
+        let defaultKeys = Object.keys(this.defaultLabels)
+        queryKeys.forEach(key => {
+          if (defaultKeys.indexOf(key) !== -1) {
+            let arr = []
+            arr.push({ label: this.$route.query[key], value: null })
+            filters[key] = arr
+          }
+        })
+        return this.newData(filters)
       }
     },
     methods: {
@@ -61,7 +93,6 @@
         return data
       },
       toggleFilterBar (keys) {
-        // this.$root.$broadcast('clickButton')
         let defaultKeys = Object.keys(this.defaultLabels)
         let counter = 0
         defaultKeys.forEach(key => {
@@ -70,8 +101,9 @@
           }
         })
         if (counter === 0 && this.isToggled) {
-          this.$root.$broadcast('clickButton')
+          // this.$root.$broadcast('clickButton')
         } else if (counter > 0 && !this.isToggled) {
+          this.$root.$broadcast('clickButton')
           setTimeout(() => {
             let facetBar = document.getElementById('search-tools')
             facetBar.classList.add('show')

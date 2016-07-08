@@ -1,6 +1,6 @@
 <template>
   <li class="search-tools-button">
-    <div @click="toggleSearchOptions">Ferramentas de Pesquisa</div>
+    <div @click="toggleSearchOptions" :class="{ 'search-button-active': isToggled }">Ferramentas de Pesquisa</div>
   </li>
 </template>
 
@@ -14,14 +14,10 @@
     methods: {
       toggleSearchOptions () {
         this.$set('isToggled', !this.isToggled)
-        this.$root.$broadcast('toggleSearchOptions', this.isToggled)
+        this.$root.$broadcast('toggleFacetsBar', this.isToggled)
       }
     },
     events: {
-      'toggleButton' () {
-        this.$set('isToggled', !this.isToggled)
-        // this.$root.$broadcast('toggleSearchOptions', this.isToggled)
-      },
       'clickButton' () {
         this.toggleSearchOptions()
       }
@@ -29,7 +25,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
 
 .search-tools-button {
   color: #666;
@@ -50,6 +46,13 @@
 
 .search-tools-button > div:hover {
   background-color: #ddd;
+}
+
+.search-button-active {
+  background-color: #cfcfcf !important;
+  &:hover {
+    background-color: #c1c1c1 !important;
+  }
 }
   
 </style>
