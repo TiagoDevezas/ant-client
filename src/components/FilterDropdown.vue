@@ -26,11 +26,16 @@
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
-          // tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância',
           d: 'Qualquer altura'
+        },
+        dateFacetsLabels: {
+          d: 'Últimas 24 horas',
+          w: 'Última semana',
+          m: 'Último mês',
+          y: 'Último ano'
         }
       }
     },
@@ -46,10 +51,9 @@
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
           if (key !== 'd') {
-            console.log('key not equal to d')
             currentQuery[key] = undefined
           } else {
-            ['ed', 'sd'].forEach(str => {
+            ['d', 'ed', 'sd'].forEach(str => {
               currentQuery[str] = undefined
             })
           }
@@ -58,15 +62,19 @@
             currentQuery[key] = 'dataentidade'
           } else if (this.label === 'd') {
             if (label === 'Últimas 24 horas') {
+              currentQuery['d'] = 'd'
               currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
               currentQuery['sd'] = moment().subtract(1, 'day').format('YYYYMMDDHHMM')
             } else if (label === 'Última semana') {
+              currentQuery['d'] = 'w'
               currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
               currentQuery['sd'] = moment().subtract(1, 'week').format('YYYYMMDDHHMM')
             } else if (label === 'Último mês') {
+              currentQuery['d'] = 'm'
               currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
               currentQuery['sd'] = moment().subtract(1, 'month').format('YYYYMMDDHHMM')
             } else if (label === 'Último ano') {
+              currentQuery['d'] = 'y'
               currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
               currentQuery['sd'] = moment().subtract(1, 'year').format('YYYYMMDDHHMM')
             }
@@ -74,7 +82,23 @@
             currentQuery[key] = label
           }
         }
-        this.$dispatch('addtoActiveFilters', key)
+        if (key !== 'd') {
+          this.$dispatch('addtoActiveFilters', key)
+        } else {
+          if (currentQuery[key]) {
+            // Remove all other facet date filters
+            ['dd', 'dw', 'dm', 'dy'].forEach(val => {
+              if (val !== key) {
+                this.$dispatch('removeFromActiveFilters', val)
+              }
+            })
+            this.$dispatch('addtoActiveFilters', key + '' + currentQuery[key])
+          } else {
+            ['dd', 'dw', 'dm', 'dy'].forEach(val => {
+              this.$dispatch('removeFromActiveFilters', val)
+            })
+          }
+        }
         this.$router.go({
           name: 'search',
           query: currentQuery
@@ -88,10 +112,16 @@
           if (defaultKeys.indexOf(key) !== -1 && this.label === key) {
             if (this.$route.query[key] === 'dataentidade') {
               this.$set('selectedItem', 'Ordenado por data')
+            } else if (key === 'd') {
+              this.$set('selectedItem', this.dateFacetsLabels[this.$route.query[key]])
             } else {
               this.$set('selectedItem', this.$route.query[key])
             }
-            this.$dispatch('addtoActiveFilters', key)
+            if (key !== 'd') {
+              this.$dispatch('addtoActiveFilters', key)
+            } else {
+              this.$dispatch('addtoActiveFilters', key + '' + this.$route.query[key])
+            }
           }
         })
         if (!this.selectedItem) {
@@ -106,21 +136,6 @@
           this.$set('selectedItem', this.defaultLabels[this.label])
           this.$dispatch('removeFromActiveFilters', this.label)
         }
-
-        // let currentQuery = newRoute.to.query
-        // let previousQuery = newRoute.from.query
-
-        // if (currentQuery !== previousQuery) {
-        //   if (this.selectedItem !== this.defaultLabels[this.label] && this.selectedItem !== currentQuery[this.label] && this.label !== 's') {
-        //     currentQuery[this.label] = this.selectedItem
-        //     this.$router.replace({
-        //       name: 'search',
-        //       query: currentQuery
-        //     })
-        //     this.setLabel()
-        //   }
-        // }
-        // this.setLabel()
       }
     },
     ready () {

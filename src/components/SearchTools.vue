@@ -7,6 +7,7 @@
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
     </div>
     <filter-clear v-if="activeFilters.length" :active-filters="activeFilters" btn-label="Limpar"></filter-clear>
+    {{ activeFilters | json }}
   </div>
 </template>
 
@@ -30,7 +31,6 @@
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
-          // tipoentidade: 'Qualquer tipo',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância',
@@ -38,6 +38,12 @@
         },
         orderFacetData: {
           s: [{ label: 'Ordenado por data', value: null}]
+        },
+        dateFacetsLabels: {
+          d: 'Últimas 24 horas',
+          w: 'Última semana',
+          m: 'Último mês',
+          y: 'Último ano'
         },
         dateFacetData: {
           d: [
@@ -90,7 +96,11 @@
         queryKeys.forEach(key => {
           if (defaultKeys.indexOf(key) !== -1) {
             let arr = []
-            arr.push({ label: this.$route.query[key], value: null })
+            if (key !== 'd') {
+              arr.push({ label: this.$route.query[key], value: null })
+            } else {
+              arr.push({ label: this.dateFacetsLabels[this.$route.query[key]], value: null })
+            }
             filters[key] = arr
           }
         })
