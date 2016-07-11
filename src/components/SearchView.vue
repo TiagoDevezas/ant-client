@@ -14,6 +14,12 @@
   </div>
   <div class="content-wrap-results">
     <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
+    <modal title="Intervalo de datas personalizado" :show.sync="modal1">
+      <div>
+          <p>This is the content inside the modal.</p>
+      </div>
+    </modal>
+    <button @click="modal1 = true">Open modal</button>
     <div class="cw"> 
       <div class="results-wrapper">
         <result-empty v-if="data.queryData.count === 0"></result-empty>
@@ -54,6 +60,7 @@ import ResultEmpty from './ResultEmpty'
 import AboutLink from './AboutLink'
 import FeedButton from './FeedButton'
 import SearchTools from './SearchTools'
+import Modal from './Modal'
 
 export default {
   components: {
@@ -65,7 +72,8 @@ export default {
     ResultEmpty,
     AboutLink,
     FeedButton,
-    SearchTools
+    SearchTools,
+    Modal
   },
 
   data () {
@@ -76,7 +84,8 @@ export default {
       },
       timeToSearch: 0,
       facets: [],
-      error: ''
+      error: '',
+      modal1: false
     }
   },
   computed: {
