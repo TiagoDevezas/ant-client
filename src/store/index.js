@@ -4,6 +4,8 @@ const JSON_SEARCH_URL = SEARCH_URL
 
 const store = Object.create(null)
 
+import moment from 'moment'
+
 export default store
 
 let t0
@@ -15,12 +17,29 @@ store.getLatestNews = (context, count) => {
 }
 
 store.getEntities = (context) => {
+  let currentQuery = context.$route.query
+  if (currentQuery['d']) {
+    let ed = moment().format('YYYYMMDDHHMM')
+    let sd
+    let dateParam = currentQuery['d']
+    if (dateParam === 'd') {
+      sd = moment().subtract(1, 'day').format('YYYYMMDDHHMM')
+    } else if (dateParam === 'w') {
+      sd = moment().subtract(1, 'week').format('YYYYMMDDHHMM')
+    } else if (dateParam === 'm') {
+      sd = moment().subtract(1, 'month').format('YYYYMMDDHHMM')
+    } else if (dateParam === 'y') {
+      sd = moment().subtract(1, 'year').format('YYYYMMDDHHMM')
+    }
+    currentQuery['sd'] = sd
+    currentQuery['ed'] = ed
+  }
   // TODO: variable with allowed query params
 
   // const query = context.$route.query.q
   // const start = context.$route.query.start
   // const entityType = context.$route.query.tipoentidade
-  return context.$http.get(JSON_SEARCH_URL, context.$route.query)
+  return context.$http.get(JSON_SEARCH_URL, currentQuery)
 }
 
 store.getData = (context) => {

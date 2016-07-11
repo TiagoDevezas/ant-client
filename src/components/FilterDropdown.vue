@@ -15,8 +15,6 @@
 </template>
 
 <script>
-  import moment from 'moment'
-
   export default {
     props: ['data', 'label'],
     data () {
@@ -47,7 +45,7 @@
         this.isToggled = false
       },
       selectItem (key, label) {
-        console.log(key, label)
+        console.log(label)
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
           if (key !== 'd') {
@@ -63,20 +61,20 @@
           } else if (this.label === 'd') {
             if (label === 'Últimas 24 horas') {
               currentQuery['d'] = 'd'
-              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              currentQuery['sd'] = moment().subtract(1, 'day').format('YYYYMMDDHHMM')
+              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              // currentQuery['sd'] = moment().subtract(1, 'day').format('YYYYMMDDHHMM')
             } else if (label === 'Última semana') {
               currentQuery['d'] = 'w'
-              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              currentQuery['sd'] = moment().subtract(1, 'week').format('YYYYMMDDHHMM')
+              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              // currentQuery['sd'] = moment().subtract(1, 'week').format('YYYYMMDDHHMM')
             } else if (label === 'Último mês') {
               currentQuery['d'] = 'm'
-              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              currentQuery['sd'] = moment().subtract(1, 'month').format('YYYYMMDDHHMM')
+              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              // currentQuery['sd'] = moment().subtract(1, 'month').format('YYYYMMDDHHMM')
             } else if (label === 'Último ano') {
               currentQuery['d'] = 'y'
-              currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              currentQuery['sd'] = moment().subtract(1, 'year').format('YYYYMMDDHHMM')
+              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
+              // currentQuery['sd'] = moment().subtract(1, 'year').format('YYYYMMDDHHMM')
             }
           } else {
             currentQuery[key] = label
