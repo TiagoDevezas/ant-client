@@ -14,7 +14,6 @@
   </div>
   <div class="content-wrap-results">
     <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
-    <!-- <mz-datepicker en clearable range></mz-datepicker> -->
     <div class="cw"> 
       <div class="results-wrapper">
         <result-empty v-if="data.queryData.count === 0"></result-empty>
@@ -55,7 +54,6 @@ import ResultEmpty from './ResultEmpty'
 import AboutLink from './AboutLink'
 import FeedButton from './FeedButton'
 import SearchTools from './SearchTools'
-// import MzDatepicker from '../../node_modules/vue-datepicker/src/vue.datepicker'
 
 export default {
   components: {
@@ -68,8 +66,6 @@ export default {
     AboutLink,
     FeedButton,
     SearchTools
-    // ,
-    // MzDatepicker
   },
 
   data () {
@@ -157,9 +153,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-  // @import "../../node_modules/vue-datepicker/src/vue.datepicker";
-
   #search {
     height: 100%;
   }

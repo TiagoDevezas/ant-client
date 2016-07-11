@@ -6,7 +6,7 @@
     </span>
     <span class="dropdown-icon"><i class="material-icons">arrow_drop_down</i></span>
     <div :class="['dropdown-panel', { 'dropdown-open': isToggled }]">
-      <div v-for="d in data" class="dropdown-item" @click="selectItem(this.label, d.label)">
+      <div v-for="d in data" :class="['dropdown-item', { 'border-top': d.label === 'Intervalo personalizado'}]" @click="selectItem(this.label, d.label)">
         <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
         <span>{{ d.label }}</span>
       </div>
@@ -176,7 +176,7 @@
       background: #fff;
       border: 1px solid rgba(0,0,0,.2);
       font-size: 13px;
-      padding: 6px 0;
+      // padding: 6px 0;
       position: absolute;
       white-space: nowrap;
       z-index: 10;
@@ -185,7 +185,7 @@
       .dropdown-item {
         display: flex;
         align-items: center;
-        padding: 5px 10px;
+        padding: 8px 10px;
         font-weight: normal;
         &:hover, &:focus, &:active {
           background-color: #F1F1F1;
@@ -195,6 +195,10 @@
           text-align: center;
         }
       }
+    }
+    .border-top {
+      border-top: 1px solid #ccc;
+      padding-top: 8px;
     }
     .dropdown-open {
       display: block;

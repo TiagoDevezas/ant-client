@@ -49,7 +49,8 @@
             { label: 'Últimas 24 horas', value: null },
             { label: 'Última semana', value: null },
             { label: 'Último mês', value: null },
-            { label: 'Último ano', value: null }
+            { label: 'Último ano', value: null },
+            { label: 'Intervalo personalizado', value: null }
           ]
         },
         activeFilters: []
