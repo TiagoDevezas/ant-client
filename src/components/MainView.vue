@@ -60,12 +60,12 @@ export default {
     }
   }
   #logo-link {
-    background-image: url("../assets/ant-logo.svg");
+    background-image: url("../assets/ant_logo.svg");
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    background-size: 150px 100px;
+    background-size: 100px;
     height: 100px;
-    width: 150px;
+    width: 100px;
     display: block;
     text-indent: -9999px;
     margin: 0 auto;

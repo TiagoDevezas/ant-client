@@ -197,7 +197,7 @@ export default {
     top: 0;
   }
   .header-logo {
-    background-image: url("../assets/ant-logo.svg");
+    background-image: url("../assets/ant_logo.svg");
     background-size: 50px 50px;
     background-position: 50% 50%;
     background-repeat: no-repeat;
