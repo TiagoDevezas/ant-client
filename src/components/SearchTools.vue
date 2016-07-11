@@ -7,7 +7,6 @@
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
     </div>
     <filter-clear v-if="activeFilters.length" :active-filters="activeFilters" btn-label="Limpar"></filter-clear>
-    {{ activeFilters | json }}
   </div>
 </template>
 

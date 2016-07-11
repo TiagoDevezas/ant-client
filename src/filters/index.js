@@ -27,10 +27,14 @@ export function highlightQuery (value, query) {
     let q = ''
     if (split.length === 1) {
       q = split[0]
+      q = q.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '')
     } else if (split.length > 1) {
-      q = split.join('|')
+      let newSplit = split.map(s => {
+        return s.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '')
+      })
+      q = newSplit.join('|')
     }
-    const regex = new RegExp('(?=\\b)(' + q + ')(?=\\W|\\b)', 'gi')
+    let regex = new RegExp('(?=\\b)(' + q + ')(?=\\W|\\b)', 'gi')
     return value.replace(regex, '<span class="highlight">$1</span>')
   }
   return value
