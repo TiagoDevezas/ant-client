@@ -5,11 +5,23 @@
       </span>
     </span>
     <span class="dropdown-icon"><i class="material-icons">arrow_drop_down</i></span>
+    
     <div :class="['dropdown-panel', { 'dropdown-open': isToggled }]">
-      <div v-for="d in data" :class="['dropdown-item', { 'border-top': d.label === 'Intervalo personalizado'}]" @click="selectItem(this.label, d.label)">
-        <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
-        <span>{{ d.label }}</span>
+
+      <div v-for="d in data" :class="['dropdown-item', { 'border-top':  d.label === 'Intervalo personalizado'}]">
+
+        <div @click="selectItem(this.label, d.label)" v-if="d.label !== 'Intervalo personalizado'">        
+          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
+          <span>{{ d.label }}</span>
+        </div>
+
+        <div v-if="d.label === 'Intervalo personalizado'" @click.prevent="openModal()">
+          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
+          <span>{{ d.label }}</span>
+        </div>
+
       </div>
+
     </div>
   </div>
 </template>
@@ -43,6 +55,10 @@
       },
       closeDropdown (event) {
         this.isToggled = false
+      },
+      openModal () {
+        console.log('open modal clicked')
+        this.$dispatch('openModal')
       },
       selectItem (key, label) {
         console.log(label)
@@ -191,6 +207,7 @@
         .item-selected {
           width: 24px;
           text-align: center;
+          display: inline-block;
         }
       }
     }

@@ -1,18 +1,30 @@
 <template>
   <div id="search-tools" :class="{'show': isToggled }">
+
     <filter-dropdown v-for="data in newData()" :data="data" :label="$key" v-if="checkFilterData && $key !== 'tipoentidade'"></filter-dropdown>
+
     <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
+
     <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
+ 
     <div v-if="!checkFilterData" style="display: inline-flex;" v-for="newData in getFiltersFromURL">
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
     </div>
+ 
     <filter-clear v-if="activeFilters.length" :active-filters="activeFilters" btn-label="Limpar"></filter-clear>
+
+    <modal title="Intervalo de datas personalizado" :show.sync="dateModal">
+      <date-range-picker></date-range-picker>
+    </modal>
+
   </div>
 </template>
 
 <script>
   import FilterDropdown from './FilterDropdown'
   import FilterClear from './FilterClear'
+  import Modal from './Modal'
+  import DateRangePicker from './DateRangePicker'
 
   export default {
     props: {
@@ -23,10 +35,11 @@
         }
       }
     },
-    components: { FilterDropdown, FilterClear },
+    components: { FilterDropdown, FilterClear, Modal, DateRangePicker },
     data () {
       return {
         isToggled: false,
+        dateModal: false,
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
@@ -57,6 +70,9 @@
       }
     },
     events: {
+      'openModal' () {
+        this.dateModal = true
+      },
       'toggleFacetsBar' (toggled) {
         this.$set('isToggled', toggled)
         let resultCounter = document.getElementById('results-counter')

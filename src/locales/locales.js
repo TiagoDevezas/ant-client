@@ -1,5 +1,7 @@
 let locales = {
   pt: {
+    location: 'Localização',
+    event_location: 'Local do Evento',
     true: 'Sim',
     false: 'Não',
     photo_url: 'Foto',
