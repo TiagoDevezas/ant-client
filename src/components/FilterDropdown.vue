@@ -15,8 +15,8 @@
           <span>{{ d.label }}</span>
         </div>
 
-        <div v-if="d.label === 'Intervalo personalizado'" @click.prevent="openModal()">
-          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
+        <div v-if="d.label === 'Intervalo personalizado'" @click="openModal()">
+          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customInterval">check</i></span>
           <span>{{ d.label }}</span>
         </div>
 
@@ -33,6 +33,7 @@
       return {
         isToggled: false,
         selectedItem: '',
+        customInterval: false,
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
@@ -57,11 +58,10 @@
         this.isToggled = false
       },
       openModal () {
-        console.log('open modal clicked')
         this.$dispatch('openModal')
+        this.customInterval = true
       },
       selectItem (key, label) {
-        console.log(label)
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
           if (key !== 'd') {
@@ -75,22 +75,17 @@
           if (this.label === 's') {
             currentQuery[key] = 'dataentidade'
           } else if (this.label === 'd') {
+            ['sd', 'ed'].forEach(str => {
+              currentQuery[str] = undefined
+            })
             if (label === 'Últimas 24 horas') {
               currentQuery['d'] = 'd'
-              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              // currentQuery['sd'] = moment().subtract(1, 'day').format('YYYYMMDDHHMM')
             } else if (label === 'Última semana') {
               currentQuery['d'] = 'w'
-              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              // currentQuery['sd'] = moment().subtract(1, 'week').format('YYYYMMDDHHMM')
             } else if (label === 'Último mês') {
               currentQuery['d'] = 'm'
-              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              // currentQuery['sd'] = moment().subtract(1, 'month').format('YYYYMMDDHHMM')
             } else if (label === 'Último ano') {
               currentQuery['d'] = 'y'
-              // currentQuery['ed'] = moment().format('YYYYMMDDHHMM')
-              // currentQuery['sd'] = moment().subtract(1, 'year').format('YYYYMMDDHHMM')
             }
           } else {
             currentQuery[key] = label

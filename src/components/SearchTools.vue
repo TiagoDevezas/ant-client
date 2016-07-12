@@ -13,8 +13,11 @@
  
     <filter-clear v-if="activeFilters.length" :active-filters="activeFilters" btn-label="Limpar"></filter-clear>
 
+    {{ activeFilters }}
+
     <modal title="Intervalo de datas personalizado" :show.sync="dateModal">
-      <date-range-picker></date-range-picker>
+    {{ startDate }} - {{ endDate }}
+      <date-range-picker slot="modal-body" :start-date.sync="startDate" :end-date.sync="endDate"></date-range-picker>
     </modal>
 
   </div>
@@ -40,6 +43,8 @@
       return {
         isToggled: false,
         dateModal: false,
+        startDate: '',
+        endDate: '',
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
@@ -114,7 +119,7 @@
             let arr = []
             if (key !== 'd') {
               arr.push({ label: this.$route.query[key], value: null })
-            } else {
+            } else if (key === 'd') {
               arr.push({ label: this.dateFacetsLabels[this.$route.query[key]], value: null })
             }
             filters[key] = arr

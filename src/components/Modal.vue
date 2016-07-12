@@ -12,13 +12,11 @@
 
       <div class="modal-body">
         <slot name="modal-body">
-          <slot></slot>
         </slot>
       </div>
 
       <div class="modal-footer">
         <slot name="modal-footer">
-          this is the footer
         </slot>
       </div>
 
@@ -41,7 +39,13 @@
     },
     methods: {
       close () {
+        this.$root.$broadcast('modalClosed')
         this.show = false
+      }
+    },
+    events: {
+      'closeModal' () {
+        this.close()
       }
     },
     ready () {
@@ -97,6 +101,8 @@
         > i.material-icons {
           font-size: 18px;
         }
+      }
+      .modal-footer {
       }
     }
   }
