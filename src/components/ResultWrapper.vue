@@ -106,7 +106,7 @@
             labels = {
               primary: {
                 line_1: ['active'],
-                line_2: ['teachers_in_charge']
+                line_2: ['teachers']
               },
               special: ['study_plan']
             }

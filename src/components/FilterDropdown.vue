@@ -211,12 +211,14 @@
       box-shadow: 0 2px 4px rgba(0,0,0,.2);
       cursor: pointer;
       .dropdown-item {
-        display: flex;
-        align-items: center;
-        padding: 8px 10px;
         font-weight: normal;
         &:hover, &:focus, &:active {
           background-color: #F1F1F1;
+        }
+        &> div {
+          padding: 8px 10px;
+          display: flex;
+          align-items: center;
         }
         .item-selected {
           width: 24px;
@@ -227,7 +229,6 @@
     }
     .border-top {
       border-top: 1px solid #ccc;
-      padding-top: 8px;
     }
     .dropdown-open {
       display: block;

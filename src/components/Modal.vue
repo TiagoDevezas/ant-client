@@ -39,7 +39,7 @@
     },
     methods: {
       close () {
-        this.$root.$broadcast('modalClosed')
+        // this.$root.$broadcast('modalClosed')
         this.show = false
       }
     },

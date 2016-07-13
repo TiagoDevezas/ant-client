@@ -132,9 +132,9 @@
       }
     },
     events: {
-      'modalClosed' () {
-        console.log('modalClosed')
-      },
+      // 'modalClosed' () {
+      //   console.log('modalClosed')
+      // },
       'routeChange' (newRoute) {
         setTimeout(() => {
           if (newRoute.to.query['sd'] && !newRoute.to.query['d']) {

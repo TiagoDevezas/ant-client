@@ -1,45 +1,45 @@
 <template>
   <about-link link-text="Sobre" link-path="about"></about-link>
   <div id="search">
-  <div id="header-wrapper">
-    <div id="header">
-      <div class="header-search-wrap">
-        <a v-link="'/'" id="header-logo-wrap">
-          <span class="header-logo">ANT Pesquisa de Informação na Universidade do Porto</span>
-        </a>
-        <search-form :query-params="$route.query.q" class="search-top"></search-form>
-      </div>
-    </div>
-    <result-filter :query-params="$route.query" :entity-types="getEntityTypes" :filter-data="data.queryData.filteredFacetsCount"></result-filter>
-  </div>
-  <div class="content-wrap-results">
-    <search-tools :filter-data="data.queryData.filteredFacetsCount"></search-tools>
-    <div class="cw"> 
-      <div class="results-wrapper">
-        <result-empty v-if="data.queryData.count === 0"></result-empty>
-        <div v-if="data.queryData.count > 0">        
-          <result-counter
-            v-if="data.entities.length"
-            :count="data.queryData.count"
-            :curr-page="data.queryData.page"
-            :time-to-search="timeToSearch">
-            <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
-          </result-counter>
-          <div class="results">
-            <result-item v-for="entity in data.entities" :metadata="entity" :category="data.queryData.category">
-            </result-item>
-          </div>
+    <div id="header-wrapper">
+      <div id="header">
+        <div class="header-search-wrap">
+          <a v-link="'/'" id="header-logo-wrap">
+            <span class="header-logo">ANT Pesquisa de Informação na Universidade do Porto</span>
+          </a>
+          <search-form :query-params="$route.query.q" class="search-top"></search-form>
         </div>
       </div>
-      <result-paginator
-        v-if="data.queryData.pages > 1"
-        :num-pages="data.queryData.pages"
-        :curr-page="data.queryData.page"
-        :start-page="data.queryData.start"
-        :total-results="data.queryData.count">
-      </result-paginator>
+      <result-filter :query-params="$route.query" :entity-types="getEntityTypes" :filter-data="data.queryData.filteredFacetsCount" v-if="data.queryData"></result-filter>
     </div>
-  </div>
+    <div class="content-wrap-results">
+      <search-tools :filter-data="data.queryData.filteredFacetsCount" v-if="data.queryData"></search-tools>
+      <div class="cw"> 
+        <div class="results-wrapper">
+          <result-empty v-if="dataReceived && !data.entities.length"></result-empty>
+          <div v-if="data.queryData && data.queryData.count > 0">        
+            <result-counter
+              v-if="data.entities.length"
+              :count="data.queryData.count"
+              :curr-page="data.queryData.page"
+              :time-to-search="timeToSearch">
+              <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
+            </result-counter>
+            <div class="results">
+              <result-item v-for="entity in data.entities" :metadata="entity" :category="data.queryData.category">
+              </result-item>
+            </div>
+          </div>
+        </div>
+        <result-paginator
+          v-if="data.queryData && data.queryData.pages > 1"
+          :num-pages="data.queryData.pages"
+          :curr-page="data.queryData.page"
+          :start-page="data.queryData.start"
+          :total-results="data.queryData.count">
+        </result-paginator>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -74,6 +74,7 @@ export default {
         entities: [],
         queryData: []
       },
+      dataReceived: false,
       timeToSearch: 0,
       facets: [],
       error: '',

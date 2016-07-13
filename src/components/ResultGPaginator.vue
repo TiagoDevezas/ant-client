@@ -3,17 +3,19 @@
   <div class="pagination-wrapper">  
     <ul class="page-navigation">
       <li v-if="currPage > 1">
-        <a v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: this.startPage - 10 }}">
+        <a v-link="{ name: 'search', query: generatePreviousQuery }">
+<!--         <a v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: this.startPage - 10 }}"> -->
           <i class="material-icons">chevron_left</i>
         </a>
       </li>
       <li v-for="page in getPages">
-        <a :class="{'active': isStartPage(this.page)}" v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: this.page * 10 - 10 }}">
-          {{ page }}
+        <a :class="{'active': isStartPage(page.pageNum)}" v-link="{ name: 'search', query: page.query }">
+          {{ page.pageNum }}
         </a>
       </li>
       <li v-if="currPage < numPages">
-        <a v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: (this.startPage + 10) }}">
+        <a v-link="{ name: 'search', query: generateNextQuery }">
+<!--         <a v-link="{ name: 'search', query: { q: this.$route.query.q, tipoentidade: this.$route.query.tipoentidade, start: (this.startPage + 10) }}"> -->
           <i class="material-icons">chevron_right</i>
         </a>
       </li>
@@ -25,6 +27,16 @@
   export default {
     props: ['numPages', 'currPage', 'startPage', 'totalResults'],
     computed: {
+      generatePreviousQuery () {
+        let currentQuery = JSON.parse(JSON.stringify(this.$route.query))
+        currentQuery['start'] = this.startPage - 10
+        return currentQuery
+      },
+      generateNextQuery () {
+        let currentQuery = JSON.parse(JSON.stringify(this.$route.query))
+        currentQuery['start'] = this.startPage + 10
+        return currentQuery
+      },
       getPages () {
         let startPage
         let endPage
@@ -48,7 +60,9 @@
           }
         }
         for (let i = startPage; i <= endPage; i++) {
-          pageArray.push(i)
+          let currentQuery = JSON.parse(JSON.stringify(this.$route.query))
+          currentQuery['start'] = i * 10 - 10
+          pageArray.push({query: currentQuery, pageNum: i })
         }
         return pageArray
       }
@@ -88,11 +102,12 @@
   .page-navigation {
     padding: 0;
     margin: 0;
+    display: flex;
+    align-items: center;
   }
   
   .page-navigation li {
     display: inline-flex;
-    vertical-align: middle;
   }
 
   .page-navigation li a {

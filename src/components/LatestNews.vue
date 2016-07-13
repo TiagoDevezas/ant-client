@@ -40,7 +40,7 @@
 }
 
 .latest-news {
-  margin-bottom: 5px;
+  margin-bottom: 0;
 }
 
 .news-title {

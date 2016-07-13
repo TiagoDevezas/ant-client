@@ -56,7 +56,13 @@ store.getData = (context) => {
     let timeToSearch = ((t1 - t0) * 0.001).toFixed(2)
     context.$set('timeToSearch', timeToSearch)
     let data = response.data
-    context.$set('data.queryData', data.metadata)
+    let metadata = data.metadata
+    if (metadata) {
+      context.$set('data.queryData', metadata)
+    } else {
+      context.$set('data.queryData', [])
+    }
+    context.$set('dataReceived', true)
     context.$set('data.entities', data.data)
     if (data.metadata.unfilteredFacetsCount.tipoentidade && data.metadata.unfilteredFacetsCount.tipoentidade !== context.entities) {
       context.$set('facets', data.metadata.unfilteredFacetsCount.tipoentidade)
