@@ -165,7 +165,7 @@
         let searchableAttributes = {
           rooms: true,
           room: true,
-          building: true,
+          // building: true,
           teachers_in_charge: true,
           teachers: true,
           director: true,

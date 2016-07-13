@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-news-container">
+  <div class="latest-news-container" v-if="newsData">
     <p class="latest-news-heading">Últimas notícias</p>
     <div class="latest-news" v-for="news in newsData">
       <h2 class="news-title"><a href="{{ news.link }}">{{ news.title }}</a></h2>
@@ -7,7 +7,7 @@
         <span class="news-source">{{ news.school }}</span>
         <span class="news-date">- {{ news.date.split(', ')[1] + ' às ' + news.date.split(', ')[2] }}</span>
       </p>
-      <span class="separator" v-if="$index !== newsData.length - 1"></span>
+      <span class="separator" v-if="$index !== newsData.length - 1">&middot;</span>
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@
 
 .separator {
   display: inline-block;
-  border: 1px solid #000;
+  font-size: 18px;
 }
 
 .latest-news-heading {
