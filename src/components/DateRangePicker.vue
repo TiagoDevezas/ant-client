@@ -4,7 +4,7 @@
     <span class="picker-label">Até:</span><input type="text" id="end-date">
   </div>
   <div class="picker-controls">
-    <span class="picker-submit" @click="setDateInterval()">Ir</span>
+    <span class="picker-submit" @click="setDateInterval">Ir</span>
   </div>
 </template>
 
@@ -76,15 +76,18 @@
       },
       setDateInterval () {
         let currentQuery = this.$route.query
-        currentQuery['sd'] = moment(this.startDate).format(this.dateFormat)
-        currentQuery['ed'] = moment(this.endDate).format(this.dateFormat)
-        currentQuery['d'] = undefined
         this.destroyPickers()
         this.createPickers()
+        currentQuery['sd'] = moment(this.startDate).format(this.dateFormat)
+        currentQuery['ed'] = moment(this.endDate).format(this.dateFormat)
+        if (currentQuery['d']) {
+          currentQuery['d'] = undefined
+        }
         this.$router.go({
           name: 'search',
           query: currentQuery
         })
+        this.$root.$broadcast('setDateRange', {sd: currentQuery['sd'], ed: currentQuery['ed']})
         this.$dispatch('closeModal')
       }
     },
@@ -106,6 +109,7 @@
       }
     },
     ready () {
+      this.destroyPickers()
       this.createPickers()
     }
   }

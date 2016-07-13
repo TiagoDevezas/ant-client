@@ -16,7 +16,6 @@
     {{ activeFilters }}
 
     <modal title="Intervalo de datas personalizado" :show.sync="dateModal">
-    {{ startDate }} - {{ endDate }}
       <date-range-picker slot="modal-body" :start-date.sync="startDate" :end-date.sync="endDate"></date-range-picker>
     </modal>
 
@@ -60,7 +59,9 @@
           d: 'Últimas 24 horas',
           w: 'Última semana',
           m: 'Último mês',
-          y: 'Último ano'
+          y: 'Último ano',
+          sd: '',
+          ed: ''
         },
         dateFacetData: {
           d: [

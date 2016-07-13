@@ -59,9 +59,11 @@
       },
       openModal () {
         this.$dispatch('openModal')
-        this.customInterval = true
       },
       selectItem (key, label) {
+        if (this.customInterval) {
+          this.$set('customInterval', false)
+        }
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
           if (key !== 'd') {
@@ -144,6 +146,17 @@
         if (queryKeys.indexOf(this.label) === -1) {
           this.$set('selectedItem', this.defaultLabels[this.label])
           this.$dispatch('removeFromActiveFilters', this.label)
+        }
+      },
+      'setDateRange' (dateRange) {
+        if (dateRange && this.label === 'd') {
+          let keys = Object.keys(dateRange)
+          let values = keys.map(key => {
+            return dateRange[key]
+          })
+          this.$set('selectedItem', values.join('-'))
+          this.$set('customInterval', true)
+          this.$dispatch('addtoActiveFilters', 'dr')
         }
       }
     },

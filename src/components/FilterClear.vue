@@ -13,7 +13,7 @@
         let currentQuery = this.$route.query
         this.activeFilters.forEach(filter => {
           currentQuery[filter] = undefined
-          if (['dd', 'dw', 'dm', 'dy'].indexOf(filter) !== -1) {
+          if (['dd', 'dw', 'dm', 'dy', 'dr'].indexOf(filter) !== -1) {
             currentQuery['d'] = undefined
             currentQuery['sd'] = undefined
             currentQuery['ed'] = undefined
