@@ -5,7 +5,7 @@
 
     <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
 
-    <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
+    <filter-dropdown v-if="($route.query.tipoentidade === 'Notícia' && checkFilterData) || dateDropdown" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
  
     <div v-if="!checkFilterData" style="display: inline-flex;" v-for="newData in getFiltersFromURL">
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
@@ -44,6 +44,7 @@
         dateModal: false,
         startDate: '',
         endDate: '',
+        dateDropdown: false,
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
@@ -59,9 +60,7 @@
           d: 'Últimas 24 horas',
           w: 'Última semana',
           m: 'Último mês',
-          y: 'Último ano',
-          sd: '',
-          ed: ''
+          y: 'Último ano'
         },
         dateFacetData: {
           d: [
@@ -91,6 +90,11 @@
         }
       },
       'routeChange' (newRoute) {
+        if (newRoute.to.query['tipoentidade'] !== 'Notícia') {
+          ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(str => {
+            this.$dispatch('removeFromActiveFilters', str)
+          })
+        }
         let queryKeys = Object.keys(newRoute.to.query)
         this.toggleFilterBar(queryKeys)
         return true
@@ -124,6 +128,9 @@
               arr.push({ label: this.dateFacetsLabels[this.$route.query[key]], value: null })
             }
             filters[key] = arr
+            this.dateDropdown = false
+          } else if (key === 'sd') {
+            this.dateDropdown = true
           }
         })
         return this.newData(filters)

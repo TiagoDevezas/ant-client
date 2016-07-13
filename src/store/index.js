@@ -1,6 +1,7 @@
 const API_URL = 'http://ant.fe.up.pt/api/'
 const SEARCH_URL = API_URL + 'search'
-const JSON_SEARCH_URL = SEARCH_URL
+const NEWS_RANKINGS_URL = API_URL + 'rankings/news'
+const EVENTS_RANKINGS_URL = API_URL + 'rankings/events'
 
 const store = Object.create(null)
 
@@ -10,9 +11,15 @@ export default store
 
 let t0
 
-store.getLatestNews = (context, count) => {
-  return context.$http({url: JSON_SEARCH_URL, method: 'GET', params: {tipoentidade: 'Notícia'}}).then(response => {
-    context.$set('latestNews', response.data.data.slice(0, count))
+store.getLatestNews = (context) => {
+  return context.$http({url: NEWS_RANKINGS_URL, method: 'GET'}).then(response => {
+    context.$set('latestNews', response.data.data)
+  })
+}
+
+store.getUpcomingEvents = (context) => {
+  return context.$http({url: EVENTS_RANKINGS_URL, method: 'GET'}).then(response => {
+    context.$set('upcomingEvents', response.data.data)
   })
 }
 
@@ -39,7 +46,7 @@ store.getEntities = (context) => {
   // const query = context.$route.query.q
   // const start = context.$route.query.start
   // const entityType = context.$route.query.tipoentidade
-  return context.$http.get(JSON_SEARCH_URL, currentQuery)
+  return context.$http.get(SEARCH_URL, currentQuery)
 }
 
 store.getData = (context) => {

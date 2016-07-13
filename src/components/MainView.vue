@@ -17,8 +17,9 @@
     <div class="full center-text">
         <span class="app-description">Pesquisa de Informação na Universidade do Porto.</span>
     </div>
-    <div class="full">
+    <div class="news-events-container">
         <latest-news :news-data="latestNews"></latest-news>
+        <upcoming-events :events-data="upcomingEvents"></upcoming-events>
     </div>
   </div>
   <div id="footer" class="center-text">
@@ -30,6 +31,7 @@
 import store from '../store'
 import SearchForm from './SearchForm'
 import LatestNews from './LatestNews'
+import UpcomingEvents from './UpcomingEvents'
 import AboutLink from './AboutLink'
 
 export default {
@@ -37,16 +39,19 @@ export default {
   components: {
     SearchForm,
     LatestNews,
+    UpcomingEvents,
     AboutLink
   },
   data () {
     return {
-      latestNews: []
+      latestNews: [],
+      upcomingEvents: []
     }
   },
   ready () {
     document.title = 'ANT - Pesquisa de Informação na Universidade do Porto'
-    store.getLatestNews(this, 3)
+    store.getLatestNews(this)
+    store.getUpcomingEvents(this)
   }
 }
 </script>
@@ -84,6 +89,11 @@ export default {
     font-size: 16px;
     line-height: 1;
     color: #A3A3A3;
+  }
+  .news-events-container {
+    max-width: 750px;
+    display: flex;
+    margin: 0 auto;
   }
   #footer {
     position: absolute;

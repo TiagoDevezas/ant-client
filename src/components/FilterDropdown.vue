@@ -98,14 +98,14 @@
         } else {
           if (currentQuery[key]) {
             // Remove all other facet date filters
-            ['dd', 'dw', 'dm', 'dy'].forEach(val => {
+            ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(val => {
               if (val !== key) {
                 this.$dispatch('removeFromActiveFilters', val)
               }
             })
             this.$dispatch('addtoActiveFilters', key + '' + currentQuery[key])
           } else {
-            ['dd', 'dw', 'dm', 'dy'].forEach(val => {
+            ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(val => {
               this.$dispatch('removeFromActiveFilters', val)
             })
           }
@@ -138,10 +138,24 @@
         if (!this.selectedItem) {
           this.$set('selectedItem', this.defaultLabels[this.label])
         }
+      },
+      setDateRange (dateRange) {
+        if (dateRange && this.label === 'd') {
+          let keys = Object.keys(dateRange)
+          let values = keys.map(key => {
+            return dateRange[key]
+          })
+          this.$set('selectedItem', values.join(' - '))
+          this.$set('customInterval', true)
+          this.$dispatch('addtoActiveFilters', 'dr')
+        }
       }
     },
     events: {
       'routeChange' (newRoute) {
+        if (!newRoute.to.query['sd']) {
+          this.customInterval = false
+        }
         let queryKeys = Object.keys(newRoute.to.query)
         if (queryKeys.indexOf(this.label) === -1) {
           this.$set('selectedItem', this.defaultLabels[this.label])
@@ -149,15 +163,7 @@
         }
       },
       'setDateRange' (dateRange) {
-        if (dateRange && this.label === 'd') {
-          let keys = Object.keys(dateRange)
-          let values = keys.map(key => {
-            return dateRange[key]
-          })
-          this.$set('selectedItem', values.join('-'))
-          this.$set('customInterval', true)
-          this.$dispatch('addtoActiveFilters', 'dr')
-        }
+        this.setDateRange(dateRange)
       }
     },
     ready () {

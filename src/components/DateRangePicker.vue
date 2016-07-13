@@ -4,7 +4,7 @@
     <span class="picker-label">Até:</span><input type="text" id="end-date">
   </div>
   <div class="picker-controls">
-    <span class="picker-submit" @click="setDateInterval">Ir</span>
+    <span class="picker-submit" @click="setDateInterval" v-if="startDate">Ir</span>
   </div>
 </template>
 
@@ -25,7 +25,8 @@
           weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
           weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
         },
-        dateFormat: 'YYYYMMDD'
+        apiDateFormat: 'YYYYMMDD',
+        displayDateFormat: 'DD/MM/YYYY'
       }
     },
     methods: {
@@ -34,6 +35,7 @@
         let pickerStart = new Pikaday({
           field: document.getElementById('start-date'),
           maxDate: new Date(),
+          format: this.displayDateFormat,
           i18n: self.i18n,
           onSelect () {
             let dateNow = this.getDate()
@@ -43,6 +45,7 @@
         let pickerEnd = new Pikaday({
           field: document.getElementById('end-date'),
           maxDate: new Date(),
+          format: this.displayDateFormat,
           i18n: self.i18n,
           onSelect () {
             let dateNow = this.getDate()
@@ -51,17 +54,23 @@
         })
         this.$set('pickerStart', pickerStart)
         this.$set('pickerEnd', pickerEnd)
+        this.pickerStart.setDate(this.startDate)
+        this.pickerEnd.setDate(this.endDate)
       },
       destroyPickers () {
+        this.$set('startDate', '')
+        this.$set('endDate', '')
         if (this.pickerStart) {
           this.pickerStart.setDate(false)
-          this.pickerStart.destroy()
-          this.$set('pickerStart', '')
+          this.pickerStart.setMaxDate(new Date())
+          this.pickerStart.setStartRange(false)
+          this.pickerStart.setEndRange(false)
         }
         if (this.pickerEnd) {
           this.pickerEnd.setDate(false)
-          this.pickerEnd.destroy()
-          this.$set('pickerEnd', '')
+          this.pickerEnd.setMaxDate(new Date())
+          this.pickerEnd.setStartRange(false)
+          this.pickerEnd.setEndRange(false)
         }
       },
       updateStartDate () {
@@ -76,24 +85,64 @@
       },
       setDateInterval () {
         let currentQuery = this.$route.query
-        this.destroyPickers()
-        this.createPickers()
-        currentQuery['sd'] = moment(this.startDate).format(this.dateFormat)
-        currentQuery['ed'] = moment(this.endDate).format(this.dateFormat)
-        if (currentQuery['d']) {
-          currentQuery['d'] = undefined
+        if (!currentQuery['sd']) {
+          currentQuery['sd'] = moment(this.startDate).format(this.apiDateFormat)
+          currentQuery['ed'] = this.endDate ? moment(this.endDate).format(this.apiDateFormat) : moment().format(this.apiDateFormat)
+          if (currentQuery['d']) {
+            currentQuery['d'] = undefined
+          }
+          this.$router.go({
+            name: 'search',
+            query: currentQuery
+          })
+        } else {
+          let dateChanged = false
+          let sd = moment(currentQuery['sd'])
+          let modelSd = this.startDate ? moment(this.startDate) : null
+          let ed = moment(currentQuery['ed'])
+          let modelEd = this.endDate ? moment(this.endDate) : null
+          if (modelSd && modelSd !== sd) {
+            currentQuery['sd'] = moment(this.startDate).format(this.apiDateFormat)
+            this.$set('startDate', moment(this.startDate).toDate())
+            dateChanged = true
+          } else {
+            this.$set('startDate', sd.toDate())
+          }
+          if (modelEd && modelEd !== ed) {
+            currentQuery['ed'] = moment(this.endDate).format(this.apiDateFormat)
+            this.$set('endDate', moment(this.endDate).toDate())
+            dateChanged = true
+          } else {
+            this.$set('endDate', ed.toDate())
+          }
+          this.pickerStart.setDate(this.startDate)
+          this.pickerEnd.setDate(this.endDate)
+          if (dateChanged) {
+            this.$router.go({
+              name: 'search',
+              query: currentQuery
+            })
+          }
         }
-        this.$router.go({
-          name: 'search',
-          query: currentQuery
+        this.$root.$broadcast('setDateRange', {
+          sd: moment(currentQuery['sd']).format(this.displayDateFormat),
+          ed: moment(currentQuery['ed']).format(this.displayDateFormat)
         })
-        this.$root.$broadcast('setDateRange', {sd: currentQuery['sd'], ed: currentQuery['ed']})
         this.$dispatch('closeModal')
       }
     },
     events: {
       'modalClosed' () {
         console.log('modalClosed')
+      },
+      'routeChange' (newRoute) {
+        setTimeout(() => {
+          if (newRoute.to.query['sd'] && !newRoute.to.query['d']) {
+            this.setDateInterval()
+          } else {
+            this.destroyPickers()
+          }
+        }, 100)
       }
     },
     watch: {

@@ -1,12 +1,13 @@
 <template>
-  <div class="flex latest-news-container">
-    <p class="latest-news-heading full">Últimas notícias</p>
-    <div class="latest-news full" v-for="news in newsData">
-      <h2 class="news-title"><a href="{{ news.link }}">{{ news.description }}</a></h2>
+  <div class="latest-news-container">
+    <p class="latest-news-heading">Últimas notícias</p>
+    <div class="latest-news" v-for="news in newsData">
+      <h2 class="news-title"><a href="{{ news.link }}">{{ news.title }}</a></h2>
       <p class="news-meta">
-        <span class="news-source">{{ news.sources.join(', ')}}</span>
+        <span class="news-source">{{ news.school }}</span>
         <span class="news-date">- {{ news.date.split(', ')[1] + ' às ' + news.date.split(', ')[2] }}</span>
       </p>
+      <span class="separator" v-if="$index !== newsData.length - 1"></span>
     </div>
   </div>
 </template>
@@ -20,7 +21,14 @@
 <style>
 
 .latest-news-container {
+  width: 100%;
   text-align: center;
+  padding-right: 20px;
+}
+
+.separator {
+  display: inline-block;
+  border: 1px solid #000;
 }
 
 .latest-news-heading {
