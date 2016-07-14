@@ -15,8 +15,13 @@
           <span>{{ d.label }}</span>
         </div>
 
-        <div v-if="d.label === 'Intervalo personalizado'" @click="openModal()">
-          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customInterval">check</i></span>
+        <div v-if="d.label === 'Intervalo personalizado' && this.label === 'd'" @click="openDateModal()">
+          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customDatenterval">check</i></span>
+          <span>{{ d.label }}</span>
+        </div>
+
+        <div v-if="d.label === 'Intervalo personalizado' && this.label === 'cr'" @click="openCreditModal()">
+          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customCreditInterval">check</i></span>
           <span>{{ d.label }}</span>
         </div>
 
@@ -33,14 +38,16 @@
       return {
         isToggled: false,
         selectedItem: '',
-        customInterval: false,
+        customDateInterval: false,
+        customCreditInterval: false,
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância',
-          d: 'Qualquer altura'
+          d: 'Qualquer altura',
+          cr: 'Qualquer intervalo de créditos'
         },
         dateFacetsLabels: {
           d: 'Últimas 24 horas',
@@ -57,8 +64,11 @@
       closeDropdown (event) {
         this.isToggled = false
       },
-      openModal () {
-        this.$dispatch('openModal')
+      openDateModal () {
+        this.$dispatch('openDateModal')
+      },
+      openCreditModal () {
+        this.$dispatch('openCreditModal')
       },
       selectItem (key, label) {
         if (this.customInterval) {

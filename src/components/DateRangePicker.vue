@@ -1,10 +1,10 @@
 <template>
-  <div class="picker-container">
-    <span class="picker-label">De:</span><input type="text" id="start-date">
-    <span class="picker-label">Até:</span><input type="text" id="end-date">
+  <div class="modal-input-container">
+    <span class="modal-input-label">De:</span><input type="text" id="start-date">
+    <span class="modal-input-label">Até:</span><input type="text" id="end-date">
   </div>
-  <div class="picker-controls">
-    <span class="picker-submit" @click="setDateInterval" v-if="startDate">Ir</span>
+  <div class="modal-input-controls">
+    <span class="modal-input-submit" @click="setDateInterval" v-if="startDate">Ir</span>
   </div>
 </template>
 
@@ -171,11 +171,11 @@
     background-color: transparent !important;
   }
 
-  .picker-container {
+  .modal-input-container {
     padding: 10px 0;
     display: flex;
     align-items: center;
-    .picker-label {
+    .modal-input-label {
       display: block;
       margin-right: 10px;
       color: #222;
@@ -185,11 +185,11 @@
     }
   }
 
-  .picker-controls {
+  .modal-input-controls {
     padding: 10px 0;
     display: flex;
     justify-content: flex-end;
-    .picker-submit {
+    .modal-input-submit {
       padding: 5px 15px;
       border-radius: 2px;
       cursor: pointer;

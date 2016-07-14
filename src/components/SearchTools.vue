@@ -6,6 +6,8 @@
     <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
 
     <filter-dropdown v-if="($route.query.tipoentidade === 'Notícia' && checkFilterData) || dateDropdown" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
+
+    <filter-dropdown v-if="$route.query.tipoentidade === 'Cadeira' && checkFilterData" :data="newData(creditRangeFacetData).cr" label="cr"></filter-dropdown>
  
     <div v-if="!checkFilterData" style="display: inline-flex;" v-for="newData in getFiltersFromURL">
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
@@ -19,6 +21,10 @@
       <date-range-picker slot="modal-body" :start-date.sync="startDate" :end-date.sync="endDate"></date-range-picker>
     </modal>
 
+    <modal title="Intervalo de créditos personalizado" :show.sync="creditModal">
+    <credit-range-picker slot="modal-body"></credit-range-picker>
+    </modal>
+
   </div>
 </template>
 
@@ -27,6 +33,7 @@
   import FilterClear from './FilterClear'
   import Modal from './Modal'
   import DateRangePicker from './DateRangePicker'
+  import CreditRangePicker from './CreditRangePicker'
 
   export default {
     props: {
@@ -37,11 +44,12 @@
         }
       }
     },
-    components: { FilterDropdown, FilterClear, Modal, DateRangePicker },
+    components: { FilterDropdown, FilterClear, Modal, DateRangePicker, CreditRangePicker },
     data () {
       return {
         isToggled: false,
         dateModal: false,
+        creditModal: false,
         startDate: '',
         endDate: '',
         dateDropdown: false,
@@ -51,17 +59,18 @@
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
           s: 'Ordenado por relevância',
-          d: 'Qualquer altura'
+          d: 'Qualquer altura',
+          cr: 'Qualquer intervalo de créditos'
         },
         orderFacetData: {
           s: [{ label: 'Ordenado por data', value: null}]
         },
-        dateFacetsLabels: {
-          d: 'Últimas 24 horas',
-          w: 'Última semana',
-          m: 'Último mês',
-          y: 'Último ano'
-        },
+        // dateFacetsLabels: {
+        //   d: 'Últimas 24 horas',
+        //   w: 'Última semana',
+        //   m: 'Último mês',
+        //   y: 'Último ano'
+        // },
         dateFacetData: {
           d: [
             { label: 'Últimas 24 horas', value: null },
@@ -71,12 +80,18 @@
             { label: 'Intervalo personalizado', value: null }
           ]
         },
+        creditRangeFacetData: {
+          cr: [{ label: 'Intervalo personalizado', value: null }]
+        },
         activeFilters: []
       }
     },
     events: {
-      'openModal' () {
+      'openDateModal' () {
         this.dateModal = true
+      },
+      'openCreditModal' () {
+        this.creditModal = true
       },
       'toggleFacetsBar' (toggled) {
         this.$set('isToggled', toggled)
@@ -109,19 +124,22 @@
       },
       getFiltersFromURL () {
         let filters = {}
-        let queryKeys = Object.keys(this.$route.query)
+        let currentQuery = JSON.parse(JSON.stringify(this.$route.query))
+        delete currentQuery['d']
+        let queryKeys = Object.keys(currentQuery)
         let defaultKeys = Object.keys(this.defaultLabels)
         queryKeys.forEach(key => {
           if (defaultKeys.indexOf(key) !== -1) {
             let arr = []
             if (key !== 'd') {
               arr.push({ label: this.$route.query[key], value: null })
-            } else if (key === 'd') {
-              arr.push({ label: this.dateFacetsLabels[this.$route.query[key]], value: null })
             }
+            // else if (key === 'd') {
+            //   arr.push({ label: this.dateFacetsLabels[this.$route.query[key]], value: null })
+            // }
             filters[key] = arr
             this.dateDropdown = false
-          } else if (key === 'sd') {
+          } else if (key === 'sd' || key === 'd') {
             this.dateDropdown = true
           }
         })
@@ -162,6 +180,9 @@
           // setTimeout(() => {
           this.$root.$broadcast('toggleButton')
           // }, 1)
+        }
+        if (counter === 0 && !this.toggled && this.$route.query['fb']) {
+          this.$root.$broadcast('toggleButton')
         }
       }
     }
