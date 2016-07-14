@@ -161,6 +161,7 @@
           this.$set('selectedItem', this.defaultLabels[this.label])
           this.$dispatch('removeFromActiveFilters', this.label)
         }
+        return true
       },
       'setDateRange' (dateRange) {
         this.setDateRange(dateRange)

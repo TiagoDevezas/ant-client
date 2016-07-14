@@ -85,12 +85,13 @@
       },
       setDateInterval () {
         let currentQuery = this.$route.query
+        if (currentQuery['d']) {
+          this.$dispatch('removeFromActiveFilters', 'd' + currentQuery['d'])
+          currentQuery['d'] = undefined
+        }
         if (!currentQuery['sd']) {
           currentQuery['sd'] = moment(this.startDate).format(this.apiDateFormat)
           currentQuery['ed'] = this.endDate ? moment(this.endDate).format(this.apiDateFormat) : moment().format(this.apiDateFormat)
-          if (currentQuery['d']) {
-            currentQuery['d'] = undefined
-          }
           this.$router.go({
             name: 'search',
             query: currentQuery
@@ -132,10 +133,8 @@
       }
     },
     events: {
-      // 'modalClosed' () {
-      //   console.log('modalClosed')
-      // },
       'routeChange' (newRoute) {
+        console.log(newRoute.to.query, newRoute.from.query)
         setTimeout(() => {
           if (newRoute.to.query['sd'] && !newRoute.to.query['d']) {
             this.setDateInterval()
@@ -143,6 +142,7 @@
             this.destroyPickers()
           }
         }, 100)
+        return true
       }
     },
     watch: {

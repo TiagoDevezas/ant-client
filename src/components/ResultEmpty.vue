@@ -10,7 +10,7 @@
 
 <style lang="scss">
   .result-empty {
-    margin-top: 10px;
+    margin-top: 40px;
     padding-left: 10px;
     h2 {
       font-weight: normal;

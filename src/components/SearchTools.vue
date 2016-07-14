@@ -80,14 +80,6 @@
       },
       'toggleFacetsBar' (toggled) {
         this.$set('isToggled', toggled)
-        let resultCounter = document.getElementById('results-counter')
-        if (resultCounter) {
-          if (this.isToggled) {
-            resultCounter.classList.add('slide-out')
-          } else {
-            resultCounter.classList.remove('slide-out')
-          }
-        }
       },
       'routeChange' (newRoute) {
         if (newRoute.to.query['tipoentidade'] !== 'Notícia') {
@@ -156,8 +148,7 @@
         return data
       },
       toggleFilterBar (keys) {
-        // this.$root.$broadcast('clickButton')
-        let defaultKeys = Object.keys(this.defaultLabels)
+        let defaultKeys = Object.keys(this.defaultLabels).concat('sd')
         let counter = 0
         defaultKeys.forEach(key => {
           if (keys.indexOf(key) !== -1) {
@@ -165,15 +156,12 @@
           }
         })
         if (counter === 0 && this.isToggled) {
-          // this.$root.$broadcast('clickButton')
+          this.$root.$broadcast('toggleButton')
         }
-        if (counter > 0 && !this.toggled) {
-          // this.$root.$broadcast('clickButton')
-          setTimeout(() => {
-            // let facetBar = document.getElementById('search-tools')
-            // facetBar.classList.add('show')
-            // this.$root.$broadcast('clickButton')
-          }, 1)
+        if (counter > 0 && !this.isToggled) {
+          // setTimeout(() => {
+          this.$root.$broadcast('toggleButton')
+          // }, 1)
         }
       }
     }

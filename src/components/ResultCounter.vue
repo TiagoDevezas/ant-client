@@ -1,5 +1,5 @@
 <template>
-  <div id="results-counter" v-if="count">
+  <div id="results-counter" v-show="count">
     <span style="line-height: 1;">{{ count }} resultados ({{ timeToSearch }} segundos)</span>
     <slot></slot>
   </div>
@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    props: ['count', 'currPage', 'timeToSearch']
+    props: ['count', 'timeToSearch']
   }
 </script>
 

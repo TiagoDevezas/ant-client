@@ -19,9 +19,7 @@
           <result-empty v-if="dataReceived && !data.entities.length"></result-empty>
           <div v-if="data.queryData && data.queryData.count > 0">        
             <result-counter
-              v-if="data.entities.length"
               :count="data.queryData.count"
-              :curr-page="data.queryData.page"
               :time-to-search="timeToSearch">
               <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
             </result-counter>
