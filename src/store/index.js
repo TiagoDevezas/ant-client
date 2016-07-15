@@ -24,7 +24,7 @@ store.getUpcomingEvents = (context) => {
 }
 
 store.getEntities = (context) => {
-  let currentQuery = context.$route.query
+  let currentQuery = JSON.parse(JSON.stringify(context.$route.query))
   if (currentQuery['d']) {
     let ed = moment().format('YYYYMMDDHHMM')
     let sd
@@ -40,6 +40,14 @@ store.getEntities = (context) => {
     }
     currentQuery['sd'] = sd
     currentQuery['ed'] = ed
+    currentQuery['d'] = undefined
+  }
+
+  if (currentQuery['cr']) {
+    let values = currentQuery['cr'].split('-')
+    currentQuery['min_credits'] = values[0]
+    currentQuery['max_credits'] = values[1]
+    currentQuery['cr'] = undefined
   }
   // TODO: variable with allowed query params
 

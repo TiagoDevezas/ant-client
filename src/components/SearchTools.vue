@@ -7,15 +7,13 @@
 
     <filter-dropdown v-if="($route.query.tipoentidade === 'Notícia' && checkFilterData) || dateDropdown" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
 
-    <filter-dropdown v-if="$route.query.tipoentidade === 'Cadeira' && checkFilterData" :data="newData(creditRangeFacetData).cr" label="cr"></filter-dropdown>
+    <filter-dropdown v-if="($route.query.tipoentidade === 'Cadeira' && checkFilterData) || creditDropdown" :data="newData(creditRangeFacetData).cr" label="cr"></filter-dropdown>
  
     <div v-if="!checkFilterData" style="display: inline-flex;" v-for="newData in getFiltersFromURL">
       <filter-dropdown :data="newData" :label="$key" v-if="$key !== 'tipoentidade'"></filter-dropdown>
     </div>
  
     <filter-clear v-if="activeFilters.length" :active-filters="activeFilters" btn-label="Limpar"></filter-clear>
-
-    {{ activeFilters }}
 
     <modal title="Intervalo de datas personalizado" :show.sync="dateModal">
       <date-range-picker slot="modal-body" :start-date.sync="startDate" :end-date.sync="endDate"></date-range-picker>
@@ -53,6 +51,7 @@
         startDate: '',
         endDate: '',
         dateDropdown: false,
+        creditDropdown: false,
         defaultLabels: {
           fontesentidade: 'Qualquer origem',
           estado: 'Qualquer estado',
@@ -65,12 +64,6 @@
         orderFacetData: {
           s: [{ label: 'Ordenado por data', value: null}]
         },
-        // dateFacetsLabels: {
-        //   d: 'Últimas 24 horas',
-        //   w: 'Última semana',
-        //   m: 'Último mês',
-        //   y: 'Último ano'
-        // },
         dateFacetData: {
           d: [
             { label: 'Últimas 24 horas', value: null },
@@ -123,26 +116,27 @@
         return Object.keys(this.filterData).length
       },
       getFiltersFromURL () {
+        this.dateDropdown = false
+        this.creditDropdown = false
         let filters = {}
         let currentQuery = JSON.parse(JSON.stringify(this.$route.query))
         delete currentQuery['d']
+        delete currentQuery['cr']
         let queryKeys = Object.keys(currentQuery)
         let defaultKeys = Object.keys(this.defaultLabels)
         queryKeys.forEach(key => {
           if (defaultKeys.indexOf(key) !== -1) {
             let arr = []
-            if (key !== 'd') {
-              arr.push({ label: this.$route.query[key], value: null })
-            }
-            // else if (key === 'd') {
-            //   arr.push({ label: this.dateFacetsLabels[this.$route.query[key]], value: null })
-            // }
+            arr.push({ label: this.$route.query[key], value: null })
             filters[key] = arr
-            this.dateDropdown = false
-          } else if (key === 'sd' || key === 'd') {
-            this.dateDropdown = true
           }
         })
+        if (this.$route.query['sd'] || this.$route.query['d']) {
+          this.dateDropdown = true
+        }
+        if (this.$route.query['cr']) {
+          this.creditDropdown = true
+        }
         return this.newData(filters)
       }
     },

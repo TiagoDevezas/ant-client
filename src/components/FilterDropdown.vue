@@ -15,12 +15,12 @@
           <span>{{ d.label }}</span>
         </div>
 
-        <div v-if="d.label === 'Intervalo personalizado' && this.label === 'd'" @click="openDateModal()">
-          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customDatenterval">check</i></span>
+        <div v-if="this.label === 'd' && d.label === 'Intervalo personalizado'" @click="openDateModal()">
+          <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customDateInterval">check</i></span>
           <span>{{ d.label }}</span>
         </div>
 
-        <div v-if="d.label === 'Intervalo personalizado' && this.label === 'cr'" @click="openCreditModal()">
+        <div v-if="this.label === 'cr' && d.label === 'Intervalo personalizado'" @click="openCreditModal()">
           <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="customCreditInterval">check</i></span>
           <span>{{ d.label }}</span>
         </div>
@@ -71,8 +71,11 @@
         this.$dispatch('openCreditModal')
       },
       selectItem (key, label) {
-        if (this.customInterval) {
-          this.$set('customInterval', false)
+        if (this.customDateInterval) {
+          this.$set('customDateInterval', false)
+        }
+        if (this.customCreditInterval) {
+          this.$set('customCreditInterval', false)
         }
         let currentQuery = this.$route.query
         if (label === this.defaultLabels[key]) {
@@ -135,13 +138,10 @@
               this.$set('selectedItem', 'Ordenado por data')
             } else if (key === 'd') {
               this.$set('selectedItem', this.dateFacetsLabels[this.$route.query[key]])
+              this.$dispatch('addtoActiveFilters', key + '' + this.$route.query[key])
             } else {
               this.$set('selectedItem', this.$route.query[key])
-            }
-            if (key !== 'd') {
               this.$dispatch('addtoActiveFilters', key)
-            } else {
-              this.$dispatch('addtoActiveFilters', key + '' + this.$route.query[key])
             }
           }
         })
@@ -149,22 +149,34 @@
           this.$set('selectedItem', this.defaultLabels[this.label])
         }
       },
-      setDateRange (dateRange) {
-        if (dateRange && this.label === 'd') {
-          let keys = Object.keys(dateRange)
+      setRange (range) {
+        console.log(this.label)
+        if (range && this.label === 'd') {
+          let keys = Object.keys(range)
           let values = keys.map(key => {
-            return dateRange[key]
+            return range[key]
           })
           this.$set('selectedItem', values.join(' - '))
-          this.$set('customInterval', true)
+          this.$set('customDateInterval', true)
           this.$dispatch('addtoActiveFilters', 'dr')
+        } else if (range && this.label === 'cr') {
+          let keys = Object.keys(range)
+          let values = keys.map(key => {
+            return range[key]
+          })
+          this.$set('selectedItem', 'Créditos: ' + values.join(' - '))
+          this.$set('customCreditInterval', true)
+          this.$dispatch('addtoActiveFilters', 'cr')
         }
       }
     },
     events: {
       'routeChange' (newRoute) {
         if (!newRoute.to.query['sd']) {
-          this.customInterval = false
+          this.customDateInterval = false
+        }
+        if (!newRoute.to.query['cr']) {
+          this.customCreditInterval = false
         }
         let queryKeys = Object.keys(newRoute.to.query)
         if (queryKeys.indexOf(this.label) === -1) {
@@ -173,8 +185,8 @@
         }
         return true
       },
-      'setDateRange' (dateRange) {
-        this.setDateRange(dateRange)
+      'setRange' (range) {
+        this.setRange(range)
       }
     },
     ready () {

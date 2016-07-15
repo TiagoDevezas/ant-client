@@ -125,7 +125,7 @@
             })
           }
         }
-        this.$root.$broadcast('setDateRange', {
+        this.$root.$broadcast('setRange', {
           sd: moment(currentQuery['sd']).format(this.displayDateFormat),
           ed: moment(currentQuery['ed']).format(this.displayDateFormat)
         })
@@ -134,7 +134,6 @@
     },
     events: {
       'routeChange' (newRoute) {
-        console.log(newRoute.to.query, newRoute.from.query)
         setTimeout(() => {
           if (newRoute.to.query['sd'] && !newRoute.to.query['d']) {
             this.setDateInterval()
