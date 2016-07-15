@@ -51,9 +51,9 @@
     </div>
 
     <div v-if="entityType === 'Departamento'" class="attr-well-no-flex">
-      <div v-for="obj in formatLabels(labels.special)">
-        <span class="attr-label">{{{ obj.label | iconify }}}</span>
-        <span>{{{ obj.value | cleanMarkup |  highlightQuery $route.query.q | isSearchable obj $route.query.q  }}}</span>
+      <div v-for="obj in formatLabels(labels.special)" class="flex-align-center">
+        <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
+        <span>{{{ obj.value | cleanMarkup | highlightQuery $route.query.q | isSearchable obj $route.query.q  }}}</span>
       </div>
       
     </div>
@@ -262,6 +262,17 @@
     border: 1px solid #e0e0e0;
     span {
       font-size: 13px;
+    }
+  }
+
+  .flex-align-center {
+    display: flex;
+    align-items: center;
+    > span {
+      display: inline-flex;
+    }
+    i.material-icons::after {
+      content: "\00a0";
     }
   }
 
