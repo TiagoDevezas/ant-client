@@ -214,6 +214,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.5;
       .dropdown-highlight {
         color: #222;
         font-weight: bold;

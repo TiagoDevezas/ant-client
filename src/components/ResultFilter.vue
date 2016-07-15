@@ -11,6 +11,9 @@
           {{ eType.label }}
           </a>
         </li>
+        <li class="results-filter-separator" style="margin-top: -3px;">
+          <span style="font-size: 12px; color: #999;">|</span>
+        </li>
         <search-tools-button></search-tools-button>
       </ul> 
   </div>

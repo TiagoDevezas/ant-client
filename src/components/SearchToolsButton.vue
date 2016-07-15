@@ -48,15 +48,16 @@
 
 .search-tools-button > div {
   display: inline;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 5px 5px;
   cursor: pointer;
-  background-color: #eee;
-  border: 1px solid #aaa;
+  border-radius: 5px;
+  border: 1px solid transparent;
 }
 
 .search-tools-button > div:hover {
-  background-color: #ddd;
+  background-color: #eee;
+  border-radius: 5px;
+  border: 1px solid #aaa;
 }
 
 .search-button-active {

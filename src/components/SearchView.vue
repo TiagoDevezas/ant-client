@@ -174,8 +174,8 @@ export default {
     position: relative;
     margin-bottom: 3px;
     margin-top: 1px;
-    padding: 0 94px;
-    max-width: 634px;
+    padding: 0 0 0 102px;
+    max-width: 773px;
   }
   #header-logo-wrap {
     height: 50px;

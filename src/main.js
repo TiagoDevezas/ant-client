@@ -9,7 +9,6 @@ import App from './components/App'
 import MainView from './components/MainView'
 import SearchView from './components/SearchView'
 import AboutView from './components/AboutView'
-import NotFoundView from './components/NotFoundView'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -22,7 +21,12 @@ Object.keys(Locales).forEach(function (lang) {
   Vue.locale(lang, Locales[lang])
 })
 
-export var router = new VueRouter({history: true})
+export var router = new VueRouter(
+  {
+    history: true
+    // root: '/beta/'
+  }
+  )
 
 router.map({
   '/': {
@@ -36,10 +40,6 @@ router.map({
   '/about': {
     name: 'about',
     component: AboutView
-  },
-  '*': {
-    name: 'notFound',
-    component: NotFoundView
   }
 })
 
