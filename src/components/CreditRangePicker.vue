@@ -2,6 +2,13 @@
   <div class="range-slider-container">
     <div id="range-slider"></div>
   </div>
+  <div class="modal-input-container">
+    <span class="modal-input-label">Entre </span><input type="text" v-model="minCredits" @change="minCreditsChanged">
+    <span class="modal-input-label">e </span><input type="text" v-model="maxCredits" @change="maxCreditsChanged">
+  </div>
+  <div class="modal-error-message" v-if="errorMessage">
+    <span class="error-message">Erro</span>
+  </div>
   <div class="range-values">
   Entre <strong>{{ minCredits }}</strong> e <strong>{{ maxCredits }}</strong> créditos.
   </div>
@@ -17,27 +24,49 @@ export default {
   data () {
     return {
       minCredits: 0,
-      maxCredits: 180,
-      creditSlider: ''
+      maxCredits: 240,
+      creditSlider: '',
+      errorMessage: ''
     }
   },
   methods: {
+    minCreditsChanged () {
+      let commaReplaced = parseFloat(this.minCredits.replace(',', '.'))
+      if (commaReplaced >= 0) {
+        this.creditSlider.noUiSlider.set([commaReplaced, this.maxCredits])
+      } else {
+        this.$set('minCredits', 0)
+        this.creditSlider.noUiSlider.set([this.minCredits, this.maxCredits])
+      }
+    },
+    maxCreditsChanged () {
+      let commaReplaced = parseFloat(this.maxCredits.replace(',', '.'))
+      if (commaReplaced <= 240) {
+        this.creditSlider.noUiSlider.set([this.minCredits, commaReplaced])
+      } else {
+        this.$set('maxCredits', 240)
+        this.creditSlider.noUiSlider.set([this.minCredits, this.maxCredits])
+      }
+    },
     createSlider () {
       let slider = document.getElementById('range-slider')
       noUiSlider.create(slider, {
         start: [this.minCredits, this.maxCredits],
-        step: 10,
+        step: 0.5,
+        behaviour: 'drag',
         connect: true,
         range: {
-          'min': this.minCredits,
-          'max': this.maxCredits
+          'min': [this.minCredits],
+          '33%': [10, 1],
+          '66%': [30, 5],
+          'max': [this.maxCredits]
         },
         format: {
           to: (val) => {
-            return Math.ceil(val)
+            return Math.round(val * 1e1) / 1e1
           },
           from: (val) => {
-            return Math.ceil(val)
+            return Math.round(val * 1e1) / 1e1
           }
         }
       })
@@ -62,7 +91,7 @@ export default {
     },
     resetSlider () {
       this.$set('minCredits', 0)
-      this.$set('maxCredits', 180)
+      this.$set('maxCredits', 240)
       this.creditSlider.noUiSlider.set([this.minCredits, this.maxCredits])
     }
   },
@@ -94,6 +123,7 @@ export default {
   .range-slider-container {
     padding: 20px;
   }
+
   .range-values {
     text-align: center;
   }

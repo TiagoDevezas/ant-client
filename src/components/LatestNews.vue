@@ -32,7 +32,7 @@
 }
 
 .latest-news-heading {
-  margin-top: 35px;
+  margin-top: 15px;
   margin-bottom: 0;
   line-height: 40px;
   font-size: 16px;

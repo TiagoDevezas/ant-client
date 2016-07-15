@@ -136,6 +136,7 @@
           if (defaultKeys.indexOf(key) !== -1 && this.label === key) {
             if (this.$route.query[key] === 'dataentidade') {
               this.$set('selectedItem', 'Ordenado por data')
+              this.$dispatch('addtoActiveFilters', 's')
             } else if (key === 'd') {
               this.$set('selectedItem', this.dateFacetsLabels[this.$route.query[key]])
               this.$dispatch('addtoActiveFilters', key + '' + this.$route.query[key])
@@ -150,7 +151,6 @@
         }
       },
       setRange (range) {
-        console.log(this.label)
         if (range && this.label === 'd') {
           let keys = Object.keys(range)
           let values = keys.map(key => {

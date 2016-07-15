@@ -14,6 +14,7 @@
         this.activeFilters.forEach(filter => {
           currentQuery[filter] = undefined
           if (['dd', 'dw', 'dm', 'dy', 'dr', 'cr'].indexOf(filter) !== -1) {
+            currentQuery['s'] = undefined
             currentQuery['d'] = undefined
             currentQuery['sd'] = undefined
             currentQuery['ed'] = undefined
