@@ -71,6 +71,7 @@
         this.$dispatch('openCreditModal')
       },
       selectItem (key, label) {
+        console.log(key, label, this.label)
         if (this.customDateInterval) {
           this.$set('customDateInterval', false)
         }
@@ -78,7 +79,7 @@
           this.$set('customCreditInterval', false)
         }
         let currentQuery = this.$route.query
-        if (label === this.defaultLabels[key]) {
+        if (label === this.defaultLabels[key]) { // The selected dropdown item is the default
           if (key !== 'd') {
             currentQuery[key] = undefined
           } else {
@@ -86,9 +87,10 @@
               currentQuery[str] = undefined
             })
           }
-        } else if (label !== this.selectedItem) {
+        } else if (label !== this.selectedItem) { // The selected item is not the default
           if (this.label === 's') {
             currentQuery[key] = 'dataentidade'
+            this.$dispatch('addtoActiveFilters', key)
           } else if (this.label === 'd') {
             ['sd', 'ed'].forEach(str => {
               currentQuery[str] = undefined
@@ -102,15 +104,6 @@
             } else if (label === 'Último ano') {
               currentQuery['d'] = 'y'
             }
-          } else {
-            currentQuery[key] = label
-          }
-        }
-        if (key !== 'd') {
-          this.$dispatch('addtoActiveFilters', key)
-        } else {
-          if (currentQuery[key]) {
-            // Remove all other facet date filters
             ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(val => {
               if (val !== key) {
                 this.$dispatch('removeFromActiveFilters', val)
@@ -118,11 +111,27 @@
             })
             this.$dispatch('addtoActiveFilters', key + '' + currentQuery[key])
           } else {
-            ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(val => {
-              this.$dispatch('removeFromActiveFilters', val)
-            })
+            currentQuery[key] = label
+            this.$dispatch('addtoActiveFilters', key)
           }
         }
+        // if (key !== 'd') {
+        //   this.$dispatch('addtoActiveFilters', key)
+        // } else {
+        //   if (currentQuery[key]) {
+        //     // Remove all other facet date filters
+        //     ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(val => {
+        //       if (val !== key) {
+        //         this.$dispatch('removeFromActiveFilters', val)
+        //       }
+        //     })
+        //     this.$dispatch('addtoActiveFilters', key + '' + currentQuery[key])
+        //   } else {
+        //     ['dd', 'dw', 'dm', 'dy', 'dr'].forEach(val => {
+        //       this.$dispatch('removeFromActiveFilters', val)
+        //     })
+        //   }
+        // }
         this.$router.go({
           name: 'search',
           query: currentQuery
