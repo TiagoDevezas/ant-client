@@ -31,9 +31,9 @@ export default {
     openSearchLink.type = 'application/opensearchdescription+xml'
     document.head.appendChild(openSearchLink)
 
-    const ogImage = require('../assets/ant_logo.png')
-    const ogImageTag = document.head.querySelector('[property=og\\:image]')
-    ogImageTag.content = ogImage
+    // const ogImage = require('../assets/ant_logo.png')
+    // const ogImageTag = document.head.querySelector('[property=og\\:image]')
+    // ogImageTag.content = ogImage
   }
 }
 </script>

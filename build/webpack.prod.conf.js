@@ -2,6 +2,7 @@ var webpack = require('webpack')
 var config = require('./webpack.base.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 // naming output files with hashes for better caching.
 // dist/index.html will be auto-generated with correct URLs.
@@ -51,6 +52,23 @@ config.plugins = (config.plugins || []).concat([
   new webpack.optimize.OccurenceOrderPlugin(),
   // extract css into its own file
   new ExtractTextPlugin('[name].[contenthash].css'),
+  // Generate favicons from logo
+  new FaviconsWebpackPlugin({
+    logo: './src/assets/ant_logo.png',
+    prefix: 'icons/',
+    icons: {
+      android: false,
+      appleIcon: false,
+      appleStartup: false,
+      coast: false,
+      favicons: true,
+      firefox: false,
+      opengraph: true,
+      twitter: false,
+      yandex: false,
+      windows: false
+    }
+  }),
   // generate dist index.html with correct asset hash for caching.
   // you can customize output by editing /src/index.html
   // see https://github.com/ampedandwired/html-webpack-plugin
