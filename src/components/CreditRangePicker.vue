@@ -3,14 +3,11 @@
     <div id="range-slider"></div>
   </div>
   <div class="modal-input-container">
-    <span class="modal-input-label">Entre </span><input type="text" v-model="minCredits" @change="minCreditsChanged">
-    <span class="modal-input-label">e </span><input type="text" v-model="maxCredits" @change="maxCreditsChanged">
-  </div>
-  <div class="modal-error-message" v-if="errorMessage">
-    <span class="error-message">Erro</span>
+    <span class="modal-input-label">Entre </span><input type="text" v-model="startCredits" @change="minCreditsChanged">
+    <span class="modal-input-label">e </span><input type="text" v-model="endCredits" @change="maxCreditsChanged">
   </div>
   <div class="range-values">
-  Entre <strong>{{ minCredits }}</strong> e <strong>{{ maxCredits }}</strong> créditos.
+  Entre <strong>{{ startCredits }}</strong> e <strong>{{ endCredits }}</strong> créditos.
   </div>
   <div class="modal-input-controls">
     <span class="modal-input-submit" @click="setCreditRange">Ir</span>
@@ -26,40 +23,42 @@ export default {
       minCredits: 0,
       maxCredits: 240,
       creditSlider: '',
-      errorMessage: ''
+      startCredits: '',
+      endCredits: ''
     }
   },
   methods: {
     minCreditsChanged () {
-      let commaReplaced = parseFloat(this.minCredits.replace(',', '.'))
-      if (commaReplaced >= 0) {
-        this.creditSlider.noUiSlider.set([commaReplaced, this.maxCredits])
+      let commaReplaced = parseFloat(this.startCredits.replace(',', '.'))
+      if (commaReplaced >= this.minCredits) {
+        this.creditSlider.noUiSlider.set([commaReplaced, this.endCredits])
       } else {
-        this.$set('minCredits', 0)
-        this.creditSlider.noUiSlider.set([this.minCredits, this.maxCredits])
+        this.creditSlider.noUiSlider.set([this.minCredits, this.endCredits])
       }
     },
     maxCreditsChanged () {
-      let commaReplaced = parseFloat(this.maxCredits.replace(',', '.'))
-      if (commaReplaced <= 240) {
-        this.creditSlider.noUiSlider.set([this.minCredits, commaReplaced])
+      let commaReplaced = parseFloat(this.endCredits.replace(',', '.'))
+      if (commaReplaced <= this.maxCredits) {
+        this.creditSlider.noUiSlider.set([this.startCredits, commaReplaced])
       } else {
-        this.$set('maxCredits', 240)
-        this.creditSlider.noUiSlider.set([this.minCredits, this.maxCredits])
+        this.creditSlider.noUiSlider.set([this.startCredits, this.maxCredits])
       }
     },
     createSlider () {
       let slider = document.getElementById('range-slider')
+      let urlRange = this.$route.query['cr'] && this.$route.query['cr'].split('-') ? this.$route.query['cr'].split('-') : null
+      let sCreds = urlRange && urlRange[0] ? +urlRange[0] : this.minCredits
+      let eCreds = urlRange && urlRange[1] ? +urlRange[1] : this.maxCredits
       noUiSlider.create(slider, {
-        start: [0, 240],
+        start: [sCreds, eCreds],
         step: 0.5,
         behaviour: 'drag',
         connect: true,
         range: {
-          'min': [0],
+          'min': [this.minCredits],
           '33%': [10, 1],
           '66%': [30, 5],
-          'max': [240]
+          'max': [this.maxCredits]
         },
         format: {
           to: (val) => {
@@ -71,27 +70,25 @@ export default {
         }
       })
       slider.noUiSlider.on('update', (values) => {
-        this.$set('minCredits', values[0])
-        this.$set('maxCredits', values[1])
+        this.$set('startCredits', values[0])
+        this.$set('endCredits', values[1])
       })
       this.$set('creditSlider', slider)
     },
     setCreditRange () {
       let currentQuery = this.$route.query
-      currentQuery['cr'] = this.minCredits + '-' + this.maxCredits
+      currentQuery['cr'] = this.startCredits + '-' + this.endCredits
       this.$router.go({
         name: 'search',
         query: currentQuery
       })
       this.$root.$broadcast('setRange', {
-        min_credits: this.minCredits,
-        max_credits: this.maxCredits
+        min_credits: this.startCredits,
+        max_credits: this.endCredits
       })
       this.$dispatch('closeModal')
     },
     resetSlider () {
-      this.$set('minCredits', 0)
-      this.$set('maxCredits', 240)
       this.creditSlider.noUiSlider.set([this.minCredits, this.maxCredits])
     }
   },
