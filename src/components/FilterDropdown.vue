@@ -71,7 +71,6 @@
         this.$dispatch('openCreditModal')
       },
       selectItem (key, label) {
-        console.log(key, label, this.label)
         if (this.customDateInterval) {
           this.$set('customDateInterval', false)
         }

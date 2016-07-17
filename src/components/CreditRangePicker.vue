@@ -51,15 +51,15 @@ export default {
     createSlider () {
       let slider = document.getElementById('range-slider')
       noUiSlider.create(slider, {
-        start: [this.minCredits, this.maxCredits],
+        start: [0, 240],
         step: 0.5,
         behaviour: 'drag',
         connect: true,
         range: {
-          'min': [this.minCredits],
+          'min': [0],
           '33%': [10, 1],
           '66%': [30, 5],
-          'max': [this.maxCredits]
+          'max': [240]
         },
         format: {
           to: (val) => {
