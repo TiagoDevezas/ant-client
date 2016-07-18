@@ -84,7 +84,7 @@
     padding-top: 0.5em;
     position: relative;
     padding-left: 94px;
-    margin-bottom: 70px;
+    /*margin-bottom: 70px;*/
   }
 
   .pagination-wrapper {

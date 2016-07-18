@@ -159,6 +159,7 @@ export default {
 <style lang="scss">
   #search {
     height: 100%;
+    padding-bottom: 60px;
   }
   #header-wrapper {
     box-shadow: 0 1px 0 rgba(0,0,0,0.15);
@@ -208,7 +209,7 @@ export default {
     display: block;
   }
   .content-wrap-results {
-    margin: 0 auto 40px auto;
+    // margin: 0 auto 40px auto;
     position: relative;
     /*background-color: #fefefe;*/
   }
