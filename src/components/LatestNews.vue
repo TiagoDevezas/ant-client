@@ -2,10 +2,10 @@
   <div class="latest-news-container" v-if="newsData">
     <p class="latest-news-heading">Últimas notícias</p>
     <div class="latest-news" v-for="news in newsData">
-      <h2 class="news-title"><a href="{{ news.link }}">{{ news.title }}</a></h2>
+      <h2 class="news-title"><a href="{{ news.link }}" title="{{ news.title }}">{{ news.title }}</a></h2>
       <p class="news-meta">
-        <span class="news-source">{{ news.school }}</span>
-        <span class="news-date">- {{ news.date.split(', ')[1] + ' às ' + news.date.split(', ')[2] }}</span>
+        <span class="news-source">{{ news.school }}</span><br>
+        <span class="news-date">{{ news.date.split(', ')[1] }}</span>
       </p>
       <span class="separator" v-if="$index !== newsData.length - 1">&middot;</span>
     </div>
@@ -21,7 +21,7 @@
 <style>
 
 .latest-news-container {
-  width: 100%;
+  width: 50%;
   text-align: center;
   padding-right: 20px;
 }
@@ -46,11 +46,13 @@
 .news-title {
   font-size: 15px;
   font-weight: normal;
-  /*color: #333;*/
   line-height: 18px;
   margin: 0;
   padding: 0;
-  /*padding-left: 10px;*/
+  white-space: nowrap;
+  width: 100%;                   
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .news-title a {
@@ -65,6 +67,10 @@
   font-size: 13px;
   line-height: 16px;
   margin: 0;
+  white-space: nowrap;
+  width: 100%;                   
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .news-source {

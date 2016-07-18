@@ -1,9 +1,9 @@
 <template>
-  <about-link link-text="Sobre" link-path="about"></about-link>
+  <!-- <about-link link-text="Sobre" link-path="about"></about-link> -->
   <div class="wrapper flex">  
     <div class="full">   
-      <a v-link="{name: 'home'}" id="logo-link">
-        ANT Pesquisa de Informação na Universidade do Porto
+      <a v-link="{name: 'home'}" id="logo-link" title="ANT - Pesquisa de Informação na Universidade do Porto">
+        ANT - Pesquisa de Informação na Universidade do Porto
       </a>
     </div>
     <div class="full center-text">
@@ -23,7 +23,8 @@
     </div>
   </div>
   <div id="footer" class="center-text">
-    InfoLab, FEUP
+    <span class="footer-link"><a href="http://infolab.fe.up.pt">InfoLab/U.Porto</a></span>
+    <span class="footer-link"><a v-link="{name: 'about'}">Sobre</a></span>
   </div>
 </template>
 
@@ -105,5 +106,17 @@ export default {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
     color: #444444;
     font-size: 14px;
+    .footer-link {
+      &:last-of-type {
+        margin-left: 25px;
+      }
+      a {
+        color: #222;
+        &:hover, &:active, &:focus {
+          // color: #222;
+          text-decoration: underline;
+        }
+      }
+    }
   }
 </style>

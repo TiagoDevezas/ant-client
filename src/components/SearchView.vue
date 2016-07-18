@@ -1,10 +1,10 @@
 <template>
-  <about-link link-text="Sobre" link-path="about"></about-link>
+  <!-- <about-link link-text="Sobre" link-path="about"></about-link> -->
   <div id="search">
     <div id="header-wrapper">
       <div id="header">
         <div class="header-search-wrap">
-          <a v-link="'/'" id="header-logo-wrap">
+          <a v-link="'/'" id="header-logo-wrap" title="ANT - Pesquisa de Informação na Universidade do Porto">
             <span class="header-logo">ANT Pesquisa de Informação na Universidade do Porto</span>
           </a>
           <search-form :query-params="$route.query.q" class="search-top"></search-form>
@@ -38,6 +38,10 @@
         </result-paginator>
       </div>
     </div>
+  </div>
+  <div id="footer" class="center-text">
+    <span class="footer-link"><a href="http://infolab.fe.up.pt">InfoLab/U.Porto</a></span>
+    <span class="footer-link"><a v-link="{name: 'about'}">Sobre</a></span>
   </div>
 </template>
 

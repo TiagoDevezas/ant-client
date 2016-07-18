@@ -1,5 +1,5 @@
 <template>
-  <about-link link-text="Voltar" :link-path="fromPath"></about-link>
+  <!-- <about-link link-text="Voltar" :link-path="fromPath"></about-link> -->
   <div id="about-wrapper">
     <h1>Sobre</h1>
     <p>O objetivo do ANT é o de disponibilizar uma plataforma educativa e para Investigação & Desenvolvimento, na área da pesquisa orientada a entidades.</p>
@@ -8,37 +8,68 @@
     <h1>Colaboração</h1>
     <p>Se pertences à Universidade do Porto e pretendes colaborar no projeto ANT para desenvolver competências na área da recuperação de informação, em particular da pesquisa orientada a entidades, entra em contacto connosco.</p>
 
-    <p>Podes fazê-lo via e-mail, ou pessoalmente no Laboratório de Sistemas de Informação, que fica na sala <a v-link="{name: 'search', query: {q: 'i123'}}">i123</a> do <a v-link="{name: 'search', query: {q: 'departamento de engenharia informática'}}">Departamento de Engenharia Informática</a> — pergunta pelo <a v-link="{name: 'search', query: {q: 'josé devezas funcionário'}}">José Devezas</a> ou pelo <a v-link="{name: 'search', query: {q: 'sérgio nunes funcionário'}}">Sérgio Nunes</a>.</p>
+    <p>Podes fazê-lo via e-mail, ou pessoalmente no Laboratório de Sistemas de Informação, que fica na sala <a v-link="{name: 'search', query: {q: 'i123', tipoentidade: 'Sala'}}">i123</a> do <a v-link="{name: 'search', query: {q: 'departamento de engenharia informática', tipoentidade: 'Departamento'}}">Departamento de Engenharia Informática</a> — pergunta pelo <a v-link="{name: 'search', query: {q: 'josé devezas', tipoentidade: 'Funcionário'}}">José Devezas</a> ou pelo <a v-link="{name: 'search', query: {q: 'sérgio nunes', tipoentidade: 'Funcionário'}}">Sérgio Nunes</a>.</p>
 
-    <h1>Contactos</h1>
-    <address>
-      <strong>Sérgio Nunes</strong><br>
-      Departamento de Engenharia Informática,<br>
-      Faculdade de Engenharia, Universidade do Porto<br>
-      <a href="mailto:ssn@fe.up.pt">ssn@fe.up.pt</a>
-    </address>
-    <address>
-      <strong>José Devezas *</strong><br>
-      Laboratório de Sistemas de Informação,<br>
-      Faculdade de Engenharia, Universidade do Porto<br>
-      <a href="mailto:jld@fe.up.pt">jld@fe.up.pt</a>
-    </address>
-    <p class="smaller">
+    <h1>Equipa</h1>
+    <dl>
+      <dt><a v-link="{name: 'search', query: {q: 'sérgio sobral nunes', tipoentidade: 'Funcionário'}}">Sérgio Nunes</a></dt>
+      <dd>Coordenador</dd>
+      <dd>
+        Departamento de Engenharia Informática,<br>
+        Faculdade de Engenharia, Universidade do Porto<br>
+        <a href="mailto:ssn@fe.up.pt">ssn@fe.up.pt</a>
+      </dd>
+    </dl>
+    <dl>
+      <dt><a v-link="{name: 'search', query: {q: 'josé devezas', tipoentidade: 'Funcionário'}}">José Devezas *</a></dt>
+      <dd>Lead Developer</dd>
+      <dd>
+        Laboratório de Sistemas de Informação,<br>
+        Faculdade de Engenharia, Universidade do Porto<br>
+        <a href="mailto:jld@fe.up.pt">jld@fe.up.pt</a>
+      </dd>
+    </dl>
+
+     <p class="smaller">
       * Contacto para envio de sugestões, bugs ou outro feedback.
     </p>
 
-    <h1>Agradecimentos</h1>
     <dl>
-      <dt><a v-link="{name: 'search', query: {q: 'tiago devezas'}}">Tiago Devezas</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'tiago devezas', tipoentidade: 'Estudante'}}">Tiago Devezas</a></dt>
       <dd>Front-End Development</dd>
-      <dt><a v-link="{name: 'search', query: {q: 'noémia moreira'}}">Noémia Moreira</a></dt>
-      <dd>UX Analyst</dd>
+      <dd>
+        Laboratório de Sistemas de Informação,<br>
+        Faculdade de Engenharia, Universidade do Porto<br>
+      </dd>
     </dl>
+
     <dl>
-      <dt><a v-link="{name: 'search', query: {q: 'ricardo carvalho amorim'}}">Ricardo Amorim</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'noémia moreira', tipoentidade: 'Estudante'}}">Noémia Moreira</a></dt>
+      <dd>UX Analyst</dd>
+      <dd>
+        <span class="italic">Estudante do Mestrado em Multimédia</span><br>
+        Laboratório de Sistemas de Informação,<br>
+        Faculdade de Engenharia, Universidade do Porto<br>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt><a v-link="{name: 'search', query: {q: 'ricardo carvalho amorim', tipoentidade: 'Funcionário'}}">Ricardo Amorim</a></dt>
       <dd>Android Development</dd>
-      <dt><a v-link="{name: 'search', query: {q: 'ana de lurdes rocha reis'}}">Ana Rocha Reis</a></dt>
+      <dd>
+        Laboratório de Sistemas de Informação,<br>
+        Faculdade de Engenharia, Universidade do Porto<br>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt><a v-link="{name: 'search', query: {q: 'ana de lurdes rocha reis', tipoentidade: 'Estudante'}}">Ana Rocha Reis</a></dt>
       <dd>Android Design</dd>
+      <dd>
+        <span class="italic">Estudante do Mestrado em Multimédia</span><br>
+        Laboratório de Sistemas de Informação,<br>
+        Faculdade de Engenharia, Universidade do Porto<br>
+      </dd>
     </dl>
 
     <p class="dev-link"><em><a href="http://ant.fe.up.pt/dev">Versão de desenvolvimento</a></em></p>
@@ -93,12 +124,25 @@
     margin-bottom: 20px;
   }
 
+  #about-wrapper dl {
+    font-size: 15px;
+  }
+
   #about-wrapper dt {
+    font-weight: bold;
+    font-size: 16px;
   }
 
   #about-wrapper dd {
     margin-left: 0px;
     margin-bottom: 15px;
+    &:first-of-type {
+      margin-bottom: 0;
+      font-family: "Lucida Console", monospace;
+    }
+    > .italic {
+      font-style: italic;
+    }
   }
 
   #about-wrapper p {

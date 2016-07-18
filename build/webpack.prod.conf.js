@@ -57,16 +57,16 @@ config.plugins = (config.plugins || []).concat([
     logo: './src/assets/ant_logo.png',
     prefix: 'icons/',
     icons: {
-      android: false,
-      appleIcon: false,
-      appleStartup: false,
+      android: true,
+      appleIcon: true,
+      appleStartup: true,
       coast: false,
       favicons: true,
       firefox: false,
       opengraph: true,
-      twitter: false,
+      twitter: true,
       yandex: false,
-      windows: false
+      windows: true
     }
   }),
   // generate dist index.html with correct asset hash for caching.

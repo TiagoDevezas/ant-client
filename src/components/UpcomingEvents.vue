@@ -2,7 +2,7 @@
   <div class="upcoming-events-container" v-if="eventsData">
     <p class="latest-news-heading">Próximos eventos</p>
     <div class="latest-news" v-for="event in eventsData">
-      <h2 class="news-title"><a href="{{ event.link }}">{{ event.title }}</a></h2>
+      <h2 class="news-title"><a href="{{ event.link }}" title="{{ event.title }}">{{ event.title }}</a></h2>
       <p class="news-meta">
         <span class="news-source">{{ event.school }}</span>
       </p>
@@ -36,7 +36,7 @@
 
 <style>
   .upcoming-events-container {
-    width: 100%;
+    width: 50%;
     text-align: center;
     padding-left: 20px;
   }
