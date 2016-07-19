@@ -1,19 +1,41 @@
 <template>
   <div class="shrink no-bottom-padding">
-    <img :src="getPicture" :alt="setAltText" :title="title" width="75px">
+    <img :src="displayUrl" :alt="setAltText" :title="title" width="75px">
   </div>
 </template>
 
 <script>
+  import { noPhoto } from '../main'
+  
   export default {
-    props: ['title', 'link'],
-    computed: {
+    props: ['title', 'link', 'photoUrl'],
+    data () {
+      return {
+        displayUrl: ''
+      }
+    },
+    methods: {
       getPicture () {
-        return 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.link.split('=')[1] + ''
-      },
+        let photoService = 'http://ant.fe.up.pt/api/status/photo?url='
+        let photoUrl = 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.link.split('=')[1]
+        let promise = this.$http({url: photoService + photoUrl, method: 'GET'})
+        promise.then(res => {
+          if (res.ok) {
+            this.$set('displayUrl', photoUrl)
+          }
+        }, (res) => {
+          this.$set('displayUrl', noPhoto)
+        })
+      }
+    },
+    computed: {
       setAltText () {
         return 'Foto de ' + this.title
       }
+    },
+    ready () {
+      this.$set('displayUrl', noPhoto)
+      this.getPicture()
     }
   }
 </script>

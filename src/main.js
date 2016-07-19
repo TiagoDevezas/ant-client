@@ -21,6 +21,8 @@ Object.keys(Locales).forEach(function (lang) {
   Vue.locale(lang, Locales[lang])
 })
 
+export var noPhoto = require('./assets/no_photo.png')
+
 export var router = new VueRouter(
   {
     history: true
@@ -41,6 +43,11 @@ router.map({
     name: 'about',
     component: AboutView
   }
+})
+
+router.beforeEach(function (transition) {
+  window.scrollTo(0, 0)
+  transition.next()
 })
 
 router.afterEach(function (transition) {

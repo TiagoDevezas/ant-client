@@ -1,6 +1,6 @@
 <template>
 <div class="flex">
-  <person-picture v-if="entityType === 'Funcionário' || entityType === 'Estudante'" :title="metadata.description" :link="metadata.link"></person-picture>
+  <person-picture v-if="entityType === 'Funcionário' || entityType === 'Estudante'" :title="metadata.description" :link="metadata.link" :photo-url="metadata.document.photo_url"></person-picture>
   <div :class="['no-bottom-padding', {
     'full': entityType !== 'Funcionário' || entityType !== 'Estudante',
     'four-fifth': entityType === 'Funcionário' || entityType === 'Estudante'
