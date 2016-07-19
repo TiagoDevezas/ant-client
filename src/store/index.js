@@ -1,24 +1,20 @@
-const API_URL = 'http://ant.fe.up.pt/api/'
-const SEARCH_URL = API_URL + 'search'
-const NEWS_RANKINGS_URL = API_URL + 'rankings/news'
-const EVENTS_RANKINGS_URL = API_URL + 'rankings/events'
+import defaults from '../defaults'
+import moment from 'moment'
 
 const store = Object.create(null)
-
-import moment from 'moment'
 
 export default store
 
 let t0
 
 store.getLatestNews = (context) => {
-  return context.$http({url: NEWS_RANKINGS_URL, method: 'GET'}).then(response => {
+  return context.$http({url: defaults.news_url, method: 'GET'}).then(response => {
     context.$set('latestNews', response.data.data)
   })
 }
 
 store.getUpcomingEvents = (context) => {
-  return context.$http({url: EVENTS_RANKINGS_URL, method: 'GET'}).then(response => {
+  return context.$http({url: defaults.events_url, method: 'GET'}).then(response => {
     context.$set('upcomingEvents', response.data.data)
   })
 }
@@ -50,11 +46,7 @@ store.getEntities = (context) => {
     currentQuery['cr'] = undefined
   }
   // TODO: variable with allowed query params
-
-  // const query = context.$route.query.q
-  // const start = context.$route.query.start
-  // const entityType = context.$route.query.tipoentidade
-  return context.$http.get(SEARCH_URL, currentQuery)
+  return context.$http.get(defaults.search_url, currentQuery)
 }
 
 store.getData = (context) => {

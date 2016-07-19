@@ -35,7 +35,7 @@
 
     <dl>
       <dt><a v-link="{name: 'search', query: {q: 'tiago devezas', tipoentidade: 'Estudante'}}">Tiago Devezas</a></dt>
-      <dd>Front-End Development</dd>
+      <dd>Front-End Developer</dd>
       <dd>
         Laboratório de Sistemas de Informação,<br>
         Faculdade de Engenharia, Universidade do Porto<br>
@@ -54,7 +54,7 @@
 
     <dl>
       <dt><a v-link="{name: 'search', query: {q: 'ricardo carvalho amorim', tipoentidade: 'Funcionário'}}">Ricardo Amorim</a></dt>
-      <dd>Android Development</dd>
+      <dd>Android Developer</dd>
       <dd>
         Laboratório de Sistemas de Informação,<br>
         Faculdade de Engenharia, Universidade do Porto<br>
@@ -63,7 +63,7 @@
 
     <dl>
       <dt><a v-link="{name: 'search', query: {q: 'ana de lurdes rocha reis', tipoentidade: 'Estudante'}}">Ana Rocha Reis</a></dt>
-      <dd>Android Design</dd>
+      <dd>Android Designer</dd>
       <dd>
         <span class="italic">Estudante do Mestrado em Multimédia</span><br>
         Laboratório de Sistemas de Informação,<br>

@@ -21,9 +21,7 @@ Object.keys(Locales).forEach(function (lang) {
   Vue.locale(lang, Locales[lang])
 })
 
-export var noPhoto = require('./assets/no_photo.png')
-
-export var router = new VueRouter(
+let router = new VueRouter(
   {
     history: true
     // root: '/beta/'

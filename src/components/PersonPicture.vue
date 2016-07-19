@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { noPhoto } from '../main'
+  import defaults from '../defaults'
   
   export default {
     props: ['title', 'link', 'photoUrl'],
@@ -16,15 +16,16 @@
     },
     methods: {
       getPicture () {
-        let photoService = 'http://ant.fe.up.pt/api/status/photo?url='
         let photoUrl = 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.link.split('=')[1]
-        let promise = this.$http({url: photoService + photoUrl, method: 'GET'})
+        let promise = this.$http({url: defaults.photo_service + photoUrl, method: 'GET'})
         promise.then(res => {
           if (res.ok) {
             this.$set('displayUrl', photoUrl)
+          } else {
+            return promise.reject()
           }
         }, (res) => {
-          this.$set('displayUrl', noPhoto)
+          this.$set('displayUrl', defaults.img_placeholder)
         })
       }
     },
@@ -34,7 +35,7 @@
       }
     },
     ready () {
-      this.$set('displayUrl', noPhoto)
+      this.$set('displayUrl', defaults.img_placeholder)
       this.getPicture()
     }
   }
