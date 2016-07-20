@@ -4,6 +4,7 @@
       <h2 class="result-link"><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
   </div>
   <div class="full no-b-padding" style="display: flex; align-items: center;">
+      <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="right"></status-indicator>
       <span class="label is-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</span>
       <span class="result-url">{{ metadata.link }}</span>
   </div>
@@ -11,8 +12,11 @@
 </template>
 
 <script>
+  import StatusIndicator from './StatusIndicator'
+
   export default {
     props: ['metadata', 'category'],
+    components: { StatusIndicator },
     methods: {
       sendClickData (event) {
         let values = {

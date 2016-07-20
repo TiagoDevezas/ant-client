@@ -1,7 +1,7 @@
 <template>
   <span class="feed-icon">
     <a :href="generateFeedLink" class="feed-link">
-      <i class="material-icons">rss_feed
+      <i class="material-icons" title="Subscrever feed">rss_feed
       </i> 
     </a> 
   </span>

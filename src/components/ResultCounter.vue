@@ -1,6 +1,6 @@
 <template>
   <div id="results-counter" v-show="count">
-    <span style="line-height: 1;">{{ count }} resultados ({{ timeToSearch }} segundos)</span>
+    <span class="counter-text">{{ count }} resultados ({{ timeToSearch }} segundos)</span>
     <slot></slot>
   </div>
 </template>
@@ -23,5 +23,8 @@
     padding: 10px 0 11px 10px;
     z-index: 1;
     transition: top 220ms ease-in-out;
+  }
+  .counter-text {
+    line-height: 1;
   }
 </style>

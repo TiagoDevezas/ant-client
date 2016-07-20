@@ -29,6 +29,6 @@
 		font-size: 13px;
 		line-height: 1.15;
 		color: #666;
-    padding-top: 5px;
+    padding-top: 2px;
 	}
 </style>

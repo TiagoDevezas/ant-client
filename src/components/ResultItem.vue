@@ -57,10 +57,9 @@ export default {
 }
 
 .result p {
-  margin: 4px 0;
+  margin: 2px 0;
   max-width: 650px;
   font-size: 13px;
-  line-height: 1.15;
 }
 
 .result-more-data {

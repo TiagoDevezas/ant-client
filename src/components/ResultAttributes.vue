@@ -30,6 +30,7 @@
       <p v-for="obj in formatLabels(labels.secondary)">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
         <span>{{{ obj.value | cleanMarkup | highlightQuery $route.query.q | isSearchable obj $route.query.q }}}</span>
+        <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="left" v-if="obj.label === 'Ativo' || obj.label === 'Estado'"></status-indicator>
       </p>
     </div>
 
@@ -66,6 +67,7 @@
         <div v-for="obj in formatLabels(labels.special)">       
           <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
           <span>{{{ obj.value | cleanMarkup | highlightQuery $route.query.q | isSearchable obj $route.query.q }}}</span>
+          <status-indicator :status="metadata.document.status" :state="metadata.document.active" v-if="obj.label === 'Ativo' || obj.label === 'Estado'"></status-indicator>
         </div>
       </div>
     </div>
@@ -74,6 +76,7 @@
       <p v-for="obj in remainingLabels()" style="display: block;">
         <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
         <span>{{{ obj.value | cleanMarkup |  highlightQuery $route.query.q | isSearchable obj $route.query.q }}}</span>
+        <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="left" v-if="obj.label === 'Ativo' || obj.label === 'Estado'"></status-indicator>
       </p>
     </div>
 
@@ -83,10 +86,12 @@
 
 <script>
   import { cleanMarkup, stripTags, highlightQuery, truncateText, iconify, isSearchable } from '../filters'
+  import StatusIndicator from './StatusIndicator'
 
   export default {
     filters: { cleanMarkup, stripTags, highlightQuery, truncateText, iconify, isSearchable },
     props: ['isToggled', 'metadata', 'labels'],
+    components: { StatusIndicator },
     data () {
       return {
         entityType: this.metadata.type.label
@@ -242,6 +247,9 @@
 <style lang="scss">
   .attributes {
     display: flex;
+    .attr-label {
+      display: inline-flex;
+    }
   }
   .attributes > p {
     display: flex;

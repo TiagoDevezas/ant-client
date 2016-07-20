@@ -3,7 +3,7 @@
 
     <filter-dropdown v-for="data in newData()" :data="data" :label="$key" v-if="checkFilterData && $key !== 'tipoentidade'"></filter-dropdown>
 
-    <filter-dropdown v-if="$route.query.tipoentidade === 'Notícia' && checkFilterData" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
+    <filter-dropdown v-if="($route.query.tipoentidade === 'Notícia' && checkFilterData) || sortDropdown" :data="newData(orderFacetData).s" label="s"></filter-dropdown>
 
     <filter-dropdown v-if="($route.query.tipoentidade === 'Notícia' && checkFilterData) || dateDropdown" :data="newData(dateFacetData).d" label="d"></filter-dropdown>
 
@@ -52,6 +52,7 @@
         endDate: '',
         dateDropdown: false,
         creditDropdown: false,
+        sortDropdown: false,
         defaultLabels: {
           fontesentidade: 'Qualquer unidade',
           estado: 'Qualquer estado',
@@ -118,10 +119,12 @@
       getFiltersFromURL () {
         this.dateDropdown = false
         this.creditDropdown = false
+        this.sortDropdown = false
         let filters = {}
         let currentQuery = JSON.parse(JSON.stringify(this.$route.query))
         delete currentQuery['d']
         delete currentQuery['cr']
+        delete currentQuery['s']
         let queryKeys = Object.keys(currentQuery)
         let defaultKeys = Object.keys(this.defaultLabels)
         queryKeys.forEach(key => {
@@ -136,6 +139,9 @@
         }
         if (this.$route.query['cr']) {
           this.creditDropdown = true
+        }
+        if (this.$route.query['s']) {
+          this.sortDropdown = true
         }
         return this.newData(filters)
       }
