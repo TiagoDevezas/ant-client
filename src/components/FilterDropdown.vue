@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown" @click="toggleDropdown" @blur="closeDropdown" tabindex="0">
     <span class="dropdown-label">
-      <span :class="{'dropdown-highlight': selectedItem !== defaultLabels[label]}">{{ selectedItem }}
+      <span :class="{'dropdown-highlight': selectedItem !== defaultLabels[label]}" :title="selectedItem">{{ selectedItem }}
       </span>
     </span>
     <span class="dropdown-icon"><i class="material-icons">arrow_drop_down</i></span>
@@ -9,10 +9,10 @@
     <div :class="['dropdown-panel', { 'dropdown-open': isToggled }]">
 
       <div v-for="d in data" :class="['dropdown-item', { 'border-top':  d.label === 'Intervalo personalizado'}]">
-
         <div @click="selectItem(this.label, d.label)" v-if="d.label !== 'Intervalo personalizado'">        
           <span class="item-selected"><i class="material-icons" style="font-size: 14px;" v-if="d.label === selectedItem">check</i></span>
-          <span>{{ d.label }}</span>
+          <span class="item-label">{{ d.label }}</span>
+          <span v-if="d.value" class="item-value"><span class="counter">{{ d.value }}</span></span>
         </div>
 
         <div v-if="this.label === 'd' && d.label === 'Intervalo personalizado'" @click="openDateModal()">
@@ -41,7 +41,7 @@
         customDateInterval: false,
         customCreditInterval: false,
         defaultLabels: {
-          fontesentidade: 'Qualquer origem',
+          fontesentidade: 'Qualquer unidade',
           estado: 'Qualquer estado',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
@@ -253,9 +253,26 @@
           align-items: center;
         }
         .item-selected {
-          width: 24px;
+          min-width: 24px;
           text-align: center;
           display: inline-block;
+        }
+        .item-value {
+          width: 100%;
+          text-align: right;
+          margin-left: 15px;
+        }
+        .item-label {
+        }
+        .counter {
+          display: inline-block;
+          padding: 2px 5px;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 1;
+          color: #666;
+          background-color: #eee;
+          border-radius: 20px;
         }
       }
     }

@@ -52,7 +52,7 @@
             labels = {
               primary: {
                 line_1: ['code', 'acronym'],
-                line_2: ['institutional_emails', 'alternative_telephone', 'voip', 'rooms']
+                line_2: ['institutional_emails', 'telephone', 'alternative_telephone', 'voip', 'rooms']
               },
               secondary: ['status'],
               special: ['positions', 'teaching', 'functions', 'research']
@@ -105,7 +105,7 @@
           case 'Cadeira':
             labels = {
               primary: {
-                line_1: ['active'],
+                line_1: ['courses_in_charge'],
                 line_2: ['teachers']
               },
               special: ['study_plan']

@@ -53,7 +53,7 @@
         dateDropdown: false,
         creditDropdown: false,
         defaultLabels: {
-          fontesentidade: 'Qualquer origem',
+          fontesentidade: 'Qualquer unidade',
           estado: 'Qualquer estado',
           curso: 'Qualquer curso',
           departamento: 'Qualquer departamento',
@@ -168,7 +168,7 @@
           }
         })
         if (counter === 0 && this.isToggled) {
-          this.$root.$broadcast('toggleButton')
+          // this.$root.$broadcast('toggleButton')
         }
         if (counter > 0 && !this.isToggled) {
           // setTimeout(() => {

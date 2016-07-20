@@ -6,13 +6,13 @@
       <span> {{{ metadata.document.courses[0].course | highlightQuery $route.query.q| isSearchable metadata.document.courses[0] $route.query.q }}}</span>
     </span>
     <div v-if="labels.primary.line_1" class="attributes">
-      <p v-for="obj in formatLabels(labels.primary.line_1)">
+      <p v-for="obj in formatLabels(labels.primary.line_1)" :class="{'align-top': obj.orig_label === 'courses_in_charge'}">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span> 
         <span>{{{ obj.value | cleanMarkup | highlightQuery $route.query.q | isSearchable obj $route.query.q }}} &nbsp;</span>
       </p>
     </div>
     <div v-if="labels.primary.line_2" class="attributes">
-      <p v-for="obj in formatLabels(labels.primary.line_2)">
+      <p v-for="obj in formatLabels(labels.primary.line_2)" :class="{'align-top': obj.orig_label === 'teachers'}">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
         <span>{{{ obj.value | cleanMarkup | highlightQuery $route.query.q  | isSearchable obj $route.query.q }}} &nbsp;</span>
       </p>
@@ -38,7 +38,7 @@
         <p v-if="isDisplayable(label)" style="font-size: 15px;">{{ isDisplayable(label) }}</p>
         <div v-for="element in formatLabelArray(label)" class="attr-well">
           <div style="margin: 0 30px;" v-if="label === 'courses'">
-            <i class="material-icons" style="font-size: 38px;">school</i>
+            <i class="material-icons" style="font-size: 38px;" title="Inscrição">school</i>
           </div>
           <div>
             <span v-for="obj in element" style="display:block;">
@@ -51,7 +51,7 @@
     </div>
 
     <div v-if="entityType === 'Departamento'" class="attr-well-no-flex">
-      <div v-for="obj in formatLabels(labels.special)" class="flex-align-center">
+      <div v-for="obj in formatLabels(labels.special)" class="flex-align-center" v-if="obj.value.toString().trim()">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
         <span>{{{ obj.value | cleanMarkup | highlightQuery $route.query.q | isSearchable obj $route.query.q  }}}</span>
       </div>
@@ -122,6 +122,15 @@
               })
               formatted.push({ label: this.$t(label), value: valueStrings.join(', ') })
             } else {
+              if (this.metadata.document[label].constructor === Object) {
+                value = Object.keys(this.metadata.document[label]).map(key => {
+                  if (key === 'acronym') {
+                    return '(' + this.metadata.document[label][key] + ')'
+                  } else {
+                    return this.metadata.document[label][key]
+                  }
+                }).join(' ')
+              }
               formatted.push({ label: this.$t(label), value: value, orig_label: label })
             }
           }
@@ -147,7 +156,7 @@
         return this.setSearchableAttributes(formatted)
       },
       remainingLabels () {
-        let labelsToHide = ['courses_in_charge', 'photo_url', 'content', 'publication_date', 'name', 'display_name', 'schools', 'map_url']
+        let labelsToHide = ['photo_url', 'content', 'publication_date', 'name', 'display_name', 'schools', 'map_url']
         let formatted = []
         let keys = Object.keys(this.metadata.document)
         let allLabels = [].concat(this.labels.primary.line_1)
@@ -179,7 +188,8 @@
           unit_in_charge: true,
           scientific_areas: true,
           predominant_scientific_areas: true,
-          course_unit: true
+          course_unit: true,
+          courses_in_charge: true
         }
         let searchableEntities = {
           rooms: 'Sala',
@@ -193,6 +203,7 @@
           occupants: 'Funcionário',
           department: 'Departamento',
           course: 'Curso',
+          courses_in_charge: 'Curso',
           unit_in_charge: 'Departamento',
           course_unit: 'Cadeira'
         }
@@ -217,7 +228,7 @@
         return objArray
       },
       isDisplayable (label) {
-        if (Object.keys(this.metadata.document).indexOf(label) !== -1) {
+        if (Object.keys(this.metadata.document).indexOf(label) !== -1 && label !== 'study_plan') {
           return this.$t(label)
         }
       },
@@ -263,6 +274,10 @@
     span {
       font-size: 13px;
     }
+  }
+
+  .align-top {
+    align-items: flex-start !important;
   }
 
   .flex-align-center {

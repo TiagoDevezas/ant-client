@@ -74,7 +74,7 @@ export function isSearchable (value, attrObj, query) {
         } else {
           urlParam = ''
         }
-        links.push('<a href="search?q=' + '%22' + split[i].trim() + '%22' + urlParam + '">' + highlightQuery(split[i], query) + '</a>')
+        links.push('<a href="search?q=' + '%22' + split[i].trim().split('(')[0].trim() + '%22' + urlParam + '">' + highlightQuery(split[i], query) + '</a>')
       }
       return links.join(', ')
     }
@@ -96,7 +96,7 @@ export function iconify (value, origLabel) {
       iconName = 'local_printshop'
     }
     if (iconName) {
-      return '<i class="material-icons" style="font-size: 18px;">' + iconName + '</i>'
+      return '<i class="material-icons" style="font-size: 18px;" title="' + this.$t(origLabel) + '">' + iconName + '</i>'
     }
   }
   // if (origLabel && iconName) {
