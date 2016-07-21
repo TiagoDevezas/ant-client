@@ -17,6 +17,8 @@
 </template>
 
 <script>
+  import defaults from '../defaults'
+
   import PersonPicture from './PersonPicture'
   import ResultLinkTitle from './ResultLinkTitle'
   import ResultSources from './ResultSources'
@@ -129,12 +131,12 @@
           values.is_test = true
         }
         if (!this.clicked && arguments.length === 0) {
-          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+          this.$http.post(defaults.log_click_url, values, {emulateJSON: true})
           this.clicked = true
         }
         if (arguments.length > 0 && arguments[0]) {
           values['target_url'] = arguments[0]
-          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+          this.$http.post(defaults.log_click_url, values, {emulateJSON: true})
         }
       }
     },

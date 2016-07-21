@@ -4,14 +4,15 @@
       <h2 class="result-link"><a href="{{ metadata.link }}" @click="sendClickData(metadata.link)">{{ metadata.description }}</a></h2>
   </div>
   <div class="full no-b-padding" style="display: flex; align-items: center;">
-      <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="right"></status-indicator>
       <span class="label is-{{ metadata.type.label | lowercase }}">{{ metadata.type.label }}</span>
+      <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="left"></status-indicator>
       <span class="result-url">{{ metadata.link }}</span>
   </div>
 </div>
 </template>
 
 <script>
+  import defaults from '../defaults'
   import StatusIndicator from './StatusIndicator'
 
   export default {
@@ -36,12 +37,12 @@
         }
 
         if (!this.clicked && arguments.length === 0) {
-          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+          this.$http.post(defaults.log_click_url, values, {emulateJSON: true})
           this.clicked = true
         }
         if (arguments.length > 0 && arguments[0]) {
           values['target_url'] = arguments[0]
-          this.$http.post('http://ant.fe.up.pt/api/log/event/click', values, {emulateJSON: true})
+          this.$http.post(defaults.log_click_url, values, {emulateJSON: true})
         }
       }
     }

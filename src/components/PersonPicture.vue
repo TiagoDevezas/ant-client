@@ -17,7 +17,7 @@
     methods: {
       getPicture () {
         let photoUrl = 'https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=' + this.link.split('=')[1]
-        let promise = this.$http({url: defaults.photo_service + photoUrl, method: 'GET'})
+        let promise = this.$http({url: defaults.photo_service + photoUrl, method: 'GET', timeout: 2000})
         promise.then(res => {
           if (res.ok) {
             this.$set('displayUrl', photoUrl)

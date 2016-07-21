@@ -63,7 +63,7 @@ config.plugins = (config.plugins || []).concat([
       coast: false,
       favicons: true,
       firefox: false,
-      opengraph: true,
+      opengraph: false,
       twitter: true,
       yandex: false,
       windows: true

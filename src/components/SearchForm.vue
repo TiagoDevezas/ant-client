@@ -86,7 +86,7 @@ export default {
   }
 
   #search-form-home, .unfocused {
-    padding: 0.5em 3.5em 0.5em 0.75em;
+    padding: 0.4em 3.5em 0.4em 0.75em;
     box-sizing: border-box;
     border-radius: 2px;
     display: block;

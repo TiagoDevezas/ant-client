@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import defaults from '../defaults'
+
 import store from '../store'
 import SearchForm from './SearchForm'
 import ResultItem from './ResultItem'
@@ -107,7 +109,7 @@ export default {
             element.parentNode.removeChild(element)
           }
           const feedLink = document.createElement('link')
-          feedLink.href = 'http://ant.fe.up.pt/api/search/atom?q=' + this.$route.query.q + '&tipoentidade=' + this.$route.query.tipoentidade
+          feedLink.href = defaults.atom_url + '?q=' + this.$route.query.q + '&tipoentidade=' + this.$route.query.tipoentidade
           feedLink.rel = 'alternate'
           feedLink.title = 'Feed RSS de ant.fe.up.pt - Pesquisa: ' + this.$route.query.q + ' Filtro: ' + this.$route.query.tipoentidade
           feedLink.type = 'application/rss+xml'
@@ -149,7 +151,7 @@ export default {
       if (process.env.NODE_ENV === 'development') {
         values.is_test = true
       }
-      this.$http.post('http://ant.fe.up.pt/api/log/event/search', values, {emulateJSON: true})
+      this.$http.post(defaults.log_search_url, values, {emulateJSON: true})
     }
   }
 }

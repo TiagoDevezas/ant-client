@@ -47,11 +47,11 @@
     width: 10px;
     border-radius: 5px;
     display: inline-flex;
-    &.inactive {
-      background-color: #E7676F;
-    }
     &.active {
-      background-color: #95BE34;
+      background-color: #33c748;
+    }
+    &.inactive {
+      background-color: #fc5753;
     }
     &.retired {
       background-color: #BFBFBF;

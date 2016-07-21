@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import defaults from '../defaults'
+
 export default {
   props: ['query', 'entityType'],
   data () {
@@ -16,7 +18,7 @@ export default {
   },
   computed: {
     generateFeedLink () {
-      let baseURL = 'http://ant.fe.up.pt/api/search/atom'
+      let baseURL = defaults.atom_url
       if (this.query) {
         baseURL += '?q=' + this.query
         if (this.entityType) {
