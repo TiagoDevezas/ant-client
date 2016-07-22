@@ -90,8 +90,10 @@ export default {
   font-weight: bold;
 }
 
-.highlight {
+mark {
+  background: transparent;
   font-weight: bolder;
+  color: inherit;
 }
 
 </style>
