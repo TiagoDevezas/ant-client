@@ -38,7 +38,7 @@
       filterData: {
         type: Object,
         default (val) {
-          return { label: '', value: ''}
+          return { name: [ { label: '', value: '' } ] }
         }
       }
     },
