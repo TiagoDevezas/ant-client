@@ -1,23 +1,23 @@
 <template>
-<div>
+<div v-kh="getCurrentQuery">
   <div class="result-sources">
     <span v-if="entityType === 'Estudante'">
       <span class="attr-label">{{{ $t('course') }}}:</span>
-      <span v-kh="getCurrentQuery"> {{{ metadata.document.courses[0].course | isSearchable metadata.document.courses[0] getCurrentQuery }}}</span>
+      <span> {{{ metadata.document.courses[0].course | isSearchable metadata.document.courses[0] getCurrentQuery }}}</span>
     </span>
     <div v-if="labels.primary.line_1" class="attributes">
       <p v-for="obj in formatLabels(labels.primary.line_1)" :class="{'align-top': obj.orig_label === 'courses_in_charge'}">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span> 
-        <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}} &nbsp;</span>
+        <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}} &nbsp;</span>
       </p>
     </div>
     <div v-if="labels.primary.line_2" class="attributes">
       <p v-for="obj in formatLabels(labels.primary.line_2)" :class="{'align-top': obj.orig_label === 'teachers'}">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
-        <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}} &nbsp;</span>
+        <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}} &nbsp;</span>
       </p>
     </div>
-    <span v-if="entityType === 'Notícia' && !isToggled" v-kh="getCurrentQuery">
+    <span v-if="entityType === 'Notícia' && !isToggled">
       {{{ metadata.document.content | cleanMarkup | stripTags | truncateText 20 }}}
     </span>
     <span v-if="entityType === 'Notícia' && isToggled" v-kh="getCurrentQuery">
@@ -29,7 +29,7 @@
     <div v-if="labels.secondary" class="attributes">
       <p v-for="obj in formatLabels(labels.secondary)">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
-        <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
+        <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
         <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="left" v-if="obj.label === 'Ativo' || obj.label === 'Estado'"></status-indicator>
       </p>
     </div>
@@ -44,7 +44,7 @@
           <div>
             <span v-for="obj in element" style="display:block;">
               <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
-              <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
+              <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
             </span>
           </div>
         </div>
@@ -54,7 +54,7 @@
     <div v-if="entityType === 'Departamento'" class="attr-well-no-flex">
       <div v-for="obj in formatLabels(labels.special)" class="flex-align-center" v-if="obj.value.toString().trim()">
         <span class="attr-label">{{{ obj.label | iconify obj.orig_label }}}</span>
-        <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery  }}}</span>
+        <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery  }}}</span>
       </div>
       
     </div>
@@ -66,7 +66,7 @@
       <div class="attr-well-no-flex" style="width: 100%;">
         <div v-for="obj in formatLabels(labels.special)">       
           <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
-          <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
+          <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
           <status-indicator :status="metadata.document.status" :state="metadata.document.active" v-if="obj.label === 'Ativo' || obj.label === 'Estado'"></status-indicator>
         </div>
       </div>
@@ -75,7 +75,7 @@
     <div v-if="remainingLabels().length">
       <p v-for="obj in remainingLabels()" style="display: block;">
         <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
-        <span v-kh="getCurrentQuery">{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
+        <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>
         <status-indicator :status="metadata.document.status" :state="metadata.document.active" set-margin="left" v-if="obj.label === 'Ativo' || obj.label === 'Estado'"></status-indicator>
       </p>
     </div>

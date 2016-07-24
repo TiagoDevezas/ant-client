@@ -1,4 +1,4 @@
-let locales = {
+const locales = {
   pt: {
     location: 'Localização',
     event_location: 'Local do Evento',
