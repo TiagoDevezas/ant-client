@@ -14,6 +14,7 @@
     </div>
     <div class="content-wrap-results">
       <search-tools :filter-data="data.queryData.filteredFacetsCount" v-if="data.queryData"></search-tools>
+      <feedback-button></feedback-button>
       <div class="cw"> 
         <div class="results-wrapper">
           <result-empty v-if="dataReceived && !data.entities.length"></result-empty>
@@ -58,6 +59,7 @@ import ResultEmpty from './ResultEmpty'
 import AboutLink from './AboutLink'
 import FeedButton from './FeedButton'
 import SearchTools from './SearchTools'
+import FeedbackButton from './FeedbackButton'
 
 export default {
   components: {
@@ -69,7 +71,8 @@ export default {
     ResultEmpty,
     AboutLink,
     FeedButton,
-    SearchTools
+    SearchTools,
+    FeedbackButton
   },
 
   data () {

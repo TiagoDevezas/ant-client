@@ -18,12 +18,15 @@
         this.$set('isToggled', !this.isToggled)
         let facetBar = document.getElementById('search-tools')
         let resultCounter = document.getElementById('results-counter')
+        let feedbackButton = document.getElementById('feedback-button')
         if (this.isToggled && facetBar && resultCounter) {
           facetBar.classList.add('show')
           resultCounter.classList.add('slide-out')
+          feedbackButton.classList.add('slide-out')
         } else if (!this.isToggled && facetBar && resultCounter) {
           facetBar.classList.remove('show')
           resultCounter.classList.remove('slide-out')
+          feedbackButton.classList.remove('slide-out')
         }
         this.$root.$broadcast('toggleFacetsBar', this.isToggled)
       }
