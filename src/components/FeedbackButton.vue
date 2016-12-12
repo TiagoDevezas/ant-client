@@ -9,14 +9,14 @@
     </div>
 
     <modal title="Enviar comentário para a pesquisa:" :show.sync="feedbackModalPositive">
-      <div slot="modal-body">
+      <div slot="modal-body" class="feedback-modal-body">
       <p>"{{ $route.query.q }}"</p>
       <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeIYO_B0waWuMGoGZj7SXR71VkTE0lsMU1bDYSdy2tqsVDRKA/viewform?embedded=true" width="500" height="550" frameborder="0" marginheight="0" marginwidth="0">A carregar...</iframe>
       </div>
     </modal>
 
     <modal title="Enviar comentário para a pesquisa:" :show.sync="feedbackModalNegative">
-      <div slot="modal-body">
+      <div slot="modal-body" class="feedback-modal-body">
       <p>"{{ $route.query.q }}"</p>
       <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdheWt3zQkXoAn1E-5i4PgiwR62DQPyFqBRMNJbm12as-6oHQ/viewform?embedded=true" width="500" height="550" frameborder="0" marginheight="0" marginwidth="0">A carregar...</iframe>
       </div>
@@ -46,7 +46,6 @@
     top: 10px;
     background-color: #f0f0f0;
     font-size: 14px;
-    font-weight: bold;
     border-radius: 5px;
     padding: 2.5px 10px;
     color: #777777;
@@ -68,6 +67,10 @@
         color: #444444;
       }
     }
+  }
+
+  .feedback-modal-body {
+    font-weight: bold;
   }
 
   .show {
