@@ -67,7 +67,7 @@ export function isSearchable (value, attrObj, query) {
   }
   if (value && attrObj && query) {
     let newVal = stripTags(value)
-    let split = newVal.split(',')
+    let split = attrObj.orig_label === 'course' ? [newVal] : newVal.split(',')
     let links = []
     if (attrObj.searchable) {
       for (let i in split) {
