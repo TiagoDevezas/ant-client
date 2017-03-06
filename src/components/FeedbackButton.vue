@@ -8,14 +8,14 @@
       <i class="material-icons" @click="feedbackModalNegative = !feedbackModalNegative">thumb_down</i>
     </div>
 
-    <modal title="Enviar comentário para a pesquisa:" :show.sync="feedbackModalPositive">
+    <modal v-if="feedBackButtonClicked" title="Enviar comentário para a pesquisa:" :show.sync="feedbackModalPositive">
       <div slot="modal-body" class="feedback-modal-body">
       <p>"{{ $route.query.q }}"</p>
       <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeIYO_B0waWuMGoGZj7SXR71VkTE0lsMU1bDYSdy2tqsVDRKA/viewform?embedded=true" width="500" height="550" frameborder="0" marginheight="0" marginwidth="0">A carregar...</iframe>
       </div>
     </modal>
 
-    <modal title="Enviar comentário para a pesquisa:" :show.sync="feedbackModalNegative">
+    <modal v-if="feedBackButtonClicked" title="Enviar comentário para a pesquisa:" :show.sync="feedbackModalNegative">
       <div slot="modal-body" class="feedback-modal-body">
       <p>"{{ $route.query.q }}"</p>
       <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdheWt3zQkXoAn1E-5i4PgiwR62DQPyFqBRMNJbm12as-6oHQ/viewform?embedded=true" width="500" height="550" frameborder="0" marginheight="0" marginwidth="0">A carregar...</iframe>
