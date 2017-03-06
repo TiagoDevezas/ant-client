@@ -18,7 +18,7 @@ export default {
   update: function (value) {
     this.vm.$nextTick(() => {
       markInstance = new Mark(this.el)
-      markInstance.mark(value, { exclude: ['.attr-label'], filter: excludeStopWords })
+      markInstance.mark(value, { exclude: ['.attr-label', 'i'], filter: excludeStopWords })
     })
     // do something based on the updated value
     // this will also be called for the initial value

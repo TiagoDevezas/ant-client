@@ -7,7 +7,7 @@ const ATOM_URL = SEARCH_URL + '/atom'
 const LOG_CLICK_URL = API_URL + 'log/event/click'
 const LOG_SEARCH_URL = API_URL + 'log/event/search'
 
-const IMAGE_PLACEHOLDER = require('src/assets/no_photo.png')
+const IMAGE_PLACEHOLDER = require('src/assets/no_photo.jpg')
 
 const DEFAULTS = {
   api_url: API_URL,
