@@ -15,6 +15,7 @@
     <div class="content-wrap-results">
       <search-tools :filter-data="data.queryData.filteredFacetsCount" v-if="data.queryData"></search-tools>
       <feedback-button></feedback-button>
+      {{ data.queryData.decorations === undefined | json }}
       <div class="cw"> 
         <div class="results-wrapper">
           <result-empty v-if="dataReceived && !data.entities.length"></result-empty>
