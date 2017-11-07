@@ -94,12 +94,12 @@ export default {
       entityTypes.push({value: 'todos', label: 'Todos'})
       let facetsCount = this.facets
       for (let i in facetsCount) {
-        entityTypes.push({ value: facetsCount[i].label, count: facetsCount[i].value, label: facetsCount[i].label + 's'})
+        entityTypes.push({ value: facetsCount[i].label, count: facetsCount[i].value, label: facetsCount[i].label === 'Pessoal' ? facetsCount[i].label : facetsCount[i].label + 's'})
       }
       if (this.data.queryData.count === 0) {
         let entity = this.$route.query.tipoentidade
         if (entity) {
-          entityTypes.push({value: entity, count: 0, label: entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
+          entityTypes.push({value: entity, count: 0, label: entity === 'Pessoal' ? entity.charAt(0).toUpperCase() + entity.slice(1) : entity.charAt(0).toUpperCase() + entity.slice(1) + 's'})
         }
       }
       return entityTypes
@@ -216,7 +216,7 @@ export default {
   .content-wrap-results {
     // margin: 0 auto 40px auto;
     position: relative;
-    /*background-color: #fefefe;*/
+    // background-color: #fefefe;
   }
   .cw {
     position: relative;
