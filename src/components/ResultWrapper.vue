@@ -1,9 +1,9 @@
 <template>
 <div class="flex">
-  <person-picture v-if="entityType === 'Funcionário' || entityType === 'Estudante'" :title="metadata.description" :link="metadata.link" :photo-url="metadata.document.photo_url"></person-picture>
+  <person-picture v-if="entityType === 'Pessoal' || entityType === 'Estudante'" :title="metadata.description" :link="metadata.link" :photo-url="metadata.document.photo_url"></person-picture>
   <div :class="['no-bottom-padding', {
-    'full': entityType !== 'Funcionário' || entityType !== 'Estudante',
-    'four-fifth': entityType === 'Funcionário' || entityType === 'Estudante'
+    'full': entityType !== 'Pessoal' || entityType !== 'Estudante',
+    'four-fifth': entityType === 'Pessoal' || entityType === 'Estudante'
     }]">
     <result-link-title :metadata="metadata" :category="category"></result-link-title>
     <result-sources :metadata="metadata" :is-toggled="toggled"></result-sources>
@@ -50,7 +50,7 @@
       setVisibleAttrs (entityType) {
         let labels
         switch (entityType) {
-          case 'Funcionário':
+          case 'Pessoal':
             labels = {
               primary: {
                 line_1: ['code', 'acronym'],

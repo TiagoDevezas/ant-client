@@ -85,7 +85,7 @@
     background: #2ECC71;
     color: white;
   }
-  .is-funcionário {
+  .is-pessoal {
     background: #1ABC9C;
     color: white;
   }

@@ -7,11 +7,11 @@
     <h1>Colaboração</h1>
     <p>Se pertences à Universidade do Porto e pretendes colaborar no projeto ANT para desenvolver competências na área da recuperação de informação, em particular da pesquisa orientada a entidades, entra em contacto connosco.</p>
 
-    <p>Podes fazê-lo via e-mail, ou pessoalmente no Laboratório de Sistemas de Informação, que fica na sala <a v-link="{name: 'search', query: {q: 'i123', tipoentidade: 'Sala'}}">i123</a> do <a v-link="{name: 'search', query: {q: 'departamento de engenharia informática', tipoentidade: 'Departamento'}}">Departamento de Engenharia Informática</a> — pergunta pelo <a v-link="{name: 'search', query: {q: 'josé devezas', tipoentidade: 'Funcionário'}}">José Devezas</a> ou pelo <a v-link="{name: 'search', query: {q: 'sérgio nunes', tipoentidade: 'Funcionário'}}">Sérgio Nunes</a>.</p>
+    <p>Podes fazê-lo via e-mail, ou pessoalmente no Laboratório de Sistemas de Informação, que fica na sala <a v-link="{name: 'search', query: {q: 'i123', tipoentidade: 'Sala'}}">i123</a> do <a v-link="{name: 'search', query: {q: 'departamento de engenharia informática', tipoentidade: 'Departamento'}}">Departamento de Engenharia Informática</a> — pergunta pelo <a v-link="{name: 'search', query: {q: 'josé devezas', tipoentidade: 'Pessoal'}}">José Devezas</a> ou pelo <a v-link="{name: 'search', query: {q: 'sérgio nunes', tipoentidade: 'Pessoal'}}">Sérgio Nunes</a>.</p>
 
     <h1>Equipa</h1>
     <dl>
-      <dt><a v-link="{name: 'search', query: {q: 'sérgio sobral nunes', tipoentidade: 'Funcionário'}}">Sérgio Nunes</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'sérgio sobral nunes', tipoentidade: 'Pessoal'}}">Sérgio Nunes</a></dt>
       <dd>Coordenador</dd>
       <dd>
         Departamento de Engenharia Informática,<br>
@@ -20,7 +20,7 @@
       </dd>
     </dl>
     <dl>
-      <dt><a v-link="{name: 'search', query: {q: 'josé devezas', tipoentidade: 'Funcionário'}}">José Devezas *</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'josé devezas', tipoentidade: 'Pessoal'}}">José Devezas *</a></dt>
       <dd>Lead Developer</dd>
       <dd>
         Laboratório de Sistemas de Informação,<br>
@@ -53,7 +53,7 @@
     </dl>
 
     <dl>
-      <dt><a v-link="{name: 'search', query: {q: 'ricardo carvalho amorim', tipoentidade: 'Funcionário'}}">Ricardo Amorim</a></dt>
+      <dt><a v-link="{name: 'search', query: {q: 'ricardo carvalho amorim', tipoentidade: 'Pessoal'}}">Ricardo Amorim</a></dt>
       <dd>Android Developer</dd>
       <dd>
         Laboratório de Sistemas de Informação,<br>

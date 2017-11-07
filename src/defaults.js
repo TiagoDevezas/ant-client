@@ -1,4 +1,5 @@
-const API_URL = 'http://ant.fe.up.pt/api/'
+// const API_URL = 'http://ant.fe.up.pt/api/'
+const API_URL = 'http://ant.fe.up.pt:4568/'
 const SEARCH_URL = API_URL + 'search'
 const NEWS_RANKINGS_URL = API_URL + 'rankings/news'
 const EVENTS_RANKINGS_URL = API_URL + 'rankings/events'

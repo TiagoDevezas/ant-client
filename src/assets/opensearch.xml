@@ -8,6 +8,6 @@
   </Image> 
   <Url rel="results" type="text/html" template="http:/ant.fe.up.pt/search?q={searchTerms}&amp;utm_source=opensearch"/>
   <Url rel="suggestions" type="application/json" template="http:/ant.fe.up.pt/dev/search/autocomplete/basic?q={searchTerms}&amp;utm_source=opensearch"/>
-  <Tags>sigarra, feup, up, pesquisa, entidades, estudantes, funcionários, departamentos, salas</Tags> 
+  <Tags>sigarra, feup, up, pesquisa, entidades, estudantes, pessoal, departamentos, salas</Tags> 
   <InputEncoding>UTF-8</InputEncoding> 
 </OpenSearchDescription>

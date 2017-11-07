@@ -97,7 +97,7 @@
     color: #4285f4 !important;
     border-bottom: solid 3px #4285f4;
   }
-  .result-filter a.active.Funcionário {
+  .result-filter a.active.Pessoal {
     color: #1ABC9C !important;
     border-bottom: solid 3px #1ABC9C;
   }
