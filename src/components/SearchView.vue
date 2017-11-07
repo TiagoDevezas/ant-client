@@ -41,7 +41,7 @@
     </div>
   </div>
   <div id="footer" class="center-text">
-    <span class="footer-link"><a href="http://infolab.fe.up.pt">InfoLab/U.Porto</a></span>
+    <span class="footer-link"><a href="http://infolab.fe.up.pt">FEUP InfoLab</a></span>
     <span class="footer-link"><a v-link="{name: 'about'}">Sobre</a></span>
   </div>
 </template>

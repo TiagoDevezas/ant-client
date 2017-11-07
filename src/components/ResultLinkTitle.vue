@@ -54,6 +54,9 @@
     font-size: 18px;
     font-weight: normal;
     padding: 0;
+    line-height: 1.1;
+    margin-bottom: 5px;
+    margin-top: -5px;
   }
   span.result-url {
     margin-left: 5px;
