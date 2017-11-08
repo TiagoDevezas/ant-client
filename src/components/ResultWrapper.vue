@@ -2,7 +2,7 @@
 <div class="flex">
   <person-picture v-if="entityType === 'Pessoal' || entityType === 'Estudante'" :title="metadata.description" :link="metadata.link" :photo-url="metadata.document.photo_url"></person-picture>
   <div :class="['no-bottom-padding', {
-    'full': entityType !== 'Pessoal' || entityType !== 'Estudante',
+    'full four-fifth pb-10': entityType !== 'Pessoal' || entityType !== 'Estudante',
     'four-fifth': entityType === 'Pessoal' || entityType === 'Estudante'
     }]">
     <result-link-title :metadata="metadata" :category="category"></result-link-title>
@@ -10,8 +10,13 @@
     <result-attributes :is-toggled="toggled" :metadata="metadata" :labels="setVisibleAttrs(entityType)">
     </result-attributes>
   </div>
+  <more-content></more-content>
   <div class="full no-bottom-padding">
-    <more-content></more-content>
+    <div class="flex align-center more-c">
+      <div class="no-bottom-padding">
+        <span class="more-content-divider"></span>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -149,5 +154,18 @@
 <style>
   .no-bottom-padding {
     padding-bottom: 0;
+  }
+
+  .more-c {
+    margin-bottom: 10px;
+    /*margin-top: -10px;*/
+  }
+
+  .more-content-divider {
+    display: block;
+    border-top: 1px solid #e8e8e8;
+  }
+  .pb-10 {
+    padding-bottom: 5px;
   }
 </style>

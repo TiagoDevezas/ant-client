@@ -47,14 +47,15 @@
     margin-left: 10px;
     border: 1px solid #E0E0E0;
     border-radius: 5px;
-    width: none;
+    width: inherit !important;
+    margin-right: 0.6em;
   }
   .attribute-description {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: bold;
   }
   .attribute-name {
-    font-size: 0.9em;
+    font-size: 0.85em;
     margin-top: 5px;
     color: #000;
   }
