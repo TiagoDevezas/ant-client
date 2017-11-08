@@ -15,7 +15,6 @@
     <div class="content-wrap-results">
       <search-tools :filter-data="data.queryData.filteredFacetsCount" v-if="data.queryData"></search-tools>
       <feedback-button></feedback-button>
-      {{ data.queryData.decorations === undefined | json }}
       <div class="cw"> 
         <div class="results-wrapper">
           <result-empty v-if="dataReceived && !data.entities.length"></result-empty>
@@ -26,6 +25,7 @@
               <feed-button :query="$route.query.q" :entity-type="$route.query.tipoentidade"></feed-button>
             </result-counter>
             <div class="results">
+              <quick-result :decorations="data.queryData.decorations"></quick-result>
               <result-item v-for="entity in data.entities" :metadata="entity" :category="data.queryData.category">
               </result-item>
             </div>
@@ -61,6 +61,7 @@ import AboutLink from './AboutLink'
 import FeedButton from './FeedButton'
 import SearchTools from './SearchTools'
 import FeedbackButton from './FeedbackButton'
+import QuickResult from './QuickResult'
 
 export default {
   components: {
@@ -73,7 +74,8 @@ export default {
     AboutLink,
     FeedButton,
     SearchTools,
-    FeedbackButton
+    FeedbackButton,
+    QuickResult
   },
 
   data () {
