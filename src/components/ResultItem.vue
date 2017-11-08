@@ -41,6 +41,14 @@ export default {
   /*cursor: pointer;*/
 }
 
+.result:first-of-type {
+  padding-top: 5px;
+}
+
+.result img {
+  max-width: 100%;
+}
+
 .result-more-data {
   font-size: 0.85em;
   color: #666;
