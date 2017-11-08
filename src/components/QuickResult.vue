@@ -25,7 +25,7 @@
         return attributeValue.constructor === Array
       },
       createEntityLink (attributeName, attributeValue) {
-        let searchableEntityTypes = ['Estudante', 'Funcionário', 'Pessoal', 'Notícia', 'Cadeira', 'Sala', 'Curso', 'Departamento']
+        let searchableEntityTypes = ['Estudante', 'Pessoal', 'Notícia', 'Cadeira', 'Sala', 'Curso', 'Departamento']
         if (searchableEntityTypes.indexOf(attributeName) !== -1) {
           return '<a href="search?q=' + '%22' + attributeValue +
              '%22&tipoentidade=' + attributeName + '">' + attributeValue +
@@ -49,7 +49,7 @@
     border-radius: 5px;
     width: inherit !important;
     margin-right: 0.6em;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
   }
   .quick-result {
     border-left: 1px solid #D0D0D0;
@@ -67,6 +67,10 @@
     padding: 5px 10px;
     font-size: 0.85em;
     color: #000;
+    /*border-bottom: 1px solid #D0D0D0;*/
+  }
+  .attribute-name:not(:first-of-type) {
+    padding-top: 0px;
     border-bottom: 1px solid #D0D0D0;
   }
   .attribute-value {
