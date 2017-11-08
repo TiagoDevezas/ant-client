@@ -39,25 +39,35 @@
 
 <style>
   .quick-results {
-    padding-top: 0.6em !important;
+    /*padding-top: 0.6em !important;*/
     z-index: 10000;
     background-color: #F7F7F7;
     position: relative;
     margin-bottom: 20px;
     margin-left: 10px;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #D0D0D0;
     border-radius: 5px;
     width: inherit !important;
     margin-right: 0.6em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+  }
+  .quick-result {
+    border-left: 1px solid #D0D0D0;
+    padding: 0px !important;
   }
   .attribute-description {
+    padding: 5px 10px;
+    display: block;
     font-size: 0.9em;
     font-weight: bold;
+    border-bottom: 1px solid #D0D0D0;
   }
   .attribute-name {
+    background-color: #FFF;
+    padding: 5px 10px;
     font-size: 0.85em;
-    margin-top: 5px;
     color: #000;
+    border-bottom: 1px solid #D0D0D0;
   }
   .attribute-value {
     font-size: 0.8em;
