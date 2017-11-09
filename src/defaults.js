@@ -1,3 +1,5 @@
+const BASE_URL = 'http://ant.fe.up.pt/'
+const BASE_SEARCH_URL = BASE_URL + 'search?q='
 const API_URL = 'http://ant.fe.up.pt/api/'
 // const API_URL = 'http://ant.fe.up.pt:4568/'
 const SEARCH_URL = API_URL + 'search'
@@ -11,6 +13,8 @@ const LOG_SEARCH_URL = API_URL + 'log/event/search'
 const IMAGE_PLACEHOLDER = require('src/assets/no_photo.jpg')
 
 const DEFAULTS = {
+  base_url: BASE_URL,
+  base_search_url: BASE_SEARCH_URL,
   api_url: API_URL,
   search_url: SEARCH_URL,
   news_url: NEWS_RANKINGS_URL,

@@ -9,6 +9,8 @@ import App from './components/App'
 import MainView from './components/MainView'
 import SearchView from './components/SearchView'
 import AboutView from './components/AboutView'
+import EmbedView from './components/EmbedView'
+import EmbedFormView from './components/EmbedFormView'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -40,6 +42,14 @@ router.map({
   '/about': {
     name: 'about',
     component: AboutView
+  },
+  '/embed': {
+    name: 'embed',
+    component: EmbedView
+  },
+  '/embed-form': {
+    name: 'embed-form',
+    component: EmbedFormView
   }
 })
 

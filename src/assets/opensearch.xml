@@ -6,8 +6,8 @@
   <Image width="16" height="16">
     data:image/vnd.microsoft.icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAklEQVR4AewaftIAAALGSURBVI3Bb2iUdQDA8e/v+T13uzvvbnpjh03zLhVp3Fi7uVqmseiS2QJBiCLFMoz+IPrCXkSvEnozUKopQieevqqwGohKJuFsipjk8i8bulj31ObyurXtOdlu9+x5fj0LB8dh0OcjqBCrfzoZbNj+TnDZsyk9tDSuAMscMcxsb8+9vkx6wrjcRxnBA15/KND86oHPPn5/y1tFC3Gk12J0QlFBTfZ/c3TwxM6dszOFKVwSlz8QCjRsO/W9XLJ+07l+W+RMxXsveGmKSQbuOhQt5glfbSK5aMVzbWO3uo85dsmSuLZ9kDm4Z0fHprWrdKoDAmPMofvnWUI+QctyyTXDoZwnVLdsQSS2ON9//ISMxFubnWTn599dt8VVw6EmKGhv1Hl9nYcLd2zWrJScG7Cp5KtNJO9nz56SsdRHe3zRxhZcRQuG/lJcvGNze9Sho0knWi04fd3mIYQmdeRjL+79VKuqjlDB74HNz3gY/luxY72XDU/oTE4pjLxinicQqZbx9s5PFEKjzMZmnTfbPOz+osQPN22u/ObwbspDqkHn97zDUE4xR/eFwhoIyr3SqvPhRi+ZH2cpTCuEgLZ6yRwBvPyUh3lCgF4yhw09tHQFrsfrNHa1e5mzb3MV2bxDNCyoCQrmFWcVTy6XdDRJJnJ/DGlmtreHB15boyM1/uX3Qn2dRk1QUO7uuKJraxUbGnVmRs6f1XJ9mTSgcFk2/8myYf+ZEuP3FUIwx0mn04dkcXJkNBhd9aivNtH80682+YJCKbBsmJhSDP7pcPqGTefJEpcGHe6ZilRC5/i3Xx3q6uo6LHDpVeFA4o2TZ/yPtKzjf5DjfRduHH2pvVAoTEtcjj1jjd3qPhaIxBb7ahNJQPAQApQ58PWRm19u3TI9VZjGJaiwMNa6Orp6+9vheNvz3vCSOC7LHM6axvme3JVMety4/Atl/gFBzBDyQZHojQAAAABJRU5ErkJggg==
   </Image> 
-  <Url rel="results" type="text/html" template="http:/ant.fe.up.pt/search?q={searchTerms}&amp;utm_source=opensearch"/>
-  <Url rel="suggestions" type="application/json" template="http:/ant.fe.up.pt/dev/search/autocomplete/basic?q={searchTerms}&amp;utm_source=opensearch"/>
+  <Url rel="results" type="text/html" template="http://ant.fe.up.pt/search?q={searchTerms}&amp;utm_source=opensearch"/>
+  <Url rel="suggestions" type="application/json" template="http://ant.fe.up.pt/dev/search/autocomplete/basic?q={searchTerms}&amp;utm_source=opensearch"/>
   <Tags>sigarra, feup, up, pesquisa, entidades, estudantes, pessoal, departamentos, salas</Tags> 
   <InputEncoding>UTF-8</InputEncoding> 
 </OpenSearchDescription>

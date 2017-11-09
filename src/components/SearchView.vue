@@ -7,7 +7,7 @@
           <a v-link="'/'" id="header-logo-wrap" title="ANT - Pesquisa de Informação na Universidade do Porto">
             <span class="header-logo">ANT Pesquisa de Informação na Universidade do Porto</span>
           </a>
-          <search-form :query-params="$route.query.q" class="search-top"></search-form>
+          <search-form :query-params="$route.query.q" class="search-top" placeholder-text="Introduza a sua pesquisa"></search-form>
         </div>
       </div>
       <result-filter :query-params="$route.query" :entity-types="getEntityTypes" :filter-data="data.queryData.filteredFacetsCount" v-if="data.queryData"></result-filter>

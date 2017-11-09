@@ -11,7 +11,7 @@
     </div>
     <div class="flex form-container">
       <div class="full is-paddingless">
-        <search-form is-focused="true"></search-form>
+        <search-form is-focused="true" placeholder-text="Introduza a sua pesquisa"></search-form>
       </div>
     </div>
     <div class="full center-text">

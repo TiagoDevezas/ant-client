@@ -1,15 +1,17 @@
 <template>
 <div id="search-form">  
   <form id="search-form-home" @submit.prevent="showResults" :class="['animated', { 'focused': formFocused, 'unfocused': !formFocused, 'shake': shakeForm }]">
-    <input id="search-input-home" type="text" v-model="queryParams" @focus="highlightForm" @blur="unhighlightForm" placeholder="Introduza a sua pesquisa" autocomplete="off">
+    <input id="search-input-home" type="text" v-model="queryParams" @focus="highlightForm" @blur="unhighlightForm" :placeholder="placeholderText" autocomplete="off">
     <input id="search-button-home" :class="['material-icons', {'btn-highlight': buttonFocused}]" tabindex="2" value="search" type="submit">
   </form>
 </div>
 </template>
 
 <script>
+import defaults from '../defaults'
+
 export default {
-  props: ['queryParams', 'isFocused'],
+  props: ['queryParams', 'isFocused', 'isEmbedded', 'placeholderText'],
 
   data () {
     return {
@@ -25,10 +27,14 @@ export default {
       this.buttonFocused = false
       this.shakeForm = false
       if (this.queryParams.length) {
-        this.$router.go({
-          name: 'search',
-          query: {q: this.queryParams, tipoentidade: this.$route.query.tipoentidade}
-        })
+        if (!this.isEmbedded) {
+          this.$router.go({
+            name: 'search',
+            query: {q: this.queryParams, tipoentidade: this.$route.query.tipoentidade}
+          })
+        } else {
+          window.open(defaults.base_search_url + this.queryParams)
+        }
       } else {
         this.$el.childNodes[1][0].focus()
         this.$set('shakeForm', true)
