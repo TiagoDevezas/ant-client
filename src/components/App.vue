@@ -51,6 +51,7 @@ html {
 }
 body {
   height: 100%;
+  background-color: transparent;
 }
 #main {
   min-height: 100%;
