@@ -23,6 +23,7 @@
     </div>
   </div>
   <div id="footer" class="center-text">
+    <span class="footer-link"><a v-link="{name: 'embed'}" class="link-highlight">Incorporar o ANT</a></span>
     <span class="footer-link"><a href="http://infolab.fe.up.pt">FEUP InfoLab</a></span>
     <span class="footer-link"><a v-link="{name: 'about'}">Sobre</a></span>
   </div>
@@ -107,7 +108,7 @@ export default {
     color: #444444;
     font-size: 14px;
     .footer-link {
-      &:last-of-type {
+      &:not(:first-of-type) {
         margin-left: 25px;
       }
       a {
@@ -116,6 +117,9 @@ export default {
           // color: #222;
           text-decoration: underline;
         }
+      }
+      a.link-highlight {
+        color: #0C5BDE;
       }
     }
   }

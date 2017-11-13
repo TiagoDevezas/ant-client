@@ -1,6 +1,6 @@
 <template>
   <div id="form-wrapper">
-    <p>É fácil colocar a caixa de pesquisa do ANT no seu site. Ajuste os valores e copie e cole o código na sua página.</p>
+    <p>É simples incorporar a caixa de pesquisa do ANT no seu site. Ajuste os valores e copie e cole o código abaixo na sua página.</p>
     <div id="search-form-embeddable" class="flex" style="min-width: {{formMinWidth}}px;transform-origin: 0 0;transform: scale({{scaleValue}});max-width: {{widthValue}}px;">
       <div class="logo shrink">
         <a href="http://ant.fe.up.pt" title="ANT - Pesquisa de Informação na Universidade do Porto">
@@ -133,9 +133,6 @@
 <style scoped>
   #search-form-embeddable {
     padding: 10px;
-    /*width: 500px;*/
-/*    transform: scale(0.75);
-    transform-origin: 0 0;*/
   }
   #form-wrapper {
     margin: 0 auto;
