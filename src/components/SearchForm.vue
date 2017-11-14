@@ -33,7 +33,7 @@ export default {
             query: {q: this.queryParams, tipoentidade: this.$route.query.tipoentidade}
           })
         } else {
-          window.open(defaults.base_search_url + this.queryParams)
+          window.open(defaults.base_search_url + this.queryParams + '&utm_source=embed')
         }
       } else {
         this.$el.childNodes[1][0].focus()
