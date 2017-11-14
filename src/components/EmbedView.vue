@@ -49,7 +49,7 @@
     },
     ready () {
       this.initialWidth = document.getElementById('search-form-embeddable').getBoundingClientRect().width
-      this.formHeight = document.getElementById('search-form-home').getBoundingClientRect().height
+      this.formHeight = document.getElementById('search-form-embeddable').offsetHeight
       this.createSliders()
     },
     watch: {
@@ -57,7 +57,7 @@
         this.generateEmbedCode()
       },
       'scaleValue': function (val, oldVal) {
-        this.formHeight = document.getElementById('search-form-home').getBoundingClientRect().height
+        this.formHeight = document.getElementById('search-form-embeddable').offsetHeight * val
         this.scaledWidth = this.widthValue * val
         this.generateEmbedCode()
       },
