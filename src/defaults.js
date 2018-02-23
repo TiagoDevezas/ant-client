@@ -1,6 +1,6 @@
-const BASE_URL = 'http://ant.fe.up.pt/'
+const BASE_URL = '//ant.fe.up.pt/'
 const BASE_SEARCH_URL = BASE_URL + 'search?q='
-const API_URL = 'http://ant.fe.up.pt/api/'
+const API_URL = '//ant.fe.up.pt/api/'
 // const API_URL = 'http://ant.fe.up.pt:4568/'
 const SEARCH_URL = API_URL + 'search'
 const NEWS_RANKINGS_URL = API_URL + 'rankings/news'
@@ -11,6 +11,8 @@ const LOG_CLICK_URL = API_URL + 'log/event/click'
 const LOG_SEARCH_URL = API_URL + 'log/event/search'
 
 const IMAGE_PLACEHOLDER = require('src/assets/no_photo.jpg')
+
+const NOT_FOUND_PAGE = '//ant.fe.up.pt/404.html'
 
 const DEFAULTS = {
   base_url: BASE_URL,
@@ -23,7 +25,8 @@ const DEFAULTS = {
   log_click_url: LOG_CLICK_URL,
   log_search_url: LOG_SEARCH_URL,
   photo_service: PHOTO_SERVICE,
-  img_placeholder: IMAGE_PLACEHOLDER
+  img_placeholder: IMAGE_PLACEHOLDER,
+  not_found_page: NOT_FOUND_PAGE
 }
 
 export default DEFAULTS
