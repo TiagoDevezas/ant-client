@@ -63,7 +63,7 @@
       <div class="map-url" v-if="metadata.document.map_url" style="width: 100%;">
         <img :src="getMapUrl()" alt="">
       </div>
-      <div class="attr-well-no-flex" style="width: 100%;">
+      <div class="attr-well-no-flex" style="width: 100%;" v-if="formatLabels(label.special).length">
         <div v-for="obj in formatLabels(labels.special)">       
           <span class="attr-label">{{{ obj.label + ':&nbsp;' }}}</span>
           <span>{{{ obj.value | cleanMarkup | isSearchable obj getCurrentQuery }}}</span>

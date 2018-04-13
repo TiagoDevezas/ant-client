@@ -68,7 +68,7 @@
     methods: {
       generateEmbedCode () {
         let embedWidth = this.scaledWidth || this.widthValue
-        this.embedCode = '<iframe src="' + window.location.origin + '/embed-form?width=' + this.widthValue + '&scale=' + this.scaleValue + '"' + ' height="' + this.formHeight + 'px"' + ' width="' + embedWidth + 'px"' + ' scrolling="no" frameborder="0" allowtransparency="true">' + '</iframe>'
+        this.embedCode = '<iframe src="' + window.location.origin + '/embed-form?width=' + this.widthValue + '&scale=' + this.scaleValue + '"' + ' height="' + this.formHeight + 'px"' + ' width="' + embedWidth + 'px"' + ' scrolling="no" frameborder="0" allowtransparency="true" referrerpolicy="origin">' + '</iframe>'
       },
       createSliders () {
         let widthSlider = document.getElementById('width-slider')

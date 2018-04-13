@@ -10,7 +10,7 @@
     <result-attributes :is-toggled="toggled" :metadata="metadata" :labels="setVisibleAttrs(entityType)">
     </result-attributes>
   </div>
-  <more-content></more-content>
+  <more-content v-if="showMoreContent()"></more-content>
   <div class="full no-bottom-padding">
     <div class="flex align-center more-c">
       <div class="no-bottom-padding">
@@ -52,6 +52,16 @@
       }
     },
     methods: {
+      showMoreContent () {
+        if (!this.metadata.document) {
+          if (this.metadata.sources.length > 1) {
+            return true
+          }
+        } else {
+          return true
+        }
+        return false
+      },
       setVisibleAttrs (entityType) {
         let labels
         switch (entityType) {
@@ -146,6 +156,7 @@
       }
     },
     ready () {
+      console.log(JSON.stringify(this.metadata))
       this.setVisibleAttrs(this.entityType)
     }
   }
